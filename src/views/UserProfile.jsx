@@ -40,7 +40,7 @@ class UserProfile extends Component {
           <Row>
             <Col md={8}>
               <Card
-                title="Edit Profile"
+                title="Admin Profile"
                 content={
                   <form>
                     <FormInputs
@@ -127,7 +127,7 @@ class UserProfile extends Component {
                       ]}
                     />
 
-                    <Row>
+                    {/* <Row>
                       <Col md={12}>
                         <FormGroup controlId="formControlsTextarea">
                           <ControlLabel>About Me</ControlLabel>
@@ -140,10 +140,10 @@ class UserProfile extends Component {
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
-                    <Button bsStyle="info" pullRight fill type="submit">
+                    </Row> */}
+                    {/* <Button bsStyle="info" pullRight fill type="submit">
                       Update Profile
-                    </Button>
+                    </Button> */}
                     <div className="clearfix" />
                   </form>
                 }
@@ -164,19 +164,19 @@ class UserProfile extends Component {
                     I'm in that two seat Lambo"
                   </span>
                 }
-                socials={
-                  <div>
-                    <Button simple>
-                      <i className="fa fa-facebook-square" />
-                    </Button>
-                    <Button simple>
-                      <i className="fa fa-twitter" />
-                    </Button>
-                    <Button simple>
-                      <i className="fa fa-google-plus-square" />
-                    </Button>
-                  </div>
-                }
+                // socials={
+                //   <div>
+                //     <Button simple>
+                //       <i className="fa fa-facebook-square" />
+                //     </Button>
+                //     <Button simple>
+                //       <i className="fa fa-twitter" />
+                //     </Button>
+                //     <Button simple>
+                //       <i className="fa fa-google-plus-square" />
+                //     </Button>
+                //   </div>
+                // }
               />
             </Col>
           </Row>

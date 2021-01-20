@@ -19,7 +19,11 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import cx from "classnames";
 import PropTypes from "prop-types";
-
+import IconButton from '@material-ui/core/IconButton';
+import {
+  makeStyles, withStyles
+} from "@material-ui/core/styles";
+import DeleteIcon from '@material-ui/icons/Delete';
 class CustomButton extends Component {
   render() {
     const { fill, simple, pullRight, round, block, ...rest } = this.props;
@@ -34,6 +38,12 @@ class CustomButton extends Component {
 
     return <Button className={btnClasses} {...rest} />;
   }
+}
+
+export const DeleteButton=(props)=>{
+  return <IconButton aria-label="delete" onClick={props.click}>
+    <DeleteIcon/>
+  </IconButton>
 }
 
 CustomButton.propTypes = {

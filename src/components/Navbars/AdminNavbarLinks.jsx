@@ -30,7 +30,7 @@ class AdminNavbarLinks extends Component {
     );
     return (
       <div>
-        <Nav>
+        {/* <Nav>
           <NavItem eventKey={1} href="#">
             <i className="fa fa-dashboard" />
             <p className="hidden-lg hidden-md">Dashboard</p>
@@ -51,9 +51,9 @@ class AdminNavbarLinks extends Component {
             <i className="fa fa-search" />
             <p className="hidden-lg hidden-md">Search</p>
           </NavItem>
-        </Nav>
+        </Nav> */}
         <Nav pullRight>
-          <NavItem eventKey={1} href="#">
+          {/* <NavItem eventKey={1} href="#">
             Account
           </NavItem>
           <NavDropdown
@@ -68,7 +68,7 @@ class AdminNavbarLinks extends Component {
             <MenuItem eventKey={2.5}>Something</MenuItem>
             <MenuItem divider />
             <MenuItem eventKey={2.5}>Separated link</MenuItem>
-          </NavDropdown>
+          </NavDropdown> */}
           <NavItem eventKey={3} href="#">
             Log out
           </NavItem>

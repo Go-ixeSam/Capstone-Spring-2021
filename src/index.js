@@ -25,15 +25,29 @@ import "./assets/css/animate.min.css";
 import "./assets/sass/light-bootstrap-dashboard-react.scss?v=1.3.0";
 import "./assets/css/demo.css";
 import "./assets/css/pe-icon-7-stroke.css";
-
+import App from "App";
+import { persistStore } from "redux-persist";
+import store from "./redux/store";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import AdminLayout from "layouts/Admin.jsx";
 
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { fab } from '@fortawesome/free-brands-svg-icons'
+// import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+
+// library.add(fab, faCheckSquare, faCoffee)
+let persistor=persistStore(store)
+
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/dashboard" />
-    </Switch>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <PersistGate persistor={persistor}>
+          <App />
+          {/* <Route path="/admin" render={props => <AdminLayout {...props} />} /> */}
+          {/* <Redirect from="/" to="/admin/dashboard" /> */}
+      </PersistGate>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );

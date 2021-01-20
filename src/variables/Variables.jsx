@@ -43,21 +43,21 @@ var style = {
       WebkitFontSmoothing: "antialiased",
       fontFamily: '"Roboto","Helvetica Neue",Arial,sans-serif',
       fontWeight: "400",
-      color: "#FFFFFF"
+      color: "#FFFFFF",
     },
 
     tl: {
       top: "0px",
       bottom: "auto",
       left: "0px",
-      right: "auto"
+      right: "auto",
     },
 
     tr: {
       top: "0px",
       bottom: "auto",
       left: "auto",
-      right: "0px"
+      right: "0px",
     },
 
     tc: {
@@ -65,21 +65,21 @@ var style = {
       bottom: "auto",
       margin: "0 auto",
       left: "50%",
-      marginLeft: -(defaultWidth / 2)
+      marginLeft: -(defaultWidth / 2),
     },
 
     bl: {
       top: "auto",
       bottom: "0px",
       left: "0px",
-      right: "auto"
+      right: "auto",
     },
 
     br: {
       top: "auto",
       bottom: "0px",
       left: "auto",
-      right: "0px"
+      right: "0px",
     },
 
     bc: {
@@ -87,8 +87,8 @@ var style = {
       bottom: "0px",
       margin: "0 auto",
       left: "50%",
-      marginLeft: -(defaultWidth / 2)
-    }
+      marginLeft: -(defaultWidth / 2),
+    },
   },
 
   NotificationItem: {
@@ -111,12 +111,12 @@ var style = {
       willChange: "transform, opacity",
 
       isHidden: {
-        opacity: 0
+        opacity: 0,
       },
 
       isVisible: {
-        opacity: 1
-      }
+        opacity: 1,
+      },
     },
 
     success: {
@@ -124,7 +124,7 @@ var style = {
       backgroundColor: "#a1e82c",
       WebkitBoxShadow: 0,
       MozBoxShadow: 0,
-      boxShadow: 0
+      boxShadow: 0,
     },
 
     error: {
@@ -132,7 +132,7 @@ var style = {
       backgroundColor: "#fc727a",
       WebkitBoxShadow: 0,
       MozBoxShadow: 0,
-      boxShadow: 0
+      boxShadow: 0,
     },
 
     warning: {
@@ -140,7 +140,7 @@ var style = {
       backgroundColor: "#ffbc67",
       WebkitBoxShadow: 0,
       MozBoxShadow: 0,
-      boxShadow: 0
+      boxShadow: 0,
     },
 
     info: {
@@ -148,8 +148,8 @@ var style = {
       backgroundColor: "#63d8f1",
       WebkitBoxShadow: 0,
       MozBoxShadow: 0,
-      boxShadow: 0
-    }
+      boxShadow: 0,
+    },
   },
 
   Title: {
@@ -163,8 +163,8 @@ var style = {
       left: "15px",
       position: "absolute",
       top: "50%",
-      marginTop: "-15px"
-    }
+      marginTop: "-15px",
+    },
   },
 
   MessageWrapper: {
@@ -173,8 +173,8 @@ var style = {
       marginRight: "30px",
       padding: "0 12px 0 0",
       color: "#FFFFFF",
-      maxWidthwidth: "89%"
-    }
+      maxWidthwidth: "89%",
+    },
   },
 
   Dismiss: {
@@ -198,7 +198,7 @@ var style = {
       textAlign: "center",
       padding: "6px 3px 3px 3px",
       fontWeight: "300",
-      marginLeft: "65px"
+      marginLeft: "65px",
     },
 
     success: {
@@ -219,7 +219,7 @@ var style = {
     info: {
       // color: '#e8f0f4',
       // backgroundColor: '#63d8f1'
-    }
+    },
   },
 
   Action: {
@@ -229,36 +229,36 @@ var style = {
       padding: "6px 20px",
       fontWeight: "bold",
       margin: "10px 0 0 0",
-      border: 0
+      border: 0,
     },
 
     success: {
       backgroundColor: "#a1e82c",
-      color: "#ffffff"
+      color: "#ffffff",
     },
 
     error: {
       backgroundColor: "#fc727a",
-      color: "#ffffff"
+      color: "#ffffff",
     },
 
     warning: {
       backgroundColor: "#ffbc67",
-      color: "#ffffff"
+      color: "#ffffff",
     },
 
     info: {
       backgroundColor: "#63d8f1",
-      color: "#ffffff"
-    }
+      color: "#ffffff",
+    },
   },
 
   ActionWrapper: {
     DefaultStyle: {
       margin: 0,
-      padding: 0
-    }
-  }
+      padding: 0,
+    },
+  },
 };
 
 //
@@ -273,7 +273,7 @@ const tdArray = [
   ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
   ["4", "Philip Chaney", "$38,735", "Korea, South", "Overland Park"],
   ["5", "Doris Greene", "$63,542", "Malawi", "Feldkirchen in Kärnten"],
-  ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"]
+  ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"],
 ];
 
 //
@@ -483,7 +483,7 @@ const iconsArray = [
   "pe-7s-anchor",
   "pe-7s-albums",
   "pe-7s-alarm",
-  "pe-7s-airplay"
+  "pe-7s-airplay",
 ];
 
 //
@@ -494,11 +494,11 @@ const iconsArray = [
 // Data for Pie Chart
 var dataPie = {
   labels: ["40%", "20%", "40%"],
-  series: [40, 20, 40]
+  series: [40, 20, 40],
 };
 var legendPie = {
   names: ["Open", "Bounce", "Unsubscribe"],
-  types: ["info", "danger", "warning"]
+  types: ["info", "danger", "warning"],
 };
 
 // Data for Line Chart
@@ -511,13 +511,13 @@ var dataSales = {
     "9:00PM",
     "12:00PM",
     "3:00AM",
-    "6:00AM"
+    "6:00AM",
   ],
   series: [
     [287, 385, 490, 492, 554, 586, 698, 695],
     [67, 152, 143, 240, 287, 335, 435, 437],
-    [23, 113, 67, 108, 190, 239, 307, 308]
-  ]
+    [23, 113, 67, 108, 190, 239, 307, 308],
+  ],
 };
 var optionsSales = {
   low: 0,
@@ -525,31 +525,31 @@ var optionsSales = {
   showArea: false,
   height: "245px",
   axisX: {
-    showGrid: false
+    showGrid: false,
   },
   lineSmooth: true,
   showLine: true,
   showPoint: true,
   fullWidth: true,
   chartPadding: {
-    right: 50
-  }
+    right: 50,
+  },
 };
 var responsiveSales = [
   [
     "screen and (max-width: 640px)",
     {
       axisX: {
-        labelInterpolationFnc: function(value) {
+        labelInterpolationFnc: function (value) {
           return value[0];
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ],
 ];
 var legendSales = {
   names: ["Open", "Click", "Click Second Time"],
-  types: ["info", "danger", "warning"]
+  types: ["info", "danger", "warning"],
 };
 
 // Data for Bar Chart
@@ -566,19 +566,19 @@ var dataBar = {
     "Sep",
     "Oct",
     "Nov",
-    "Dec"
+    "Dec",
   ],
   series: [
     [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-    [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]
-  ]
+    [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695],
+  ],
 };
 var optionsBar = {
   seriesBarDistance: 10,
   axisX: {
-    showGrid: false
+    showGrid: false,
   },
-  height: "245px"
+  height: "245px",
 };
 var responsiveBar = [
   [
@@ -586,19 +586,37 @@ var responsiveBar = [
     {
       seriesBarDistance: 5,
       axisX: {
-        labelInterpolationFnc: function(value) {
+        labelInterpolationFnc: function (value) {
           return value[0];
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ],
 ];
 var legendBar = {
   names: ["Tesla Model S", "BMW 5 Series"],
-  types: ["info", "danger"]
+  types: ["info", "danger"],
 };
-
+const primaryColor = "#27AE60";
+const lightColor = "#6FCF97";
+const darkColor = "#219653";
+const id="ID";
+const name = "Dessert";
+const calories = "Calories";
+const fat = "Fat";
+const carbs = "Carbs";
+const protein = "Protein";
+const materialpinkcolor="#f50057";
+const islock="isLock";
 module.exports = {
+  islock,
+  materialpinkcolor,
+  id,
+  name,
+  calories,
+  fat,
+  carbs,
+  protein,
   style, // For notifications (App container and Notifications view)
   thArray,
   tdArray, // For tables (TableList view)
@@ -612,5 +630,8 @@ module.exports = {
   dataBar,
   optionsBar,
   responsiveBar,
-  legendBar // For charts (Dashboard view)
+  legendBar, // For charts (Dashboard view)
+  primaryColor,
+  darkColor,
+  lightColor,
 };

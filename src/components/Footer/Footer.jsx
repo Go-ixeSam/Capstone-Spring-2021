@@ -19,11 +19,20 @@ import React, { Component } from "react";
 import { Grid } from "react-bootstrap";
 
 class Footer extends Component {
+  
   render() {
+    // ! style này dùng để tạo fixed footer 
+    let styel={
+      left:0,
+      bottom:0,
+      width:"100%",
+      color:"white",
+      textAlign:"center"
+    }
     return (
-      <footer className="footer">
+      <footer className="footer" style={styel}>
         <Grid fluid>
-          <nav className="pull-left">
+          {/* <nav className="pull-left">
             <ul>
               <li>
                 <a href="#pablo">Home</a>
@@ -38,8 +47,8 @@ class Footer extends Component {
                 <a href="#pablo">Blog</a>
               </li>
             </ul>
-          </nav>
-          <p className="copyright pull-right">
+          </nav> */}
+          <p className="copyright">
             &copy; {new Date().getFullYear()}{" "}
             <a href="http://www.creative-tim.com?ref=lbr-footer">
               Creative Tim

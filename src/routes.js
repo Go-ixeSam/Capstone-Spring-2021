@@ -23,73 +23,102 @@ import Icons from "views/Icons.jsx";
 import Maps from "views/Maps.jsx";
 import Notifications from "views/Notifications.jsx";
 import Upgrade from "views/Upgrade.jsx";
-import MaterialTable from "views/MaterialTable"
+import MaterialTable from "views/Account";
+import SignIn from "views/Signin";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import Post from "views/Post";
+import SystemCon from "views/SystemConfiguration"
+import Label from "views/Labeling"
+import { faCheckSquare, faCoffee,faUser,faUserPlus,faPaperPlane,faCog,faTags,faChartBar } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fab, faCheckSquare, faCoffee,faUser)
 
 const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    icon: "pe-7s-graph",
+  icon: faChartBar,
     component: Dashboard,
-    layout: "/admin"
+    layout: "/admin",
+  },
+  {
+    path: "/signin",
+    name: "Signin",
+    icon: "pe-7s-graph",
+    component: SignIn,
+    layout: "/admin",
   },
   {
     path: "/user",
     name: "User Profile",
-    icon: "pe-7s-user",
+    icon: faUser,
     component: UserProfile,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
-    path: "/materialTable",
-    name: "Material Table",
-    icon: "pe-7s-user",
+    path: "/account",
+    name: "Account",
+    icon: faUserPlus,
     component: MaterialTable,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
-    path: "/table",
-    name: "Table List",
-    icon: "pe-7s-note2",
-    component: TableList,
-    layout: "/admin"
+    path: "/post",
+    name: "Post",
+    icon: faPaperPlane,
+    component: Post,
+    layout: "/admin",
   },
   {
-    path: "/typography",
-    name: "Typography",
-    icon: "pe-7s-news-paper",
-    component: Typography,
-    layout: "/admin"
+    path: "/systemconfiguration",
+    name: "System Configuartion",
+    icon: faCog,
+    component: SystemCon,
+    layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "Icons",
-    icon: "pe-7s-science",
-    component: Icons,
-    layout: "/admin"
+    path: "/assignlabel",
+    name: "Labeling",
+    icon: faTags,
+    component: Label,
+    layout: "/admin",
   },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "pe-7s-map-marker",
-    component: Maps,
-    layout: "/admin"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "pe-7s-bell",
-    component: Notifications,
-    layout: "/admin"
-  },
-  {
-    upgrade: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "pe-7s-rocket",
-    component: Upgrade,
-    layout: "/admin"
-  }
+  // {
+  //   path: "/table",
+  //   name: "Table List",
+  //   icon: "pe-7s-note2",
+  //   component: TableList,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/typography",
+  //   name: "Typography",
+  //   icon: "pe-7s-news-paper",
+  //   component: Typography,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "pe-7s-science",
+  //   component: Icons,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "pe-7s-map-marker",
+  //   component: Maps,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   icon: "pe-7s-bell",
+  //   component: Notifications,
+  //   layout: "/admin"
+  // },
 ];
 
 export default dashboardRoutes;
