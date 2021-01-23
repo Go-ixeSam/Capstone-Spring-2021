@@ -127,23 +127,6 @@ class UserProfile extends Component {
                       ]}
                     />
 
-                    {/* <Row>
-                      <Col md={12}>
-                        <FormGroup controlId="formControlsTextarea">
-                          <ControlLabel>About Me</ControlLabel>
-                          <FormControl
-                            rows="5"
-                            componentClass="textarea"
-                            bsClass="form-control"
-                            placeholder="Here can be your description"
-                            defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row> */}
-                    {/* <Button bsStyle="info" pullRight fill type="submit">
-                      Update Profile
-                    </Button> */}
                     <div className="clearfix" />
                   </form>
                 }
@@ -164,19 +147,6 @@ class UserProfile extends Component {
                     I'm in that two seat Lambo"
                   </span>
                 }
-                // socials={
-                //   <div>
-                //     <Button simple>
-                //       <i className="fa fa-facebook-square" />
-                //     </Button>
-                //     <Button simple>
-                //       <i className="fa fa-twitter" />
-                //     </Button>
-                //     <Button simple>
-                //       <i className="fa fa-google-plus-square" />
-                //     </Button>
-                //   </div>
-                // }
               />
             </Col>
           </Row>

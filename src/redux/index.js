@@ -6,9 +6,13 @@ export {
   setTripDetail,
   setSelectedTripID,
   setSelectedAdvanceRecord,
-  removeAdvanceRecordSelected
+  removeAdvanceRecordSelected,
+  getLocked,
+  setTrip,
+  getDataByNameSearch,
 } from "./trip/TripSlice";
-export { modifyContract, ModifyContractFomr } from "./Account/AccountSlice";
+export { getALL } from "./Account/AccountSlice";
+export { setVisible } from "./Post/PostSlice";
 // export * as contracType from "./contract/contractType"
 // Làm như thế này thì mọi action creator sẽ nằm chung 1 chỗ, và ta chỉ cần gọi đến redux để
 // import action creator mình cần

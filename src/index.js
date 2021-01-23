@@ -25,7 +25,7 @@ import "./assets/css/animate.min.css";
 import "./assets/sass/light-bootstrap-dashboard-react.scss?v=1.3.0";
 import "./assets/css/demo.css";
 import "./assets/css/pe-icon-7-stroke.css";
-import App from "App";
+import App from "./App";
 import { persistStore } from "redux-persist";
 import store from "./redux/store";
 import { Provider } from "react-redux";

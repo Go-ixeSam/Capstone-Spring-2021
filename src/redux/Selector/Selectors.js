@@ -1,4 +1,3 @@
-
 export function getList(state) {
   return state.contract.listTestSelectorstSelector;
 }
@@ -16,13 +15,17 @@ export function getAdvanceSelectedData(state) {
 }
 
 export function getAdvanceDataByNameSearch(advanceTableData, searchValue) {
-  return advanceTableData.filter((record) => record.name.includes(searchValue));
+  return advanceTableData.filter((record) =>
+    record.Dessert.includes(searchValue)
+  );
 }
 
 export function getUserRole(state) {
   return state.user.roles.text;
 }
-
+export function getModalVisible(state) {
+  return state.post.userPostVisible;
+}
 
 export function getMaterialHeader(state) {
   return state.trip.materialHeader;

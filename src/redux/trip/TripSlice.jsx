@@ -2,7 +2,7 @@
 import * as variable from "../../variables/Variables";
 const { createSlice } = require("@reduxjs/toolkit");
 
-function createData(id, name, calories, fat, carbs, protein,isLock) {
+function createData(id, name, calories, fat, carbs, protein, isLock) {
   return {
     [variable.id]: id,
     [variable.name]: name,
@@ -10,7 +10,7 @@ function createData(id, name, calories, fat, carbs, protein,isLock) {
     [variable.fat]: fat,
     [variable.carbs]: carbs,
     [variable.protein]: protein,
-    [variable.islock]:isLock
+    [variable.islock]: isLock,
   };
 }
 
@@ -20,10 +20,18 @@ const trip = createSlice({
     searchValue: "",
     searchAdvanceData: [],
     advanceTableData: [
-      createData(1, "Donut", 452, 25.0, 51, 4.9,1),
-      createData(2, "Eclair", 262, 16.0, 24, 6.0,0),
-      createData(3, "Frozen yoghurt", 159, 6.0, 24, 4.0,1),
-      createData(4, "Gingerbread", 356, 16.0, 49, 3.9,0),
+      {
+        [variable.id]: 1,
+        [variable.name]: "Donut",
+        [variable.calories]: 452,
+        [variable.fat]: 25.0,
+        [variable.carbs]: 51,
+        [variable.protein]: 4.9,
+        [variable.islock]: 1,
+      },
+      createData(2, "Eclair", 262, 16.0, 24, 6.0, 0),
+      createData(3, "Frozen yoghurt", 159, 6.0, 24, 4.0, 1),
+      createData(4, "Gingerbread", 356, 16.0, 49, 3.9, 0),
       // createData("Honeycomb", 408, 3.2, 87, 6.5),
       // createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
       // createData("Jelly Bean", 375, 0.0, 94, 0.0),
@@ -174,6 +182,13 @@ const trip = createSlice({
     ],
   },
   reducers: {
+    setTrip: (state, action) => {
+      const clone = action.payload;
+      return {
+        ...state,
+        advanceTableData: [...clone],
+      };
+    },
     addTrip: (state, action) => {
       state.tripData.tableBody.record.push(action.payload);
     },
@@ -185,6 +200,20 @@ const trip = createSlice({
     },
     setSelectedAdvanceRecord: (state, action) => {
       state.advanceTableDataSelected = action.payload;
+    },
+    getLocked: (state, action) => {
+      let id = action.payload;
+      let clone = [...state.advanceTableData];
+      clone.map((obj) => {
+        if (obj[variable.id] == id) {
+          if (obj[variable.islock] == 1) {
+            obj.isLock = 0;
+          } else {
+            obj.isLock = 1;
+          }
+        }
+      });
+      state.advanceTableData = [...clone];
     },
     removeAdvanceRecordSelected: (state, action) => {
       let advanceTableDataSelected = action.payload;
@@ -203,17 +232,25 @@ const trip = createSlice({
         record.name.includes(action.payload)
       );
     },
+    getDataByNameSearch: (state, action) => {
+      state.searchAdvanceData.filter((record) =>
+        record.name.includes(action.payload)
+      );
+    },
   },
 });
 
 const { reducer, actions } = trip; //createSlice sẽ trả về cho ta 2 biến là reducer và action
 export const {
   addTrip,
+  setTrip,
   setTripDetail,
   setSelectedTripID,
   setSelectedAdvanceRecord,
   removeAdvanceRecordSelected,
   setSearchValue,
   setAdvanceSearchData,
+  getLocked,
+  getDataByNameSearch,
 } = actions;
 export default reducer;

@@ -1,0 +1,24 @@
+:root {
+  --size: 18px;
+  --squareWidth: 30px;
+}
+.dot {
+  height: var(--size);
+  width: var(--size);
+  background-color: red;
+  border-radius: 50%;
+  text-align: center;
+  position: absolute;
+  bottom: -5px;
+  left: 22px;
+}
+.square {
+  height: var(--size);
+  width: var(--squareWidth);
+text-align: center;
+  background-color: red;
+  border-radius: 5px;
+  position: absolute;
+  bottom: -12px;
+  left: 24px;
+}

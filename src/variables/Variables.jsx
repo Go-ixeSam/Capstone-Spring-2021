@@ -608,7 +608,13 @@ const carbs = "Carbs";
 const protein = "Protein";
 const materialpinkcolor="#f50057";
 const islock="isLock";
+
+// ! Mọi API URL chỉ khách ở phần sau thôi 
+const baseURL="";
+const jsonplaceholerAPI="https://jsonplaceholder.typicode.com"
 module.exports = {
+  jsonplaceholerAPI,
+  baseURL,
   islock,
   materialpinkcolor,
   id,

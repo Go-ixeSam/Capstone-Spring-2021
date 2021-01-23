@@ -168,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable(props) {
+export default function NormalTable(props) {
   const classes = useStyles();
 
   // ! row này sẽ đại diện cho dữ liệu lấy trực tiếp từ store (global)
@@ -303,7 +303,6 @@ export default function EnhancedTable(props) {
             setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]))
           );
           setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]));
-          // dispatch(getDataByNameSearch(values["searchvalue"]));
           break;
         case " Age":
           console.log("result", values["filtervalue"]);
@@ -314,7 +313,6 @@ export default function EnhancedTable(props) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <SearchOption formikAction={formik} />
         <Box height={10} />
         <TableContainer>
           <Table
@@ -412,73 +410,10 @@ export default function EnhancedTable(props) {
                 </TableRow>
               )}
             </TableBody>
-            <TableFooter>
-              <TableRow style={{ border: "none" }}>
-                <TableCell colSpan={3} size="small" style={{ padding: 0 }}>
-                  <div>
-                    {selected.length > 0 ? (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                        }}
-                      >
-                        <p
-                          style={{
-                            fontSize: 14,
-                            margin: 0,
-                            paddingLeft: 10,
-                            color: variable.materialSecondaryColorMain,
-                          }}
-                        >
-                          {selected.length} selected
-                        </p>
-                        <DeleteButton click={deleteRow} />
-                      </div>
-                    ) : (
-                      <Typography
-                        style={{ flex: "1 1 100%" }}
-                        variant="h6"
-                        id="tableTitle"
-                        component="div"
-                      >
-                        <p></p>
-                      </Typography>
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell colSpan={4} size={"small"} style={{ padding: 0 }}>
-                  <TablePagination
-                    style={{ fontSize: 14 }}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={rows.length}
-                    labelRowsPerPage={
-                      <NormalPElement>Rows per page:</NormalPElement>
-                    }
-                    labelDisplayedRows={({ from, to, count }) => (
-                      <NormalPElement>
-                        {from}-{to}
-                        {" of "}
-                        {count !== -1 ? count : "more than" + to}
-                      </NormalPElement>
-                    )}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                  />
-                </TableCell>
-              </TableRow>
-            </TableFooter>
+           
           </Table>
         </TableContainer>
       </Paper>
-      {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
     </div>
   );
 }

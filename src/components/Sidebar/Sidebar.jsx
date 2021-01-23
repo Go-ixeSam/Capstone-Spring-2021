@@ -19,6 +19,8 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
+import "./CircleDot.css";
+import "./DotPosition.css";
 
 // import logo from "assets/img/reactlogo.png";
 import logo from "assets/img/vegetable_web_admin.jpg";
@@ -42,6 +44,8 @@ class Sidebar extends Component {
     window.addEventListener("resize", this.updateDimensions.bind(this));
   }
   render() {
+    let navLinkHaveNotification = <li></li>;
+    let notificationShapeShape=<span></span>
     const sidebarBackground = {
       backgroundImage: "url(" + this.props.image + ")",
     };
@@ -57,16 +61,18 @@ class Sidebar extends Component {
         ) : null}
         <div
           className="logo"
-          style={{
-            // display: "flex",
-            // flexDirection: "row",
-            // alignItems: "center",
-          }}
+          style={
+            {
+              // display: "flex",
+              // flexDirection: "row",
+              // alignItems: "center",
+            }
+          }
         >
           <a
             // href="https://www.creative-tim.com?ref=lbd-sidebar"
             className="simple-text logo-mini"
-            style={{marginTop:-6}}
+            style={{ marginTop: -6 }}
           >
             <div className="logo-img">
               <img src={logo} alt="logo_image" />
@@ -84,8 +90,43 @@ class Sidebar extends Component {
           <ul className="nav">
             {this.state.width <= 991 ? <AdminNavbarLinks /> : null}
             {this.props.routes.map((prop, key) => {
-              if (!prop.redirect)
-                return (
+    //! Nếu hơn 100 tin nhắn thì sẽ chuyển thành hình vuông
+
+    // ! Nếu là link là post thì ta show thêm 1 cái notification
+              if (prop.path == "/post") {
+                navLinkHaveNotification = (
+                  <li key={key}>
+                    <NavLink
+                      to={prop.layout + prop.path}
+                      className="nav-link"
+                      activeClassName="active"
+                    >
+                      {/* Hiện cái icon */}
+
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          position: "relative",
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={prop.icon}
+                          style={{ width: 25, height: 25 }}
+                        />
+                        <Box width={15} />
+                        <p>{prop.name}</p>
+                        <span className={1==1?"dot":"square"}>
+                          1
+                        </span>
+                      </div>
+                    </NavLink>
+                    {/* <span className="dot" /> */}
+                  </li>
+                );
+              } else {
+                navLinkHaveNotification = (
                   <li
                     className={
                       prop.upgrade
@@ -99,6 +140,8 @@ class Sidebar extends Component {
                       className="nav-link"
                       activeClassName="active"
                     >
+                      {/* Hiện cái icon */}
+
                       <div
                         style={{
                           display: "flex",
@@ -116,6 +159,39 @@ class Sidebar extends Component {
                     </NavLink>
                   </li>
                 );
+              }
+              if (!prop.redirect) return navLinkHaveNotification;
+              // <li
+              //   className={
+              //     prop.upgrade
+              //       ? "active active-pro"
+              //       : this.activeRoute(prop.layout + prop.path)
+              //   }
+              //   key={key}
+              // >
+              //   <NavLink
+              //     to={prop.layout + prop.path}
+              //     className="nav-link"
+              //     activeClassName="active"
+              //   >
+              //     {/* Hiện cái icon */}
+
+              //     <div
+              //       style={{
+              //         display: "flex",
+              //         flexDirection: "row",
+              //         alignItems: "center",
+              //       }}
+              //     >
+              //       <FontAwesomeIcon
+              //         icon={prop.icon}
+              //         style={{ width: 25, height: 25 }}
+              //       />
+              //       <Box width={10} />
+              //       <p>{prop.name}</p>
+              //     </div>
+              //   </NavLink>
+              // </li>
               return null;
             })}
           </ul>

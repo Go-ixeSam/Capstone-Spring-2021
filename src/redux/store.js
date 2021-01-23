@@ -4,25 +4,22 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import accountReducer from "./Account/AccountSlice";
 import tripReducer from "./trip/TripSlice";
+import postReducer from "./Post/PostSlice";
 // import userReducer from "./user/userSlice"
 
-
 const reducers = combineReducers({
-  contract: accountReducer,
+  account: accountReducer,
   // user: userReducer,
   trip: tripReducer,
+  post: postReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
   whitelist: ["user"],
+  blacklist: ["account", "trip", "post"],
 };
-
-// export const store = createStore(
-//   rootReducer,
-//   composeWithDevTools(applyMiddleware(ReduxThunk))
-// );
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
@@ -33,5 +30,4 @@ const store = configureStore({
   reducer: persistedReducer,
 });
 
-// export const persistor = persistStore(store);
 export default store;

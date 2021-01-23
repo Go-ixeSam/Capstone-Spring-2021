@@ -36,6 +36,7 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort,
     headCells,
+    actionButtonList,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -51,11 +52,22 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <StyledHeaderCell padding="checkbox" style={{ fontSize: 14 }}>
-          <IconButton disabled>
-            {/* <FontAwesomeIcon icon={faLockOpen} /> */}
-          </IconButton>
-        </StyledHeaderCell>
+        {actionButtonList.map((action) => {
+          if (action == "remove") {
+            return (
+              <StyledHeaderCell padding="checkbox" style={{ fontSize: 14 }}>
+                <IconButton disabled></IconButton>
+              </StyledHeaderCell>
+            );
+          }
+          return (
+            <StyledHeaderCell
+              padding="checkbox"
+              style={{ fontSize: 14 }}
+            ></StyledHeaderCell>
+          );
+        })}
+
         {/* <StyledHeaderCell padding="checkbox" style={{ fontSize: 14 }}>
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}

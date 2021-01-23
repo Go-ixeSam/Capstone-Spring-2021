@@ -42,13 +42,13 @@ const dashboardRoutes = [
     component: Dashboard,
     layout: "/admin",
   },
-  {
-    path: "/signin",
-    name: "Signin",
-    icon: "pe-7s-graph",
-    component: SignIn,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/signin",
+  //   name: "Signin",
+  //   icon: "",
+  //   component: SignIn,
+  //   layout: "/admin",
+  // },
   {
     path: "/user",
     name: "User Profile",
