@@ -50,7 +50,7 @@ class Dashboard extends Component {
     return (
       <div className="content">
         <Grid fluid>
-          <Row>
+          {/* <Row>
             <Col lg={3} sm={6}>
               <StatsCard
                 bigIcon={<i className="pe-7s-server text-warning" />}
@@ -87,7 +87,7 @@ class Dashboard extends Component {
                 statsIconText="Updated now"
               />
             </Col>
-          </Row>
+          </Row> */}
           <Row>
             <Col md={8}>
               <Card
@@ -156,7 +156,7 @@ class Dashboard extends Component {
               />
             </Col>
 
-            <Col md={6}>
+            {/* <Col md={6}>
               <Card
                 title="Tasks"
                 category="Backend development"
@@ -170,7 +170,7 @@ class Dashboard extends Component {
                   </div>
                 }
               />
-            </Col>
+            </Col> */}
           </Row>
         </Grid>
       </div>

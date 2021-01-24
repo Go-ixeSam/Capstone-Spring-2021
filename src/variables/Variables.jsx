@@ -600,19 +600,27 @@ var legendBar = {
 const primaryColor = "#27AE60";
 const lightColor = "#6FCF97";
 const darkColor = "#219653";
-const id="ID";
+const id = "ID";
 const name = "Dessert";
 const calories = "Calories";
 const fat = "Fat";
 const carbs = "Carbs";
 const protein = "Protein";
-const materialpinkcolor="#f50057";
-const islock="isLock";
+const materialpinkcolor = "#f50057";
+const islock = "isLock";
+const fontbase = "14px";
+const fontsmall = "12px";
+const fontmedium = "16px";
+const fontlarge = "18px";
 
-// ! Mọi API URL chỉ khách ở phần sau thôi 
-const baseURL="";
-const jsonplaceholerAPI="https://jsonplaceholder.typicode.com"
+// ! Mọi API URL chỉ khách ở phần sau thôi
+const baseURL = "";
+const jsonplaceholerAPI = "https://jsonplaceholder.typicode.com";
 module.exports = {
+  fontbase,
+  fontsmall,
+  fontmedium,
+  fontlarge,
   jsonplaceholerAPI,
   baseURL,
   islock,

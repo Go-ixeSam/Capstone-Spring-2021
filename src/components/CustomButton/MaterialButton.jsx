@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
-
+import * as variable from "variables/Variables";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: (props) => {
@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
         case "error":
           return theme.palette.error.main;
         case "success":
-          return theme.palette.success.main;
+          return variable.primaryColor;
       }
     },
     color: "white",
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
           case "error":
             return theme.palette.error.dark;
           case "success":
-            return theme.palette.success.dark;
+            return variable.darkColor;
         }
       },
     },
