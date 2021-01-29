@@ -31,6 +31,10 @@ export function getMaterialHeader(state) {
   return state.trip.materialHeader;
 }
 
+export function getSignInForm(state){
+  return state.account.signInForm
+}
+
 /**
  * ! Tìm kiến trip dựa trên ID
  * @param {*} state

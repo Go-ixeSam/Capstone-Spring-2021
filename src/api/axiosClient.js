@@ -29,16 +29,18 @@ axiosClient.interceptors.request.use(async (config) => {
 });
 
 // * mỗi reponse ta sẽ phải thực hiện lấy
-//*reponse.data để lấy về json yêu cầu, ta thực hiện ở đây luôn cho tiêntiên
 axiosClient.interceptors.response.use(
+//*reponse.data để lấy về json yêu cầu, ta thực hiện ở đây luôn cho lẹ
+// ! nghĩ lại thì ta cần nhiều thư hơn đơn thuần là data
   (response) => {
-    if (response && response.data) {
-      return response.data;
-    }
+    // if (response && response.data) {
+    //   return response.data;
+    // }
     return response;
   },
   (error) => {
-    // Handle errors
+    // * Nếu ta muốn xem cái này thì ở kết quả trả về ta .error thì ta sẽ thấy rõ
+    // * Và nếu muốn xem status code thì ở .request cũng sẽ có đủ
     throw error;
   }
 );

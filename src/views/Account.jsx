@@ -10,17 +10,22 @@ import * as variable from "../variables/Variables";
 export default function StickyHeadTable() {
   let materialBody = useSelector((state) => getAdvanceData(state));
   let materialHeader = useSelector((state) => getMaterialHeader(state));
-  let dispatch=useDispatch()
+  let dispatch = useDispatch();
   React.useEffect(() => {
     const fetchPostList = async () => {
+      // * Bắt try catch ở đây là để tránh lỗi crash ứng dụng lỡ như trong quá trình dispatch đến getAll bị lỗi
       try {
         const response = await dispatch(getALL());
-        console.log("success: ", response);
+        console.log("result= ", response);
+
+        // * Nếu có sử dụng gì ở local này thì ta cứ lấy response ra mà dùng
       } catch (errpr) {
         console.log("Failed to fetch product list: ", errpr);
       }
     };
     fetchPostList();
+    // dispatch(getALL
+    //   ())
   }, []);
   return (
     <React.Fragment>

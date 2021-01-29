@@ -11,12 +11,12 @@ function App() {
     <div>
       <Switch>
         <Route
-          path="/"
+          path="/admin"
           render={(props) =>
             (number == 1 ? <AdminLayout {...props} /> : <Signin />)
           }
         />
-        <Redirect from="/" to="/fleetManager/trip" />
+        <Redirect from="/" to="/admin/dashboard" />
       </Switch>
     </div>
   );

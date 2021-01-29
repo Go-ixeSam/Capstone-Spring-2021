@@ -12,7 +12,7 @@ import {setVisible} from "redux/index"
 
 const ActionButton = (props) => {
   const { row, handlelock, name } = props;
-  console.log("row nè", row);
+  // console.log("row nè", row);
   const dispatch = useDispatch();
   function handleLockAccount(row) {
     let id = row[variable.id];

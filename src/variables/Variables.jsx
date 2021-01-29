@@ -612,11 +612,47 @@ const fontbase = "14px";
 const fontsmall = "12px";
 const fontmedium = "16px";
 const fontlarge = "18px";
+const username = "username";
+const password = "password";
+const wrongpassword = "wrongpass";
+const success="success"
+const fail="fail"
+
+/**
+ * *Các loại input
+ */
+const input = "input";
+const text = "text";
+const number = "number";
+const isCheck = "isCheck";
+const select = "select";
+const radiobutton = "radioButton";
+const submit = "submit";
+const require="Thông tin này bắt buộc"
+const rejected="rejected"
+const pending="pending"
+const error="error"
+const fulfilled="fulfilled"
 
 // ! Mọi API URL chỉ khách ở phần sau thôi
 const baseURL = "";
 const jsonplaceholerAPI = "https://jsonplaceholder.typicode.com";
 module.exports = {
+  pending,
+  rejected,
+  error,
+  fulfilled,
+  success,
+  fail,
+  require,
+  input,
+  text,
+  number,
+  select,
+  radiobutton,
+  username,
+  wrongpassword,
+  password,
   fontbase,
   fontsmall,
   fontmedium,

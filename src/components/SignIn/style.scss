@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-$color-primary: #27ae60;
+$color-primary: #27ae5f;
+$color-primary-shadow: #08813a;
 $color-second: #219653;
 $choseSignInTypeHeight: 30;
 $choseSignInTypeWidth: "80%";
@@ -11,12 +12,15 @@ $choseSignInTypeWidth: "80%";
   .form {
     position: relative;
     z-index: 1;
-    background: #ffffff;
+    background: rgba(211, 211, 211, 0.357);
     max-width: 360px;
     margin: 0 auto 100px;
     padding: 45px;
+    border-radius: 5px;
+    // height: 320px;
     text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    border: 2px solid $color-primary;
+    // box-shadow: 0 0 20px 0 $color-primary-shadow, 0 5px 5px 0 $color-primary-shadow;
   }
   .form input {
     font-family: "Roboto", sans-serif;
@@ -24,7 +28,7 @@ $choseSignInTypeWidth: "80%";
     // background: #f2f2f2;
     // width: 100%;
     border: 0;
-    margin: 0 0 15px;
+    // margin: 0 0 15px;
     // padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
@@ -36,13 +40,21 @@ $choseSignInTypeWidth: "80%";
     background: $color-primary;
     width: 100%;
     border: 0;
-    border-radius: 25px;
+    border-radius: 5px;
+    font-size: 14px;
     padding: 15px;
     color: #ffffff;
-    font-size: 14px;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
     cursor: pointer;
+    p {
+      margin: 0px;
+      a {
+        font-size: 14px;
+        color: white;
+        text-decoration: none;
+      }
+    }
   }
   .form button:hover,
   .form button:active,
@@ -105,4 +117,19 @@ $choseSignInTypeWidth: "80%";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+}
+#resend {
+  font-size: 12px;
+  font-weight: bold;
+  visibility: hidden;
+}
+#resend:target {
+  visibility: visible;
+}
+
+.attensin {
+  // text-align: "right";
+  color: grey;
+  // padding-right: 10;
+  margin: "5px 5px 15px 0";
 }

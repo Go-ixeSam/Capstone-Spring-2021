@@ -31,7 +31,7 @@ import Post from "views/Post";
 import SystemCon from "views/SystemConfiguration"
 import Label from "views/Labeling"
 import { faCheckSquare, faCoffee,faUser,faUserPlus,faPaperPlane,faCog,faTags,faChartBar } from '@fortawesome/free-solid-svg-icons'
-
+import Test from "views/TestingDatabaseRealTime"
 library.add(fab, faCheckSquare, faCoffee,faUser)
 
 const dashboardRoutes = [
@@ -54,6 +54,13 @@ const dashboardRoutes = [
     name: "User Profile",
     icon: faUser,
     component: UserProfile,
+    layout: "/admin",
+  },
+  {
+    path: "/testing",
+    name: "Fireabase Realtime",
+    icon: faUser,
+    component: Test,
     layout: "/admin",
   },
   {
