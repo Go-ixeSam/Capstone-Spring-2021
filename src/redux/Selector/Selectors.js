@@ -31,8 +31,14 @@ export function getMaterialHeader(state) {
   return state.trip.materialHeader;
 }
 
-export function getSignInForm(state){
-  return state.account.signInForm
+export function getSignInForm(state) {
+  return state.account.signInForm;
+}
+
+export function getFirebase(state) {
+  // firebase: firebaseReducer,
+
+  return state.firebase;
 }
 
 /**

@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import accountReducer from "./Account/AccountSlice";
 import tripReducer from "./trip/TripSlice";
 import postReducer from "./Post/PostSlice";
+import firebaseReducer from "./Firebase/FirebaseSlice";
 // import userReducer from "./user/userSlice"
 
 const reducers = combineReducers({
@@ -12,13 +13,15 @@ const reducers = combineReducers({
   // user: userReducer,
   trip: tripReducer,
   post: postReducer,
+  firebase: firebaseReducer,
 });
+//
 
 const persistConfig = {
   key: "root",
   storage,
   whitelist: ["user"],
-  blacklist: ["account", "trip", "post"],
+  blacklist: ["account", "trip", "post", "firebase"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

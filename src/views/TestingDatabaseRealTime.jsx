@@ -5,13 +5,14 @@ import firebaseConfig from "util/firebase";
 var rand = require("random-key");
 function TestingDatabaseRealTime() {
   function writeUserData(userId, fistname, lastname) {
-    const ref = firebaseConfig.database().ref("users/" + userId);
-
-    const data = {
-      fistname: fistname,
-      lastname: lastname,
-    };
-    ref.push(data);
+    const ref = firebaseConfig
+      .database()
+      .ref("users/" + userId)
+      .set({
+        // username:userId,
+        fistname: fistname,
+        lastname: lastname,
+      });
   }
   const formik = useFormik({
     initialValues: {
