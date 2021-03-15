@@ -600,6 +600,9 @@ var legendBar = {
 const primaryColor = "#27AE60";
 const lightColor = "#6FCF97";
 const darkColor = "#219653";
+const alternativePrimaryColor = "#2acca6";
+const alternativeLightColor = "#6dffd7";
+const alternativeDarkColor = "#009a77";
 const id = "ID";
 const name = "Dessert";
 const calories = "Calories";
@@ -615,9 +618,14 @@ const fontlarge = "18px";
 const username = "username";
 const password = "password";
 const wrongpassword = "wrongpass";
-const success="success"
-const fail="fail"
-
+const success = "success";
+const fail = "fail";
+const creator = "creator";
+const dateSubmitted = "dateSubmitted";
+const reportCount = "reportCount";
+const negativeCommendCount = "negativeCommendCount";
+const advanceTableData = "advanceTableData";
+const tableHeader = "tableHeader";
 /**
  * *Các loại input
  */
@@ -628,15 +636,23 @@ const isCheck = "isCheck";
 const select = "select";
 const radiobutton = "radioButton";
 const submit = "submit";
-const require="Thông tin này bắt buộc"
-const rejected="rejected"
-const pending="pending"
-const error="error"
-const fulfilled="fulfilled"
+const require = "Thông tin này bắt buộc";
+const rejected = "rejected";
+const pending = "pending";
+const error = "error";
+const fulfilled = "fulfilled";
+const accoutStatus = "accountStatus";
+const userName = "username";
+const email = "email";
+const birthDate = "birthdate";
+const phone = "phone";
+const sex = "sex";
+const createDate = "createdate";
 
 // ! Mọi API URL chỉ khách ở phần sau thôi
 const baseURL = "";
 const jsonplaceholerAPI = "https://jsonplaceholder.typicode.com";
+const teamBaseURL = "http://54.179.74.214:8080";
 module.exports = {
   pending,
   rejected,
@@ -684,4 +700,21 @@ module.exports = {
   primaryColor,
   darkColor,
   lightColor,
+  alternativePrimaryColor,
+  alternativeLightColor,
+  alternativeDarkColor,
+  creator,
+  dateSubmitted,
+  reportCount,
+  negativeCommendCount,
+  advanceTableData,
+  tableHeader,
+  accoutStatus,
+  userName,
+  email,
+  birthDate,
+  phone,
+  sex,
+  createDate,
+  teamBaseURL
 };

@@ -1,34 +1,31 @@
 {
   "files": {
-    "main.css": "/static/css/main.0d731992.chunk.css",
-    "main.js": "/static/js/main.c900d5b9.chunk.js",
-    "main.js.map": "/static/js/main.c900d5b9.chunk.js.map",
+    "main.css": "/static/css/main.335f466f.chunk.css",
+    "main.js": "/static/js/main.bde5824a.chunk.js",
+    "main.js.map": "/static/js/main.bde5824a.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.07bd00ab.js",
     "runtime-main.js.map": "/static/js/runtime-main.07bd00ab.js.map",
     "static/css/2.fe233f72.chunk.css": "/static/css/2.fe233f72.chunk.css",
-    "static/js/2.238b3510.chunk.js": "/static/js/2.238b3510.chunk.js",
-    "static/js/2.238b3510.chunk.js.map": "/static/js/2.238b3510.chunk.js.map",
+    "static/js/2.9fb6134c.chunk.js": "/static/js/2.9fb6134c.chunk.js",
+    "static/js/2.9fb6134c.chunk.js.map": "/static/js/2.9fb6134c.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.c9577b141a36f0aab3f897457cf34387.js": "/precache-manifest.c9577b141a36f0aab3f897457cf34387.js",
+    "precache-manifest.fd7adc978cf9f984d704dd7e25ccf2ef.js": "/precache-manifest.fd7adc978cf9f984d704dd7e25ccf2ef.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.fe233f72.chunk.css.map": "/static/css/2.fe233f72.chunk.css.map",
-    "static/css/main.0d731992.chunk.css.map": "/static/css/main.0d731992.chunk.css.map",
-    "static/js/2.238b3510.chunk.js.LICENSE.txt": "/static/js/2.238b3510.chunk.js.LICENSE.txt",
-    "static/js/main.c900d5b9.chunk.js.LICENSE.txt": "/static/js/main.c900d5b9.chunk.js.LICENSE.txt",
+    "static/css/main.335f466f.chunk.css.map": "/static/css/main.335f466f.chunk.css.map",
+    "static/js/2.9fb6134c.chunk.js.LICENSE.txt": "/static/js/2.9fb6134c.chunk.js.LICENSE.txt",
+    "static/js/main.bde5824a.chunk.js.LICENSE.txt": "/static/js/main.bde5824a.chunk.js.LICENSE.txt",
     "static/media/pe-icon-7-stroke.css": "/static/media/Pe-icon-7-stroke.c45f7de0.svg",
     "static/media/face-3.jpg": "/static/media/face-3.ce7a6b79.jpg",
+    "static/media/garden.jpg": "/static/media/garden.5f500eec.jpg",
     "static/media/bootstrap.min.css": "/static/media/glyphicons-halflings-regular.fa277232.woff",
-    "static/media/sidebar-1.jpg": "/static/media/sidebar-1.6be21e8a.jpg",
-    "static/media/sidebar-2.jpg": "/static/media/sidebar-2.7a4ce7cc.jpg",
-    "static/media/sidebar-3.jpg": "/static/media/sidebar-3.34535b95.jpg",
-    "static/media/sidebar-4.jpg": "/static/media/sidebar-4.7bc259fd.jpg",
     "static/media/vegetable_web_admin.jpg": "/static/media/vegetable_web_admin.bfae00b4.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.07bd00ab.js",
     "static/css/2.fe233f72.chunk.css",
-    "static/js/2.238b3510.chunk.js",
-    "static/css/main.0d731992.chunk.css",
-    "static/js/main.c900d5b9.chunk.js"
+    "static/js/2.9fb6134c.chunk.js",
+    "static/css/main.335f466f.chunk.css",
+    "static/js/main.bde5824a.chunk.js"
   ]
 }

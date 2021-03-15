@@ -205,7 +205,7 @@ const Admin = (props) => {
       let newArr = [];
       // ? Vì snapshot sẽ chỉ trả về các obj nên ta muốn nó thành 1 array ta phải làm bằng tay, chi tiết thế nào thì coi trong quick note
       snapshot.forEach((child) => {
-        console.log("child nè= ", child.val());
+        // console.log("child nè= ", child.val());
 
         //chỉ bỏ những node child nào có status là no, tức là chưa đc duyệt
         if (child.val()["status"] == "not") {

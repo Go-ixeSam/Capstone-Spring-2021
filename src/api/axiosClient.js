@@ -13,29 +13,55 @@ const axiosClient = axios.create({
   headers: {
     "content-type": "application/json",
   },
-  //   ! Việc parse param của asiox có hơi 
+  //   ! Việc parse param của asiox có hơi
   // !vấn đề nên ta sẽ sử dụng query string để xủ lí việc này
 
-  //? Ví dụ như ta phải viét query stirng thế này : ?userid=""&password="". Khá là mệt, 
+  //? Ví dụ như ta phải viét query stirng thế này : ?userid=""&password="". Khá là mệt,
   //?dùng cái thư việ này ta chỉ cần bỏ param vào thôi, còn lại nó sẽ tự chuyển thành query trên
-
   paramsSerializer: (params) => queryString.stringify(params),
 });
-
-// ! Xử lí phần authen token, mỗi api đề có cái này mới đc
 axiosClient.interceptors.request.use(async (config) => {
-  // Handle token here ...
   return config;
 });
 
 // * mỗi reponse ta sẽ phải thực hiện lấy
 axiosClient.interceptors.response.use(
-//*reponse.data để lấy về json yêu cầu, ta thực hiện ở đây luôn cho lẹ
-// ! nghĩ lại thì ta cần nhiều thư hơn đơn thuần là data
   (response) => {
-    // if (response && response.data) {
-    //   return response.data;
-    // }
+    return response;
+  },
+  (error) => {
+    throw error;
+  }
+);
+
+export const axiosTeamClient = axios.create({
+  baseURL: variable.teamBaseURL,
+  headers: {
+    "content-type": "application/json",
+  },
+  paramsSerializer: (params) => queryString.stringify(params),
+});
+
+// ! Xử lí phần authen token, mỗi api đề có cái này mới đc
+axiosTeamClient.interceptors.request.use(async (config) => {
+  //* Phần token ta sẽ lấy ở store sau khi user đăng nhập thành công =)
+  //   const token=""
+  //   config.headers = {
+  //     Authorization: `Bearer ${token}`,
+  //     Accept: "application/json",
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //   };
+  return config;
+  // },
+  // (errorr) => {
+  //   Promise.reject(errorr);
+});
+
+// * mỗi reponse ta sẽ phải thực hiện lấy
+axiosTeamClient.interceptors.response.use(
+  //*reponse.data để lấy về json yêu cầu, ta thực hiện ở đây luôn cho lẹ
+  // ! nghĩ lại thì ta cần nhiều thư hơn đơn thuần là data
+  (response) => {
     return response;
   },
   (error) => {
@@ -44,5 +70,5 @@ axiosClient.interceptors.response.use(
     throw error;
   }
 );
+
 export default axiosClient;
- 

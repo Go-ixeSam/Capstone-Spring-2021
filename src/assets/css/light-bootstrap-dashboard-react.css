@@ -176,7 +176,9 @@ h1 .subtitle {
 
 .post-text-header {
   font-size: 16px;
+  margin: 0;
   font-weight: bold;
+  padding: 0;
   color: #27ae60; }
 
 .post-text-content {

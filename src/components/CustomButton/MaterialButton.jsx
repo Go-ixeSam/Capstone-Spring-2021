@@ -1,6 +1,11 @@
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
+import {
+  ShowPopUp,
+  SuccessPopUp,
+  FailPopUp
+} from "components/Modal/Modal";
 import * as variable from "variables/Variables";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,7 +14,9 @@ const useStyles = makeStyles((theme) => ({
         case "error":
           return theme.palette.error.main;
         case "success":
-          return variable.primaryColor;
+          return variable.alternativePrimaryColor;
+        case "info":
+          return theme.palette.info.main;
       }
     },
     color: "white",
@@ -20,13 +27,17 @@ const useStyles = makeStyles((theme) => ({
             return theme.palette.error.dark;
           case "success":
             return variable.darkColor;
+          case "info":
+            return theme.palette.info.dark;
         }
       },
     },
   },
 }));
 
+
+
 export function MaterialButton(props) {
   const classes = useStyles(props);
-  return <Button className={classes.root} {...props} />;
+  return <Button className={classes.root} onClick={props.click} {...props} />;
 }

@@ -15,6 +15,7 @@ export const StyledHeaderCell=withStyles((theme)=>({
     fontSize:12,
     fontWeight:'bold',
     border:"none",
-    backgroundColor:variable.primaryColor
+    // backgroundColor:variable.primaryColor
+    backgroundColor:variable. alternativePrimaryColor,
   }
 }))(TableCell)

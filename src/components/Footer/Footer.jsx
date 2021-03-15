@@ -50,10 +50,10 @@ class Footer extends Component {
           </nav> */}
           <p className="copyright">
             &copy; {new Date().getFullYear()}{" "}
-            <a href="http://www.creative-tim.com?ref=lbr-footer">
-              Creative Tim
+            <a href="http://www.creative-tim.com?ref=lbr-footer" style={{color:"#34CBA7"}}>
+              Veg Exchange
             </a>
-            , made with love for a better web
+            , share vegetable with love
           </p>
         </Grid>
       </footer>

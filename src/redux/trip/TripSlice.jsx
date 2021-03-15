@@ -2,9 +2,9 @@
 import * as variable from "../../variables/Variables";
 const { createSlice } = require("@reduxjs/toolkit");
 
-function createData(id, name, calories, fat, carbs, protein, isLock) {
+function createData(name, calories, fat, carbs, protein, isLock) {
   return {
-    [variable.id]: id,
+    // [variable.id]: id,
     [variable.name]: name,
     [variable.calories]: calories,
     [variable.fat]: fat,
@@ -21,7 +21,7 @@ const trip = createSlice({
     searchAdvanceData: [],
     advanceTableData: [
       {
-        [variable.id]: 1,
+        // [variable.id]: 1,
         [variable.name]: "Donut",
         [variable.calories]: 452,
         [variable.fat]: 25.0,
@@ -29,9 +29,9 @@ const trip = createSlice({
         [variable.protein]: 4.9,
         [variable.islock]: 1,
       },
-      createData(2, "Eclair", 262, 16.0, 24, 6.0, 0),
-      createData(3, "Frozen yoghurt", 159, 6.0, 24, 4.0, 1),
-      createData(4, "Gingerbread", 356, 16.0, 49, 3.9, 0),
+      createData("Eclair", 262, 16.0, 24, 6.0, 0),
+      createData("Frozen yoghurt", 159, 6.0, 24, 4.0, 1),
+      createData("Gingerbread", 356, 16.0, 49, 3.9, 0),
       // createData("Honeycomb", 408, 3.2, 87, 6.5),
       // createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
       // createData("Jelly Bean", 375, 0.0, 94, 0.0),

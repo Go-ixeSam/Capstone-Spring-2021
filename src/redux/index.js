@@ -11,7 +11,7 @@ export {
   setTrip,
   getDataByNameSearch,
 } from "./trip/TripSlice";
-export { getALL } from "./Account/AccountSlice";
+export { getALL,getPlantInfo } from "./Account/AccountSlice";
 export { setVisible } from "./Post/PostSlice";
 export {addObject} from "./Firebase/FirebaseSlice"
 // export * as contracType from "./contract/contractType"

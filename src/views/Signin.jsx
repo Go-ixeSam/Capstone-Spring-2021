@@ -1,17 +1,13 @@
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faPhoneAlt, faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import React from "react";
-import "../components/SignIn/style.scss";
+import { grey } from "@material-ui/core/colors";
 import { FormControll } from "components/Formik/FormikControl";
-import { Formik, Form } from "formik";
-import * as variable from "variables/Variables";
-import * as Yup from "yup";
+import { Form, Formik } from "formik";
+import React from "react";
 import { useSelector } from "react-redux";
 import { getSignInForm } from "redux/Selector/Selectors";
+import * as variable from "variables/Variables";
+import * as Yup from "yup";
+import "../components/SignIn/style.scss";
 
 let width = 240;
 let marginBottom = 5;
@@ -36,6 +32,15 @@ const initialValue = {
 };
 const onSubmit = (value, onSubmitProps) => {
   console.log("submit value: ", value);
+  //* giá trị của submiting thì formik sẽ tự động set khi ta dùng đén fieldError, bỏi vì nó làm thay đổi đến object error nên submiting sẽ ko
+  //* chuyển thành true
+
+  if (value.password !== "sam") {
+    onSubmitProps.setFieldError([variable.password], "Mật khẩu không đúng");
+  } else {
+    alert("Ok rồi nha")
+  }
+  console.log("on Submit props: ", onSubmitProps, "và");
 };
 
 /**
@@ -46,14 +51,31 @@ const onSubmit = (value, onSubmitProps) => {
  */
 
 const validationSchema = Yup.object({
-  [variable.password]: Yup.string()
-    .required([variable.require])
-    .test("checkpassword", "Wrong password", (value, context) => {
-      // ? context chính là cái object Yup
-      console.log("value nay", value, " context= ", context);
-    }),
+  [variable.password]: Yup.string().required([variable.require]),
+  // .when([variable.password], {
+  //   is: (val) => (val == "sam" > 0 ? true : false),
+  //   then: Yup.string().oneOf(
+  //     [Yup.ref(variable.password)],
+  //     "Both password need to be the same"
+  //   ),
+  // }),
+  // .test(
+  //   "checkpassword",
+  //   "Wrong password",
+  //   (value, context) =>
+  //     {}
+  //     // ? context chính là cái object Yup
+  //     value == "sam"
+  //   console.log("value nay", value, " context= ", context);
+  // ),
   [variable.username]: Yup.string().required([variable.require]),
-  // [variable.password]: Yup.string().ph([variable.wrongpassword]),
+  checkpassword: Yup.string().when([variable.password], {
+    is: (val) => (val == "sam" > 0 ? true : false),
+    then: Yup.string().oneOf(
+      [Yup.ref(variable.password)],
+      "Your password is wrong"
+    ),
+  }),
 });
 function handleSubmit() {}
 
@@ -237,74 +259,64 @@ function Signin() {
             validationSchema={validationSchema}
             onSubmit={onSubmit}
           >
-            <Form>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingLeft: 15,
-                  fontFamily: "Roboto",
-                }}
-              >
-                <p style={{ color: "grey", fontSize: headeFontSize }}>
-                  Đăng nhập
-                </p>
-                <Box width={5} />
-                <p style={{ fontWeight: "bold", fontSize: headeFontSize }}>
-                  Web Admin
-                </p>
-              </div>
-              {signInForm.map((rows) => {
-                const columns = rows.row.cols;
-                return columns.map((column) => {
-                  const controlType = column.elementType;
-                  const {
-                    name,
-                    type,
-                    placeholder,
-                    labeltext,
-                  } = column.elementConfig;
-                  return (
-                    <FormControll
-                      elementType="input"
-                      // label={labeltext}
-                      type={type}
-                      name={name}
-                      placeholder={placeholder}
-                      {...column}
-                    />
-                  );
-                });
-              })}
-              {/* <TextField
-                style={{ width: width, marginBottom: marginBottom }}
-                type="text"
-                variant="standard"
-                label="Tên tài khoản"
-                name="username"
-              />
-              <TextField
-                style={{ width: width, marginBottom: marginBottom }}
-                variant="standard"
-                type="password"
-                label="Mật khẩu"
-                name="password"
-              /> */}
-              <div
-                className="attensin"
-                style={{
-                  visibility: "hidden",
-                  textAlign: "right",
-                  paddingRight: attensionPadding,
-                  marginTop: 5,
-                }}
-              >
-                <p style={{ fontSize: 12, fontWeight: "bold" }}>
-                  Quên mật khẩu?
-                </p>
-              </div>
-              <button type="submit">Đăng nhập</button>
-            </Form>
+            {(formik) => {
+              return (
+                <Form>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      paddingLeft: 15,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    <p style={{ color: "#9e9e9e", fontSize: headeFontSize }}>
+                      Đăng nhập
+                    </p>
+                    <Box width={5} />
+                    <p style={{ fontWeight: "bold", fontSize: headeFontSize }}>
+                      Web Admin
+                    </p>
+                  </div>
+                  {signInForm.map((rows) => {
+                    const columns = rows.row.cols;
+                    return columns.map((column) => {
+                      const controlType = column.elementType;
+                      const {
+                        name,
+                        type,
+                        placeholder,
+                        labeltext,
+                      } = column.elementConfig;
+                      return (
+                        <FormControll
+                          elementType="input"
+                          type={type}
+                          name={name}
+                          placeholder={placeholder}
+                          {...column}
+                        />
+                      );
+                    });
+                  })}
+                  <div
+                    className="attensin"
+                    style={{
+                      visibility: "hidden",
+                      textAlign: "right",
+                      paddingRight: attensionPadding,
+                      marginTop: 5,
+                    }}
+                  >
+                    <p style={{ fontSize: 12, fontWeight: "bold" }}>
+                      Quên mật khẩu?
+                    </p>
+                  </div>
+                  {console.log("formik valid value", formik)}
+                  <button type="submit">Đăng nhập</button>
+                </Form>
+              );
+            }}
           </Formik>
         </div>
       </div>

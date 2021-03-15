@@ -16,7 +16,6 @@ const post = createSlice({
           (obj) => obj.userId == element.userId
         );
         if (!result) {
-          // console.log("element vào nè: ", element);
           state.firebaseData.push(element);
         }
       });

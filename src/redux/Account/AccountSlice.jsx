@@ -1,8 +1,15 @@
 // import ContractType from "./contractType";
 import * as variable from "../../variables/Variables";
 import JSONPLACEHOLDERApi from "api/JSONPLACEHOLDERApi";
-
+import {
+  createPostData,
+  convertDateToString,
+  createAccountData,
+  createHeader,
+} from "util/ContructorCreation";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
+
+
 /**
  * * Có một chút khác biệt khi ta tạo async action,
  * * thay vì hồi trước slice mà ta tạo ra sẽ cho ta 2 biến là reducer và actions thì
@@ -22,11 +29,64 @@ export const getALL = createAsyncThunk(
   }
 );
 
+/**
+ * * api trả về thông tin của cây dựa trên tên
+ */
+export const getPlantInfo = createAsyncThunk(
+  "account/getPlantInfo",
+  async (params, thunkAPI) => {
+    const result = await JSONPLACEHOLDERApi.getPlantInfo(params);
+    return result;
+  }
+);
+
 const account = createSlice({
   name: "account",
   initialState: {
+    accountData: [
+      //  createAccountData(1,"alive","Khá bảnh","samxxx@gmail.com","08/17/1998","Nam","02/23/2021","08081501"),
+      //  createAccountData(2,"dead","Khong bảnh lắm","samxxx@gmail.com","02/17/1990","Nam","02/23/2021","08081501"),
+      //  createAccountData(3,"alive","Okiem ","samxxx@gmail.com","01/17/1991","Nữ","02/23/2021","08081501"),
+      createAccountData(1, "alive", "Khá bảnh", "02/23/2021"),
+      createAccountData(2, "dead", "Khong bảnh lắm", "02/23/2021"),
+      createAccountData(3, "alive", "Okiem ", "02/23/2021"),
+      
+    ],
+    accountTableHeader: [
+      createHeader("Người dùng", false, true, variable.userName),
+      createHeader("Ngày tạo", false, true, variable.createDate),
+      createHeader("Trạng thái", false, true, variable.accoutStatus),
+      createHeader("ID", true, false, variable.id),
+      // {
+      //   id: "email",
+      //   numeric: true,
+      //   disablePadding: false,
+      //   label: [variable.email],
+      // },
+      // {
+      //   id: "birthdate",
+      //   numeric: true,
+      //   disablePadding: false,
+      //   label: [variable.birthDate],
+      // },
+      // {
+      //   id: "sex",
+      //   numeric: true,
+      //   disablePadding: false,
+      //   label: [variable.sex],
+      // },
+
+      // {
+      //   id: "phone",
+      //   numeric: true,
+      //   disablePadding: false,
+      //   label: [variable.phone],
+      // },
+    ],
     current: {},
-    loadingL: false,
+    loading: false, // * trường này dùng để hiển thị pop up loading trong lúc dợi API trả về response
+    success: false, // * trường này dùng để hiển thị pop up success nếu như gọi API thành công
+    fail: false, //* trường này dùng để hiển thị pop up fail nếu như gọi API thất bại
     error: "",
     signInForm: [
       {
@@ -87,16 +147,29 @@ const account = createSlice({
 
   // ! Với kết quả trả về đều sẽ có 3 trường là meta,data và error, ta viết ở dưới này để coi sẽ phải làm những gì cho từng loại kêt quả
   extraReducers: {
-    [getALL.pending]: (state) => {},
+    [getALL.pending]: (state) => {
+      state.loading = true;
+      state.success = false;
+      state.fail = false;
+    },
     [getALL.rejected]: (state, action) => {
       // * Thực hiện hành động gì đó ở store khi kết quả trả về không có dữ liệu như mong muốn
       state.error = action.error;
+      state.loading = false;
+      state.success = true;
+      state.fail = false;
       state.current = action.payload;
     },
     [getALL.fulfilled]: (state, action) => {
       // * Thực hiện hành động gì dó ở store khi kết quả có dữ liệu trả về thành công
+      state.loading = false;
+      state.success = true;
+      state.fail = false;
       state.current = action.payload;
     },
+    [getPlantInfo.pending]: (state) => {},
+    [getPlantInfo.rejected]: (state, action) => {},
+    [getPlantInfo.fulfilled]: (state, action) => {},
   },
 });
 

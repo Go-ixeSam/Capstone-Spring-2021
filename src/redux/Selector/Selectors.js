@@ -1,3 +1,5 @@
+import * as variable from "variables/Variables"
+
 export function getList(state) {
   return state.contract.listTestSelectorstSelector;
 }
@@ -7,7 +9,7 @@ export function getTrip(state) {
 }
 
 export function getAdvanceData(state) {
-  return state.trip.advanceTableData;
+  return state.account.accountData;
 }
 
 export function getAdvanceSelectedData(state) {
@@ -28,7 +30,7 @@ export function getModalVisible(state) {
 }
 
 export function getMaterialHeader(state) {
-  return state.trip.materialHeader;
+  return state.account.accountTableHeader;
 }
 
 export function getSignInForm(state) {
@@ -36,11 +38,25 @@ export function getSignInForm(state) {
 }
 
 export function getFirebase(state) {
-  // firebase: firebaseReducer,
-
   return state.firebase;
 }
 
+export function getPostTableHeader(state){
+  return state.post.tableHeader
+}
+
+export function getPostTableBodyData(state){
+  return state.post.advanceTableData
+}
+export function getLoadingStatus(state){
+  return state.account.loading
+}
+export function getSuccessStatus(state){
+  return state.account.success
+}
+export function getFailStatus(state){
+  return state.account.fail
+}
 /**
  * ! Tìm kiến trip dựa trên ID
  * @param {*} state

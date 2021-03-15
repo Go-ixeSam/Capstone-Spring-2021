@@ -142,13 +142,21 @@ h1 .subtitle {
 .post-text-header {
   font-size: $font-size-medium;
   font-weight: bold;
-  color: $primary-app-color;
+  margin: 0;
+  // color: $primary-app-color;
+}
+.post-backgroud-content{
+  display: "flex";
+  flex-direction: "column";
+  // background: "rgb(241, 235, 235)",
+  padding: 10;
+  border-radius: 5;
 }
 .post-text-content {
   font-size: $font-size-base;
-  background-color: rgb(241, 235, 235);
+  // background-color: rgb(241, 235, 235);
   border-radius: 5px;
-  padding: 5px;
+  // padding: 5px;
 }
 .info-line {
   margin: 0;

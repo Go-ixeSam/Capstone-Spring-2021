@@ -20,7 +20,7 @@ import React, { Component } from "react";
 export class UserCard extends Component {
   render() {
     return (
-      <div className="card card-user">
+      <div className="card card-user" style={{background:"rgb(241, 235, 235)"}}>
         <div className="image">
           <img src={this.props.bgImage} alt="..." />
         </div>

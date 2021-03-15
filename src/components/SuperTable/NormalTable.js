@@ -196,14 +196,10 @@ export default function NormalTable(props) {
   }, rowWithDataFromStore);
 
   //* Dùng để thông báo rằng những field ko cần phải show ở table
-  const { notShowing } = props;
-
-  // console.log(rows);
+  const { headCells } = props;
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-
+  const [orderBy, setOrderBy] = React.useState([variable.negativeCommendCount]);
   const [selected, setSelected] = React.useState([]);
-
   const removeRows = useSelector((state) =>
     removeAdvanceRecord(state, selected)
   );
@@ -329,7 +325,7 @@ export default function NormalTable(props) {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
-              headCells={props.headCells}
+              headCells={headCells}
               actionButtonList={actionButtonList}
             />
             <TableBody>
@@ -339,23 +335,30 @@ export default function NormalTable(props) {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
-                  // * string dùng để lọc những field ko shwo lên table
-                  let string = "";
-                  const objectInArr = [];
+                  const objectInArr = []; //! cái array này sẽ chứa
+                  const finalArray = []; //! cái array sau khi đã đc xử lí để hiển thị
                   for (const key in row) {
-                    notShowing.map((showing) => {
-                      string = showing;
+                    objectInArr.push({
+                      key: key,
+                      value: row[key],
                     });
-                    if (string.localeCompare(key)) {
-                      // ! Ko biết lí do vì sao mà ID lại bằng ID khi so sánh trong mảng nên thêm dòng dưới
-                      if (key != "ID") {
-                        objectInArr.push({
-                          key: key,
-                          value: row[key],
+                  }
+                  /**
+                   * * Phần này giúp cho dữ liệu body luôn hiển thị đúng với header
+                   */
+                  headCells.map((obj) => {
+                    objectInArr.map((cell) => {
+                      if (obj.id == cell.key) {
+                        console.log("cell", cell.key, " obj", obj.id);  
+                        //! phần tử trong mảng final có 2 cái, đặc biệt là numeric giúp cho việc hiển thị giữa dữ liệu chữ và số đẹp hơn ở mỗi row của table
+                        finalArray.push({
+                          value: cell.value,
+                          numeric: obj.numeric,
                         });
                       }
-                    }
-                  }
+                    });
+                  });
+                  // //* kết thúc
 
                   return (
                     <StyledTableRow
@@ -381,8 +384,9 @@ export default function NormalTable(props) {
                         return <ActionButton name={obj} row={row} />;
                       })}
 
-                      {objectInArr.map((obj, index) => {
-                        if (index == 0) {
+                      {finalArray.map((obj, index) => {
+                        console.log("value", obj.value);
+                        if (obj.numeric == false) {
                           return (
                             <StyledTableCell
                               component="th"
@@ -410,7 +414,6 @@ export default function NormalTable(props) {
                 </TableRow>
               )}
             </TableBody>
-           
           </Table>
         </TableContainer>
       </Paper>

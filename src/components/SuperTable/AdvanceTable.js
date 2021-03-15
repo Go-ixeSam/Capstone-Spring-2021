@@ -40,6 +40,10 @@ const NormalPElement = styled.p`
   font-size: 14px;
   margin: 0px;
 `;
+const normalPElement = {
+  fontSize: 14,
+  margin: 0,
+};
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -169,8 +173,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EnhancedTable(props) {
+  const { headCells } = props;
   const classes = useStyles();
-
   // ! row này sẽ đại diện cho dữ liệu lấy trực tiếp từ store (global)
   const rowWithDataFromStore = props.bodyData;
   const actionButtonList = props.actionbuttonlist;
@@ -196,9 +200,7 @@ export default function EnhancedTable(props) {
   }, rowWithDataFromStore);
 
   //* Dùng để thông báo rằng những field ko cần phải show ở table
-  const { notShowing } = props;
 
-  // console.log(rows);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
 
@@ -211,6 +213,10 @@ export default function EnhancedTable(props) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  /**
+   * * Phần này dùng để hiển thị dữ liệu ở body khớp với header mà ko cần quan tâm đến tổ chức của object thế nào
+   */
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -340,25 +346,27 @@ export default function EnhancedTable(props) {
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
-                  // * string dùng để lọc những field ko shwo lên table
-                  let string = "";
-                  const objectInArr = [];
+                  const objectInArr = []; //! cái array này sẽ chứa
+                  const finalArray = []; //! cái array sau khi đã đc xử lí để hiển thị
                   for (const key in row) {
-                    notShowing.map((showing) => {
-                      string = showing;
+                    objectInArr.push({
+                      key: key,
+                      value: row[key],
                     });
-                    if (string.localeCompare(key)) {
-                      // ! Ko biết lí do vì sao mà ID lại bằng ID khi so sánh trong mảng nên thêm dòng dưới
-                      if (key != "ID") {
-                        objectInArr.push({
-                          key: key,
-                          value: row[key],
-                        });
-                      }
-                    }
                   }
-
+                  /**
+                   * * Phần này giúp cho dữ liệu body luôn hiển thị đúng với header 
+                   */
+                  headCells.map((obj) => {
+                    objectInArr.map((cell) => {
+                      console.log("key", cell.key, " cell", obj.id);
+                      if (obj.id === cell.key) {
+                        //! phần tử trong mảng final có 2 cái, đặc biệt là numeric giúp cho việc hiển thị giữa dữ liệu chữ và số đẹp hơn ở mỗi row của table
+                        finalArray.push({value:cell.value,numeric:obj.numeric});
+                      }
+                    });
+                  });                     
+                  // //* kết thúc
                   return (
                     <StyledTableRow
                       hover
@@ -383,8 +391,8 @@ export default function EnhancedTable(props) {
                         return <ActionButton name={obj} row={row} />;
                       })}
 
-                      {objectInArr.map((obj, index) => {
-                        if (index == 0) {
+                      {finalArray.map((obj, index) => {
+                        if (obj.numeric==false) {
                           return (
                             <StyledTableCell
                               component="th"
@@ -455,14 +463,14 @@ export default function EnhancedTable(props) {
                     component="div"
                     count={rows.length}
                     labelRowsPerPage={
-                      <NormalPElement>Rows per page:</NormalPElement>
+                      <p style={normalPElement}>Rows per page:</p>
                     }
                     labelDisplayedRows={({ from, to, count }) => (
-                      <NormalPElement>
+                      <p style={normalPElement}>
                         {from}-{to}
                         {" of "}
                         {count !== -1 ? count : "more than" + to}
-                      </NormalPElement>
+                      </p>
                     )}
                     rowsPerPage={rowsPerPage}
                     page={page}
