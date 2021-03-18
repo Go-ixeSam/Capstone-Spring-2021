@@ -83,11 +83,11 @@ export default function StickyHeadTable() {
             content={
               <Row>
                 <Col xs={12}>
+                  {/* Để có thể thực hiện hành động lock tài khoản thì hãy thêm field isLock ở mỗi dòng dữ liệu của body data */}
                   <EnhancedTable
                     headCells={materialHeader}
                     bodyData={materialBody}
-                    actionbuttonlist={["read"]}
-                    // actionbuttonlist={[]}
+                    actionbuttonlist={["remove"]}
                   />
                 </Col>
               </Row>

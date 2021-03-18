@@ -1,31 +1,33 @@
 {
   "files": {
-    "main.css": "/static/css/main.335f466f.chunk.css",
-    "main.js": "/static/js/main.bde5824a.chunk.js",
-    "main.js.map": "/static/js/main.bde5824a.chunk.js.map",
+    "main.css": "/static/css/main.5ccda105.chunk.css",
+    "main.js": "/static/js/main.dfc422f4.chunk.js",
+    "main.js.map": "/static/js/main.dfc422f4.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.07bd00ab.js",
     "runtime-main.js.map": "/static/js/runtime-main.07bd00ab.js.map",
     "static/css/2.fe233f72.chunk.css": "/static/css/2.fe233f72.chunk.css",
-    "static/js/2.9fb6134c.chunk.js": "/static/js/2.9fb6134c.chunk.js",
-    "static/js/2.9fb6134c.chunk.js.map": "/static/js/2.9fb6134c.chunk.js.map",
+    "static/js/2.ece8dd01.chunk.js": "/static/js/2.ece8dd01.chunk.js",
+    "static/js/2.ece8dd01.chunk.js.map": "/static/js/2.ece8dd01.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.fd7adc978cf9f984d704dd7e25ccf2ef.js": "/precache-manifest.fd7adc978cf9f984d704dd7e25ccf2ef.js",
+    "precache-manifest.23ef5c635ea7585dfd4fc257c1bd7954.js": "/precache-manifest.23ef5c635ea7585dfd4fc257c1bd7954.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.fe233f72.chunk.css.map": "/static/css/2.fe233f72.chunk.css.map",
-    "static/css/main.335f466f.chunk.css.map": "/static/css/main.335f466f.chunk.css.map",
-    "static/js/2.9fb6134c.chunk.js.LICENSE.txt": "/static/js/2.9fb6134c.chunk.js.LICENSE.txt",
-    "static/js/main.bde5824a.chunk.js.LICENSE.txt": "/static/js/main.bde5824a.chunk.js.LICENSE.txt",
+    "static/css/main.5ccda105.chunk.css.map": "/static/css/main.5ccda105.chunk.css.map",
+    "static/js/2.ece8dd01.chunk.js.LICENSE.txt": "/static/js/2.ece8dd01.chunk.js.LICENSE.txt",
+    "static/js/main.dfc422f4.chunk.js.LICENSE.txt": "/static/js/main.dfc422f4.chunk.js.LICENSE.txt",
     "static/media/pe-icon-7-stroke.css": "/static/media/Pe-icon-7-stroke.c45f7de0.svg",
     "static/media/face-3.jpg": "/static/media/face-3.ce7a6b79.jpg",
     "static/media/garden.jpg": "/static/media/garden.5f500eec.jpg",
     "static/media/bootstrap.min.css": "/static/media/glyphicons-halflings-regular.fa277232.woff",
+    "static/media/green tick.jpg": "/static/media/green tick.f48ff83a.jpg",
+    "static/media/success.png": "/static/media/success.7b14a037.png",
     "static/media/vegetable_web_admin.jpg": "/static/media/vegetable_web_admin.bfae00b4.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.07bd00ab.js",
     "static/css/2.fe233f72.chunk.css",
-    "static/js/2.9fb6134c.chunk.js",
-    "static/css/main.335f466f.chunk.css",
-    "static/js/main.bde5824a.chunk.js"
+    "static/js/2.ece8dd01.chunk.js",
+    "static/css/main.5ccda105.chunk.css",
+    "static/js/main.dfc422f4.chunk.js"
   ]
 }

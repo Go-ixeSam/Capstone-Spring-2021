@@ -29,6 +29,14 @@ export const getALL = createAsyncThunk(
   }
 );
 
+export const sharingDetail = createAsyncThunk(
+  "account/sharingDetail",
+  async (params, thunkAPI) => {
+    const result = await JSONPLACEHOLDERApi.shareDetail(params);
+    return result;
+  }
+);
+
 /**
  * * api trả về thông tin của cây dựa trên tên
  */
@@ -39,24 +47,34 @@ export const getPlantInfo = createAsyncThunk(
     return result;
   }
 );
+export const login = createAsyncThunk(
+  "account/",
+  async (params, thunkAPI) => {
+    const result = await JSONPLACEHOLDERApi.getPlantInfo(params);
+    return result;
+  }
+);
+
 
 const account = createSlice({
   name: "account",
   initialState: {
+    token:"",
     accountData: [
       //  createAccountData(1,"alive","Khá bảnh","samxxx@gmail.com","08/17/1998","Nam","02/23/2021","08081501"),
       //  createAccountData(2,"dead","Khong bảnh lắm","samxxx@gmail.com","02/17/1990","Nam","02/23/2021","08081501"),
       //  createAccountData(3,"alive","Okiem ","samxxx@gmail.com","01/17/1991","Nữ","02/23/2021","08081501"),
-      createAccountData(1, "alive", "Khá bảnh", "02/23/2021"),
-      createAccountData(2, "dead", "Khong bảnh lắm", "02/23/2021"),
-      createAccountData(3, "alive", "Okiem ", "02/23/2021"),
+      createAccountData(1, "alive", "Khá bảnh", "02/23/2021",12),
+      createAccountData(2, "dead", "Khong bảnh lắm", "02/23/2021",23),
+      createAccountData(3, "alive", "Okiem ", "02/23/2021",5),
       
     ],
     accountTableHeader: [
       createHeader("Người dùng", false, true, variable.userName),
       createHeader("Ngày tạo", false, true, variable.createDate),
       createHeader("Trạng thái", false, true, variable.accoutStatus),
-      createHeader("ID", true, false, variable.id),
+      // createHeader("ID", true, false, variable.id),
+      createHeader("Số lượng report", true, false, variable.numberOfReport),
       // {
       //   id: "email",
       //   numeric: true,

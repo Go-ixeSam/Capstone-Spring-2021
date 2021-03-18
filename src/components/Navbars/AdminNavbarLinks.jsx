@@ -17,20 +17,22 @@
 */
 import React, { Component } from "react";
 import { NavItem, Nav, NavDropdown, MenuItem } from "react-bootstrap";
+import { logOut } from "redux/index";
+import { useDispatch, useSelector } from "react-redux";
 
-class AdminNavbarLinks extends Component {
-  render() {
-    const notification = (
-      <div>
-        <i className="fa fa-globe" />
-        <b className="caret" />
-        <span className="notification">5</span>
-        <p className="hidden-lg hidden-md">Notification</p>
-      </div>
-    );
-    return (
-      <div>
-        {/* <Nav>
+function AdminNavbarLinks() {
+  const dispatch = useDispatch();
+  const notification = (
+    <div>
+      <i className="fa fa-globe" />
+      <b className="caret" />
+      <span className="notification">5</span>
+      <p className="hidden-lg hidden-md">Notification</p>
+    </div>
+  );
+  return (
+    <div>
+      {/* <Nav>
           <NavItem eventKey={1} href="#">
             <i className="fa fa-dashboard" />
             <p className="hidden-lg hidden-md">Dashboard</p>
@@ -52,8 +54,8 @@ class AdminNavbarLinks extends Component {
             <p className="hidden-lg hidden-md">Search</p>
           </NavItem>
         </Nav> */}
-        <Nav pullRight>
-          {/* <NavItem eventKey={1} href="#">
+      <Nav pullRight>
+        {/* <NavItem eventKey={1} href="#">
             Account
           </NavItem>
           <NavDropdown
@@ -69,13 +71,17 @@ class AdminNavbarLinks extends Component {
             <MenuItem divider />
             <MenuItem eventKey={2.5}>Separated link</MenuItem>
           </NavDropdown> */}
-          <NavItem eventKey={3} href="#">
-            Log out
-          </NavItem>
-        </Nav>
-      </div>
-    );
-  }
+        <NavItem
+          eventKey={3}
+          onClick={() => {
+            dispatch(logOut());
+          }}
+        >
+          Log out
+        </NavItem>
+      </Nav>
+    </div>
+  );
 }
 
 export default AdminNavbarLinks;

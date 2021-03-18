@@ -26,7 +26,7 @@ export function createPostData(
   };
 }
 
-export const createAccountData = (id, accountStatus, userName, createDate) => {
+export const createAccountData = (id, accountStatus, userName, createDate,numberOfReport) => {
   return {
     [variable.id]: id,
     [variable.accoutStatus]: accountStatus,
@@ -35,6 +35,7 @@ export const createAccountData = (id, accountStatus, userName, createDate) => {
     // [variable.birthDate]: birthDate,
     // [variable.sex]: sex,
     [variable.createDate]: createDate,
+    [variable.numberOfReport]:numberOfReport
     // [variable.phone]: phone,
   };
 };

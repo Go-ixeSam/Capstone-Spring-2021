@@ -12,11 +12,9 @@ import {setVisible} from "redux/index"
 
 const ActionButton = (props) => {
   const { row, handlelock, name } = props;
-  // console.log("row nè", row);
   const dispatch = useDispatch();
   function handleLockAccount(row) {
     let id = row[variable.id];
-
     // ! Nhấp vào sẽ thành mở/đóng khóa
     dispatch(getLocked(id));
   }
@@ -46,7 +44,6 @@ const ActionButton = (props) => {
       return (
         <StyledTableCell
           padding="checkbox"
-          onClick={() => handleLockAccount(row)}
         >
           <IconButton onClick={openModal}>
             <FontAwesomeIcon

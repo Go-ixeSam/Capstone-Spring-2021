@@ -2,7 +2,8 @@
 import axios from "axios";
 import queryString from "query-string";
 import * as variable from "variables/Variables";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getToken } from "redux/Selector/Selectors";
 // Set up default config for http requests here
 
 // Please have a look at here `https://github.com/axios/axios#request-
@@ -37,20 +38,45 @@ axiosClient.interceptors.response.use(
 export const axiosTeamClient = axios.create({
   baseURL: variable.teamBaseURL,
   headers: {
-    "content-type": "application/json",
+    "Content-type": "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjAxMjM0NTY3ODkiLCJBY2NvdW50SWQiOiJjMjFmOGViYy1mMjNjLTQ2OTItOTI1My0yMWI5OGUwNzJjYWIiLCJuYmYiOjE2MTU5ODc3NzcsImV4cCI6MTYxNjI0Njk3NywiaWF0IjoxNjE1OTg3Nzc3fQ.G9H_djVdX-zXEQAYlMhH-oJZY1eB0A9PJdGADtV5bLs",
   },
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
-// ! Xử lí phần authen token, mỗi api đề có cái này mới đc
+/**
+ * * Axios dành riêng cho những api ko cần token
+ */
+export const axiosWithoutToken = axios.create({
+  baseURL: variable.teamBaseURL,
+  headers: {
+    "Content-type": "application/json",
+  },
+  paramsSerializer: (params) => queryString.stringify(params),
+});
+
+// ! Xử lí phần authen token, mỗi api đề có cái này mới
+axiosWithoutToken.interceptors.request.use(async (config) => {
+  return config;
+});
+axiosWithoutToken.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    throw error;
+  }
+);
+
 axiosTeamClient.interceptors.request.use(async (config) => {
   //* Phần token ta sẽ lấy ở store sau khi user đăng nhập thành công =)
-  //   const token=""
-  //   config.headers = {
-  //     Authorization: `Bearer ${token}`,
-  //     Accept: "application/json",
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //   };
+  const token = useSelector((state) => getToken(state));
+  config.headers = {
+    Authorization: `Bearer ${token}`,
+    // Accept: "application/json",
+    // "Content-Type": "application/x-www-form-urlencoded",
+  };
   return config;
   // },
   // (errorr) => {

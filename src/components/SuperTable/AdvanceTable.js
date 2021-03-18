@@ -250,7 +250,8 @@ export default function EnhancedTable(props) {
    * @param {*} row
    */
   const handleClick = (event, row) => {
-    const { name } = row;
+    console.log("[]", [variable.userName], " ko có []", variable.userName);
+    const { username: name } = row;
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
@@ -269,7 +270,7 @@ export default function EnhancedTable(props) {
 
     // ! tam thoi ta se trien khai tren store
     setSelected(newSelected);
-    console.log(selected);
+    console.log("đc lua", selected);
   };
 
   const deleteRow = () => {
@@ -344,7 +345,7 @@ export default function EnhancedTable(props) {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row[variable.userName]);
                   const labelId = `enhanced-table-checkbox-${index}`;
                   const objectInArr = []; //! cái array này sẽ chứa
                   const finalArray = []; //! cái array sau khi đã đc xử lí để hiển thị
@@ -355,17 +356,19 @@ export default function EnhancedTable(props) {
                     });
                   }
                   /**
-                   * * Phần này giúp cho dữ liệu body luôn hiển thị đúng với header 
+                   * * Phần này giúp cho dữ liệu body luôn hiển thị đúng với header
                    */
                   headCells.map((obj) => {
                     objectInArr.map((cell) => {
-                      console.log("key", cell.key, " cell", obj.id);
                       if (obj.id === cell.key) {
                         //! phần tử trong mảng final có 2 cái, đặc biệt là numeric giúp cho việc hiển thị giữa dữ liệu chữ và số đẹp hơn ở mỗi row của table
-                        finalArray.push({value:cell.value,numeric:obj.numeric});
+                        finalArray.push({
+                          value: cell.value,
+                          numeric: obj.numeric,
+                        });
                       }
                     });
-                  });                     
+                  });
                   // //* kết thúc
                   return (
                     <StyledTableRow
@@ -373,17 +376,18 @@ export default function EnhancedTable(props) {
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.Dessert}
+                      key={row[variable.userName]}
                       selected={isItemSelected}
+                      onClick={(event) => handleClick(event, row)}
                     >
                       {actionButtonList.map((obj) => {
+                        // Nếu action button thuộc loại remove sẽ đc làm riêng
                         if (obj == "remove") {
                           return (
                             <StyledTableCell padding="checkbox">
                               <Checkbox
                                 checked={isItemSelected}
                                 inputProps={{ "aria-labelledby": labelId }}
-                                onClick={(event) => handleClick(event, row)}
                               />
                             </StyledTableCell>
                           );
@@ -392,7 +396,7 @@ export default function EnhancedTable(props) {
                       })}
 
                       {finalArray.map((obj, index) => {
-                        if (obj.numeric==false) {
+                        if (obj.numeric == false) {
                           return (
                             <StyledTableCell
                               component="th"
@@ -440,7 +444,7 @@ export default function EnhancedTable(props) {
                             color: variable.materialSecondaryColorMain,
                           }}
                         >
-                          {selected.length} selected
+                          {selected.length} được chọn
                         </p>
                         <DeleteButton click={deleteRow} />
                       </div>

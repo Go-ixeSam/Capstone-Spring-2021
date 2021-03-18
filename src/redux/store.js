@@ -6,6 +6,7 @@ import accountReducer from "./Account/AccountSlice";
 import tripReducer from "./trip/TripSlice";
 import postReducer from "./Post/PostSlice";
 import firebaseReducer from "./Firebase/FirebaseSlice";
+import loginReducer from "./Login/LoginSlice";
 // import userReducer from "./user/userSlice"
 
 const reducers = combineReducers({
@@ -14,13 +15,14 @@ const reducers = combineReducers({
   trip: tripReducer,
   post: postReducer,
   firebase: firebaseReducer,
+  login:loginReducer
 });
 //
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user"],
+  whitelist: [""],
   blacklist: ["account", "trip", "post", "firebase"],
 };
 

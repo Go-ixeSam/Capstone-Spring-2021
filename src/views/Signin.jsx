@@ -2,12 +2,15 @@ import { Box } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import { FormControll } from "components/Formik/FormikControl";
 import { Form, Formik } from "formik";
-import React from "react";
-import { useSelector } from "react-redux";
-import { getSignInForm } from "redux/Selector/Selectors";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import loginReducer from "redux/Login/LoginSlice";
+import { getSignInForm, getToken } from "redux/Selector/Selectors";
 import * as variable from "variables/Variables";
 import * as Yup from "yup";
 import "../components/SignIn/style.scss";
+import { getALL, getPlantInfo, login, sharingDetail } from "redux/index";
+import { loginToWeb } from "components/Hook/CustomHook";
 
 let width = 240;
 let marginBottom = 5;
@@ -30,18 +33,6 @@ const initialValue = {
   [variable.username]: "",
   [variable.password]: "",
 };
-const onSubmit = (value, onSubmitProps) => {
-  console.log("submit value: ", value);
-  //* giá trị của submiting thì formik sẽ tự động set khi ta dùng đén fieldError, bỏi vì nó làm thay đổi đến object error nên submiting sẽ ko
-  //* chuyển thành true
-
-  if (value.password !== "sam") {
-    onSubmitProps.setFieldError([variable.password], "Mật khẩu không đúng");
-  } else {
-    alert("Ok rồi nha")
-  }
-  console.log("on Submit props: ", onSubmitProps, "và");
-};
 
 /**
  * * hàm test dùng để tạo ra 1 validation custom
@@ -52,22 +43,6 @@ const onSubmit = (value, onSubmitProps) => {
 
 const validationSchema = Yup.object({
   [variable.password]: Yup.string().required([variable.require]),
-  // .when([variable.password], {
-  //   is: (val) => (val == "sam" > 0 ? true : false),
-  //   then: Yup.string().oneOf(
-  //     [Yup.ref(variable.password)],
-  //     "Both password need to be the same"
-  //   ),
-  // }),
-  // .test(
-  //   "checkpassword",
-  //   "Wrong password",
-  //   (value, context) =>
-  //     {}
-  //     // ? context chính là cái object Yup
-  //     value == "sam"
-  //   console.log("value nay", value, " context= ", context);
-  // ),
   [variable.username]: Yup.string().required([variable.require]),
   checkpassword: Yup.string().when([variable.password], {
     is: (val) => (val == "sam" > 0 ? true : false),
@@ -77,10 +52,33 @@ const validationSchema = Yup.object({
     ),
   }),
 });
-function handleSubmit() {}
 
 function Signin() {
+  const token = useSelector((state) => getToken(state));
   const signInForm = useSelector((state) => getSignInForm(state));
+  const dispatch = useDispatch();
+  const onSubmit = (value, onSubmitProps) => {
+    console.log("submit value: ", value);
+    //* giá trị của submiting thì formik sẽ tự động set khi ta dùng đén fieldError, bỏi vì nó làm thay đổi đến object error nên submiting sẽ ko
+    //* chuyển thành true
+
+    //! Nếu như token bằng rỗng thì chứng tỏ mật khẩu sai
+    dispatch(
+      login({
+        phoneNumber: value.username,
+        password: value.password,
+      })
+    ).then(() => {
+      if (token == "") {
+        onSubmitProps.setFieldError(
+          [variable.password],
+          "Hãy kiểm tra lại mật khẩu hoặc tên đăng nhập của bạn"
+        );
+      } else {
+        alert("Ok rồi nha");
+      }
+    });
+  };
   return (
     <div
       style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
@@ -312,7 +310,7 @@ function Signin() {
                       Quên mật khẩu?
                     </p>
                   </div>
-                  {console.log("formik valid value", formik)}
+                  {/* {console.log("formik valid value", formik)} */}
                   <button type="submit">Đăng nhập</button>
                 </Form>
               );

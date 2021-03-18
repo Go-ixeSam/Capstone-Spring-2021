@@ -28,13 +28,16 @@ export function getUserRole(state) {
 export function getModalVisible(state) {
   return state.post.userPostVisible;
 }
+export function getToken(state){
+  return state.login.token
+}
 
 export function getMaterialHeader(state) {
   return state.account.accountTableHeader;
 }
 
 export function getSignInForm(state) {
-  return state.account.signInForm;
+  return state.login.signInForm;
 }
 
 export function getFirebase(state) {

@@ -643,6 +643,7 @@ const error = "error";
 const fulfilled = "fulfilled";
 const accoutStatus = "accountStatus";
 const userName = "username";
+const numberOfReport="numberofreport"
 const email = "email";
 const birthDate = "birthdate";
 const phone = "phone";
@@ -654,6 +655,7 @@ const baseURL = "";
 const jsonplaceholerAPI = "https://jsonplaceholder.typicode.com";
 const teamBaseURL = "http://54.179.74.214:8080";
 module.exports = {
+  numberOfReport,
   pending,
   rejected,
   error,
