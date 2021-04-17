@@ -19,12 +19,31 @@ const JsonPlaceHolderApi = {
   shareDetail: (params) => {
     const url = "/api/ShareDetail";
     return axiosTeamClient.post(url, { params: params });
-    // return axios.post("http://54.179.74.214:8080/api/ShareDetail", params, {
-    //   headers: {
-    //     Authorization:
-    //       "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjAxMjM0NTY3ODkiLCJBY2NvdW50SWQiOiJjMjFmOGViYy1mMjNjLTQ2OTItOTI1My0yMWI5OGUwNzJjYWIiLCJuYmYiOjE2MTU5ODc3NzcsImV4cCI6MTYxNjI0Njk3NywiaWF0IjoxNjE1OTg3Nzc3fQ.G9H_djVdX-zXEQAYlMhH-oJZY1eB0A9PJdGADtV5bLs",
-    //   },
-    // });
   },
+  getDashboard: (params) => {
+    const url = "/api/Dashboard/GetDashboard";
+    return axiosTeamClient.get(url, { params: params });
+  },
+  isAccept: (params) => {
+    const url = "/api/Vegetable/IsAccept";
+    return axiosTeamClient.put(url, { params: params });
+  },
+  getAllVegetableUnapproved: (params) => {
+    const url = "/api/Vegetable/GetAllVegetableUnapproved";
+    return axiosTeamClient.get(url, { params: params });
+  },
+
+  //* APi trả về cho ta 1 danh sách mà thể hiện số ngưỡng mà nếu vượt quá thì sẽ khóa account
+  getAllPercent: (params) => {
+    const url = "/api/PrecentReport/GetAll";
+    return axiosTeamClient.get(url, { params: params });
+  },
+
+  //* api giúp ta chỉnh lại cái ngưỡng bị khóa
+  editPrecentReport: (params) => {
+    const url = "/api/PrecentReport";
+    return axiosTeamClient.put(url, { params: params });
+  },
+  
 };
 export default JsonPlaceHolderApi;

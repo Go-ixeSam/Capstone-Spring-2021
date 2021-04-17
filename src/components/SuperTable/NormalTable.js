@@ -5,6 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
+import { setVisible, isAccept, getAllVegetableUnapproved } from "redux/index";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -17,12 +18,17 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import clsx from "clsx";
 import { useFormik } from "formik";
+import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { DeleteButton } from "../../components/CustomButton/CustomButton";
+import {
+  DeleteButton,
+  CheckCircleButton,
+  CancelButton,
+} from "../../components/CustomButton/CustomButton";
 import SearchOption from "../../components/FilterOption/SearchOption/SearchBar";
 import { getLocked, removeAdvanceRecordSelected } from "../../redux";
 import {
@@ -32,14 +38,14 @@ import {
 } from "../../redux/Selector/Selectors";
 import * as variable from "../../variables/Variables";
 import EnhancedTableHead from "../SuperTable/Header/AdvanceHeader";
-import { StyledTableCell } from "./StyledCell";
+import { StyledTableCell, StyledTableCell17px } from "./StyledCell";
 import { StyledTableRow } from "./StyledRow";
 import ActionButton from "components/SuperTable/ActionButton";
 
-const NormalPElement = styled.p`
-  font-size: 14px;
-  margin: 0px;
-`;
+const normalPElement = {
+  fontSize: 14,
+  margin: 0,
+};
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -240,7 +246,7 @@ export default function NormalTable(props) {
    * @param {*} row
    */
   const handleClick = (event, row) => {
-    const { name } = row;
+    const { vegetableName: name } = row;
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
@@ -257,16 +263,37 @@ export default function NormalTable(props) {
       );
     }
 
-    // ! tam thoi ta se trien khai tren store
+    // ! Ở chỗ này là ta sẽ có đc 1 list những item đc check
     setSelected(newSelected);
     console.log(selected);
   };
 
   const deleteRow = () => {
-    console.log("row moi: ", selected);
+    console.log("Những row đc lựa chọn: ", selected);
     dispatch(removeAdvanceRecordSelected(selected));
     //! tìm ra những row đc lựa chọng
   };
+
+  /**
+   ** Hàm dùng để duyệt những rau đúng thông tin
+   ** Vì ở đây là duyệt nhiều rau cùng 1 lúc nên sẽ có 1 vòng lập xử lí
+   */
+  // const passTest = async () => {
+  //   console.log("Những row đc lựa chọn: ", selected);
+  //   selected.map(item=>{
+  //     await dispatch(isAccept({Id:item.id,Status:""}));
+  //   })
+  // };
+
+  /**
+   ** Hàm dùng để từ chối những rau sai thông tin
+   */
+  // const failTest = () => {
+  //   console.log("Những row đc lựa chọn: ", selected);
+  //   selected.map(item=>{
+  //     await dispatch(isAccept({Id:item.id,Status:""}));
+  //   })
+  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -332,7 +359,7 @@ export default function NormalTable(props) {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.vegetableName);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   const objectInArr = []; //! cái array này sẽ chứa
@@ -349,11 +376,12 @@ export default function NormalTable(props) {
                   headCells.map((obj) => {
                     objectInArr.map((cell) => {
                       if (obj.id == cell.key) {
-                        console.log("cell", cell.key, " obj", obj.id);  
+                        console.log("cell", cell.key, " obj", obj.id);
                         //! phần tử trong mảng final có 2 cái, đặc biệt là numeric giúp cho việc hiển thị giữa dữ liệu chữ và số đẹp hơn ở mỗi row của table
                         finalArray.push({
                           value: cell.value,
                           numeric: obj.numeric,
+                          key: cell.key,
                         });
                       }
                     });
@@ -386,7 +414,27 @@ export default function NormalTable(props) {
 
                       {finalArray.map((obj, index) => {
                         console.log("value", obj.value);
-                        if (obj.numeric == false) {
+                        //  ! Nếu value là ảnh thì sẽ  thêm 1 component image và để hiển thị
+                        if (obj.key == "vegetableImage") {
+                          if (obj.numeric == false) {
+                            return (
+                              <StyledTableCell
+                                component="th"
+                                id={labelId}
+                                scope="row"
+                                padding="none"
+                              >
+                                <img
+                                  src={obj.value}
+                                  height="80"
+                                  width="80"
+                                  style={{ margin: 10 }}
+                                />
+                              </StyledTableCell>
+                            );
+                          }
+                        }
+                        if (obj.key == "description" || obj.key == "uses") {
                           return (
                             <StyledTableCell
                               component="th"
@@ -394,8 +442,28 @@ export default function NormalTable(props) {
                               scope="row"
                               padding="none"
                             >
-                              {obj.value}
+                              <PerfectScrollbar
+                                style={{
+                                  height: 100,
+                                  width: 200,
+                                  padding: 10,
+                                }}
+                              >
+                                {obj.value}
+                              </PerfectScrollbar>
                             </StyledTableCell>
+                          );
+                        }
+                        if (obj.numeric == false) {
+                          return (
+                            <StyledTableCell17px
+                              component="th"
+                              id={labelId}
+                              scope="row"
+                              padding="none"
+                            >
+                              {obj.value}
+                            </StyledTableCell17px>
                           );
                         } else {
                           return (
@@ -414,6 +482,72 @@ export default function NormalTable(props) {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow style={{ border: "none" }}>
+                <TableCell colSpan={3} size="small" style={{ padding: 0 }}>
+                  <div>
+                    {selected.length > 0 ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <p
+                          style={{
+                            fontSize: 14,
+                            margin: 0,
+                            paddingLeft: 10,
+                            color: variable.materialSecondaryColorMain,
+                          }}
+                        >
+                          {selected.length} được chọn
+                        </p>
+                        {/* <DeleteButton click={deleteRow} /> */}
+                        <CheckCircleButton 
+                        // click={passTest} 
+                        />
+                        <CancelButton 
+                        // click={failTest} 
+                        />
+                      </div>
+                    ) : (
+                      <Typography
+                        style={{ flex: "1 1 100%" }}
+                        variant="h6"
+                        id="tableTitle"
+                        component="div"
+                      >
+                        <p></p>
+                      </Typography>
+                    )}
+                  </div>
+                </TableCell>
+                <TableCell colSpan={4} size={"small"} style={{ padding: 0 }}>
+                  <TablePagination
+                    style={{ fontSize: 14 }}
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={rows.length}
+                    labelRowsPerPage={
+                      <p style={normalPElement}>Rows per page:</p>
+                    }
+                    labelDisplayedRows={({ from, to, count }) => (
+                      <p style={normalPElement}>
+                        {from}-{to}
+                        {" of "}
+                        {count !== -1 ? count : "more than" + to}
+                      </p>
+                    )}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
       </Paper>

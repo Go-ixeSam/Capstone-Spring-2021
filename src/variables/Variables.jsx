@@ -504,28 +504,77 @@ var legendPie = {
 // Data for Line Chart
 var dataSales = {
   labels: [
-    "9:00AM",
-    "12:00AM",
-    "3:00PM",
-    "6:00PM",
-    "9:00PM",
-    "12:00PM",
-    "3:00AM",
-    "6:00AM",
+    // "thứ 2",
+    // "thứ 3",
+    // "thứ 4",
+    // "thứ 5",
+    // "thứ 6",
+    // "thứ 7",
+    // "chủ nhật",
+    "0-2 AM",
+    "2-4 AM",
+    "4-6 AM",
+    "6-8 AM",
+    "8-10 AM",
+    "10-12 AM",
+    "0-2 PM",
+    "2-4 PM",
+    "4-6 PM",
+    "6-8 PM",
+    "8-10 PM",
+    "10-12 PM",
+    // "2-4 AM",
+    // "3:00PM",
+    // "6:00PM",
+    // "9:00PM",
+    // "12:00PM",
+    // "3:00AM",
+    // "6:00AM",
   ],
   series: [
-    [287, 385, 490, 492, 554, 586, 698, 695],
-    [67, 152, 143, 240, 287, 335, 435, 437],
-    [23, 113, 67, 108, 190, 239, 307, 308],
+    // [
+    //   { meta: "Bài đăng mới", value: 287 },
+    //   { meta: "Bài đăng mới", value: 32 },
+    //   { meta: "Bài đăng mới", value: 327 },
+    //   { meta: "Bài đăng mới", value: 43 },
+    //   { meta: "Bài đăng mới", value: 425 },
+    //   { meta: "Bài đăng mới", value: 134 },
+    //   { meta: "Bài đăng mới", value: 234 },
+    // ],
+    // {name:"hoa quả",data:[287, 385, 490, 492, 554, 586, 698,287, 385, 490, 492, 554, 586]} ,
+    // {name:"Okay",data:[67, 152, 143, 240, 287, 335, 435,287, 385, 490, 492, 554, 586]} ,
+  [  67,
+    152,
+    143,
+    240,
+    287,
+    335,
+    435,
+    287,
+    385,
+    490,
+    492,
+    554,
+    586,]
+    // [67, 152, 143, 240, 287, 335, 435, 437],
+    // [23, 113, 67, 108, 190, 239, 307, 308],
+    // [43, 113, 90, 122, 432, 239, 113, 223],
+    // [13, 113, 90, 122, 432, 49, 33, 323],
   ],
 };
 var optionsSales = {
-  low: 0,
-  high: 800,
+  // low: 0,
+  // high: 800,
   showArea: false,
-  height: "245px",
+  height: 200,
+  // height: "200px",
   axisX: {
     showGrid: false,
+    showLabel: true,
+  },
+  axisY: {
+    showGrid: true,
+    showLabel: true,
   },
   lineSmooth: true,
   showLine: true,
@@ -534,6 +583,7 @@ var optionsSales = {
   chartPadding: {
     right: 50,
   },
+  plugins: [],
 };
 var responsiveSales = [
   [
@@ -548,8 +598,8 @@ var responsiveSales = [
   ],
 ];
 var legendSales = {
-  names: ["Open", "Click", "Click Second Time"],
-  types: ["info", "danger", "warning"],
+  names: ["New post", "New garden", "New vegetable", "aha"],
+  types: ["info", "danger", "warning", "purple"],
 };
 
 // Data for Bar Chart
@@ -597,6 +647,8 @@ var legendBar = {
   names: ["Tesla Model S", "BMW 5 Series"],
   types: ["info", "danger"],
 };
+const percentName = "percentName";
+const percent = "percent";
 const primaryColor = "#27AE60";
 const lightColor = "#6FCF97";
 const darkColor = "#219653";
@@ -621,6 +673,7 @@ const wrongpassword = "wrongpass";
 const success = "success";
 const fail = "fail";
 const creator = "creator";
+const token = "";
 const dateSubmitted = "dateSubmitted";
 const reportCount = "reportCount";
 const negativeCommendCount = "negativeCommendCount";
@@ -643,12 +696,18 @@ const error = "error";
 const fulfilled = "fulfilled";
 const accoutStatus = "accountStatus";
 const userName = "username";
-const numberOfReport="numberofreport"
+const vegetableName = "vegetableName";
+const description = "description";
+const uses = "uses";
+const vegetableImage = "vegetableImage";
+const numberOfReport = "numberofreport";
 const email = "email";
 const birthDate = "birthdate";
 const phone = "phone";
 const sex = "sex";
 const createDate = "createdate";
+const postPicture = "postpicture";
+const caption = "caption";
 
 // ! Mọi API URL chỉ khách ở phần sau thôi
 const baseURL = "";
@@ -707,6 +766,8 @@ module.exports = {
   alternativeDarkColor,
   creator,
   dateSubmitted,
+  percentName,
+  percent,
   reportCount,
   negativeCommendCount,
   advanceTableData,
@@ -718,5 +779,12 @@ module.exports = {
   phone,
   sex,
   createDate,
-  teamBaseURL
+  teamBaseURL,
+  postPicture,
+  caption,
+  token,
+  vegetableName,
+  vegetableImage,
+  description,
+  uses,
 };

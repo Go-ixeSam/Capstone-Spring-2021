@@ -7,23 +7,26 @@ import tripReducer from "./trip/TripSlice";
 import postReducer from "./Post/PostSlice";
 import firebaseReducer from "./Firebase/FirebaseSlice";
 import loginReducer from "./Login/LoginSlice";
+import dashboardReducer from "./Dashboard/DashboardSlice"
+import systemReducer from "./SystemConfiguration/SystemConfigurationSlice"
 // import userReducer from "./user/userSlice"
 
 const reducers = combineReducers({
   account: accountReducer,
-  // user: userReducer,
+  dashboard:dashboardReducer,
   trip: tripReducer,
   post: postReducer,
   firebase: firebaseReducer,
-  login:loginReducer
+  login:loginReducer,
+  systemConfig:systemReducer
 });
 //
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: [""],
-  blacklist: ["account", "trip", "post", "firebase"],
+  whitelist: ["login"],
+  blacklist: ["account", "trip", "post", "firebase","dashboard","systemConfig"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

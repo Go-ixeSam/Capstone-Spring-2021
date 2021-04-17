@@ -1,4 +1,5 @@
-import * as variable from "variables/Variables"
+import * as variable from "variables/Variables";
+import { getDates, removeDuplicateDate } from "util/Helper";
 
 export function getList(state) {
   return state.contract.listTestSelectorstSelector;
@@ -6,6 +7,9 @@ export function getList(state) {
 
 export function getTrip(state) {
   return state.trip.tripData;
+}
+export function getVegetableAPIloadingTime(state){
+  return state.post.loading
 }
 
 export function getAdvanceData(state) {
@@ -28,37 +32,84 @@ export function getUserRole(state) {
 export function getModalVisible(state) {
   return state.post.userPostVisible;
 }
-export function getToken(state){
-  return state.login.token
+export function getToken(state) {
+  return state.login.token;
 }
-
+/**
+ * * Hàm sẽ trả về 1 mảng chứa những ngày tạo bài đã loại bỏ trùng nhau từ account id
+ */
+export function getDateListByAccountId(state) {
+  let object = { accountID: "", posts: [] };
+  state.post.reportedPosts.map((obj) => {
+    if (obj.accountID == state.post.selectedAccountId) {
+      object = { ...obj, accountID: obj.accountID, posts: obj.posts };
+    }
+  });
+  return removeDuplicateDate(getDates(object.posts));
+}
+/**
+ * * Hàm sẽ trả về cái object mà có account id giống với selected ID
+ */
+export function getReportedListByAccountId(state) {
+  let object = { accountID: "", posts: [] };
+  state.post.reportedPosts.map((obj) => {
+    if (obj.accountID == state.post.selectedAccountId) {
+      object = obj;
+      console.log("obj ", object);
+    }
+  });
+  return object;
+}
 export function getMaterialHeader(state) {
   return state.account.accountTableHeader;
+}
+export function getReportedPost(state) {
+  return state.post.reportedPosts;
+}
+
+export function getPercentReport(state){
+  return state.systemConfig.systemConfigForm
+}
+
+export function getPercent(state){
+  return state.systemConfig.percent
+}
+
+export function getPercentResult(state){
+  return state.systemConfig.percentResult
+}
+
+export function getPercentName(state){
+  return state.systemConfig.percentNames
 }
 
 export function getSignInForm(state) {
   return state.login.signInForm;
 }
 
+export function getDashboardUpdate(state){
+  return state.dashboard.updateDashboard
+}
+
 export function getFirebase(state) {
   return state.firebase;
 }
 
-export function getPostTableHeader(state){
-  return state.post.tableHeader
+export function getPostTableHeader(state) {
+  return state.post.tableHeader;
 }
 
-export function getPostTableBodyData(state){
-  return state.post.advanceTableData
+export function getPostTableBodyData(state) {
+  return state.post.advanceTableData;
 }
-export function getLoadingStatus(state){
-  return state.account.loading
+export function getLoadingStatus(state) {
+  return state.account.loading;
 }
-export function getSuccessStatus(state){
-  return state.account.success
+export function getSuccessStatus(state) {
+  return state.account.success;
 }
-export function getFailStatus(state){
-  return state.account.fail
+export function getFailStatus(state) {
+  return state.account.fail;
 }
 /**
  * ! Tìm kiến trip dựa trên ID

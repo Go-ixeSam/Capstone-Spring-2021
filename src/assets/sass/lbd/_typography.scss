@@ -139,13 +139,17 @@ h1 .subtitle {
 .text-danger:hover {
   color: $danger-color !important;
 }
+.text-purple,
+.text-purple:hover {
+  color: purple !important;
+}
 .post-text-header {
   font-size: $font-size-medium;
   font-weight: bold;
   margin: 0;
   // color: $primary-app-color;
 }
-.post-backgroud-content{
+.post-backgroud-content {
   display: "flex";
   flex-direction: "column";
   // background: "rgb(241, 235, 235)",

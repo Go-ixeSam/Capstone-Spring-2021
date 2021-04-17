@@ -7,7 +7,6 @@ export const fetchPostList = async (dispatch) => {
   // * Bắt try catch ở đây là để tránh lỗi crash ứng dụng lỡ như trong quá trình dispatch đến getAll bị lỗi
   try {
     response = await dispatch(getALL());
-    // console.log("result= ", response);
 
     // * Nếu có sử dụng gì ở local này thì ta cứ lấy response ra mà dùng
   } catch (errpr) {

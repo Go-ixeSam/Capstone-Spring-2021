@@ -1,4 +1,5 @@
 import * as variable from "variables/Variables";
+import { numberOfReport } from "variables/Variables";
 export function createData(id, name, calories, fat, carbs, protein, isLock) {
   return {
     [variable.id]: id,
@@ -26,17 +27,65 @@ export function createPostData(
   };
 }
 
-export const createAccountData = (id, accountStatus, userName, createDate,numberOfReport) => {
+export const createAccountData = (
+  id,
+  accountStatus,
+  userName,
+  createDate,
+  numberOfReport,
+  email,
+  birthDate,
+  sex,
+  phone
+) => {
   return {
     [variable.id]: id,
     [variable.accoutStatus]: accountStatus,
     [variable.userName]: userName,
-    // [variable.email]: email,
-    // [variable.birthDate]: birthDate,
-    // [variable.sex]: sex,
+    [variable.email]: email,
+    [variable.birthDate]: birthDate,
+    [variable.sex]: sex,
     [variable.createDate]: createDate,
-    [variable.numberOfReport]:numberOfReport
-    // [variable.phone]: phone,
+    [variable.numberOfReport]: numberOfReport,
+    [variable.phone]: phone,
+  };
+};
+
+/**
+ * * Tạo dữ liệu về rau để hiển thị lên table
+ * @param {*} name 
+ * @param {*} id 
+ * @param {*} uses 
+ * @param {*} description 
+ * @param {*} image 
+ * @returns 
+ */
+export const createVegetableData = (name, id, uses, description, image) => {
+  return {
+    [variable.vegetableName]: name,
+    [variable.vegetableImage]: image,
+    [variable.uses]: uses,
+    [variable.description]: description,
+    [variable.id]: id,
+  };
+};
+export const createReportedPostData = (
+  id,
+  createDate,
+  postPicture,
+  numberOfLike,
+  numberOfReport,
+  caption,
+  vegetableName
+) => {
+  return {
+    [variable.id]: id,
+    [variable.createDate]: createDate,
+    [variable.postPicture]: postPicture,
+    [variable.numberOfLike]: numberOfLike,
+    [variable.numberOfReport]: numberOfReport,
+    [variable.caption]: caption,
+    [variable.vegetableName]: vegetableName,
   };
 };
 

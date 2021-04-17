@@ -14,6 +14,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { setVisible } from "redux/index";
+import TextButton from "components/MaterialComponent/TextButton";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import clsx from "clsx";
 import { useFormik } from "formik";
@@ -24,11 +26,12 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { DeleteButton } from "../../components/CustomButton/CustomButton";
 import SearchOption from "../../components/FilterOption/SearchOption/SearchBar";
-import { getLocked, removeAdvanceRecordSelected } from "../../redux";
+import { getLocked, removeAdvanceRecordSelected,setSelectedAccountID } from "../../redux";
 import {
   getAdvanceData,
   getAdvanceDataByNameSearch,
   removeAdvanceRecord,
+  getReportedListByAccountId
 } from "../../redux/Selector/Selectors";
 import * as variable from "../../variables/Variables";
 import EnhancedTableHead from "../SuperTable/Header/AdvanceHeader";
@@ -214,6 +217,7 @@ export default function EnhancedTable(props) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+
   /**
    * * Phần này dùng để hiển thị dữ liệu ở body khớp với header mà ko cần quan tâm đến tổ chức của object thế nào
    */
@@ -224,6 +228,14 @@ export default function EnhancedTable(props) {
     setOrderBy(property);
   };
 
+  /**
+   * tác dụng là mở modal và điền account id đc click
+   * @param {*} accountID 
+   */
+  function setSelectedAccountIDandOpenModal(accountID){
+       dispatch(setVisible(true))
+       dispatch(setSelectedAccountID(accountID))
+  }
   //! tam thoi chua dung den all click
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -310,7 +322,6 @@ export default function EnhancedTable(props) {
             setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]))
           );
           setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]));
-          // dispatch(getDataByNameSearch(values["searchvalue"]));
           break;
         case " Age":
           console.log("result", values["filtervalue"]);
@@ -321,7 +332,7 @@ export default function EnhancedTable(props) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <SearchOption formikAction={formik} />
+        {/* <SearchOption formikAction={formik} /> */}
         <Box height={10} />
         <TableContainer>
           <Table
@@ -363,6 +374,8 @@ export default function EnhancedTable(props) {
                       if (obj.id === cell.key) {
                         //! phần tử trong mảng final có 2 cái, đặc biệt là numeric giúp cho việc hiển thị giữa dữ liệu chữ và số đẹp hơn ở mỗi row của table
                         finalArray.push({
+                        
+                          key: cell.key,
                           value: cell.value,
                           numeric: obj.numeric,
                         });
@@ -378,7 +391,6 @@ export default function EnhancedTable(props) {
                       tabIndex={-1}
                       key={row[variable.userName]}
                       selected={isItemSelected}
-                      onClick={(event) => handleClick(event, row)}
                     >
                       {actionButtonList.map((obj) => {
                         // Nếu action button thuộc loại remove sẽ đc làm riêng
@@ -388,6 +400,7 @@ export default function EnhancedTable(props) {
                               <Checkbox
                                 checked={isItemSelected}
                                 inputProps={{ "aria-labelledby": labelId }}
+                                onClick={(event) => handleClick(event, row)}
                               />
                             </StyledTableCell>
                           );
@@ -408,11 +421,23 @@ export default function EnhancedTable(props) {
                             </StyledTableCell>
                           );
                         } else {
-                          return (
-                            <StyledTableCell align="right">
-                              {obj.value}
-                            </StyledTableCell>
-                          );
+                          // *Ta sẽ đc xem chi tiết những bài đăng nào bị report nhờ vào dòng code này
+                          if (obj.key == variable.numberOfReport) {
+                            return (
+                              <StyledTableCell align="right">
+                                <TextButton
+                                  text={obj.value}
+                                  click={() => setSelectedAccountIDandOpenModal(row[variable.id])}
+                                ></TextButton>
+                              </StyledTableCell>
+                            );
+                          } else {
+                            return (
+                              <StyledTableCell align="right">
+                                {obj.value}
+                              </StyledTableCell>
+                            );
+                          }
                         }
                       })}
                     </StyledTableRow>

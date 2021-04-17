@@ -68,6 +68,10 @@ function Signin() {
         phoneNumber: value.username,
         password: value.password,
       })
+      //* * Ở đây ta dùng .then là vì createAsyncThunk nó trả về 1 promise, nếu như ta dùng asynce await để nhận thì 
+      //* sẽ vi phạm nguyên tắc hook là bỏ hook trong 1 nested function 
+      //* ở dưới đang là check token trong store, nếu ta muốn sử dụng result từ .then trả về thì
+      //! .then((result)=>{ }), lúc này ta vẫn có thể sử dụng popUp loading,success và fail như ta hằng mong muốn
     ).then(() => {
       if (token == "") {
         onSubmitProps.setFieldError(
@@ -75,7 +79,8 @@ function Signin() {
           "Hãy kiểm tra lại mật khẩu hoặc tên đăng nhập của bạn"
         );
       } else {
-        alert("Ok rồi nha");
+        
+        // alert("Ok rồi nha");
       }
     });
   };

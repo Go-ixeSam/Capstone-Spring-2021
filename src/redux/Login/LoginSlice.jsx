@@ -89,6 +89,7 @@ const loginSlice= createSlice({
     [login.fulfilled]: (state, action) => {
       console.log("actioon: ", action.payload);
       state.token = action.payload.data.token;
+      variable.token=action.payload.token;
     },
   },
 });

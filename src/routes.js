@@ -27,7 +27,7 @@ import MaterialTable from "views/Account";
 import SignIn from "views/Signin";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import Post from "views/Post";
+import Post from "views/Vegetable";
 import SystemCon from "views/SystemConfiguration"
 import Label from "views/Labeling"
 import { faCheckSquare, faCoffee,faUser,faUserPlus,faPaperPlane,faCog,faTags,faChartBar } from '@fortawesome/free-solid-svg-icons'

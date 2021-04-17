@@ -47,5 +47,23 @@ export class StatsCard extends Component {
     );
   }
 }
+export function MiniChartCard(props) {
+  return (
+    <div className="card card-stats">
+      <div className="content">
+        {/* <Row>
+          <Col xs={12}></Col>
+        </Row> */}
+        {props.content}
+        <div className="footer">
+          <hr />
+          <div className="stats">
+            {props.statsIcon} {props.statsIconText}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default StatsCard;

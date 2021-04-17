@@ -1,0 +1,37 @@
+/*!
+
+=========================================================
+* Light Bootstrap Dashboard React - v1.3.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+//!  lấy trực tiếp từ store. Vì ở đây rows đc khởi tạo với useState nên nếu như
+
+//! Nếu hơn 100 tin nhắn thì sẽ chuyển thành hình vuông
+
+//! Nếu như token bằng rỗng thì chứng tỏ mật khẩu sai
+
+//! Trước khi api đc gọi thì ta sẽ cho cái loading nó chạy
+
+//! bỏ lắng nghe khi cái component này unmount
+
+//! cái array sau khi đã đc xử lí để hiển thị
+
+//! ko thực hiện hàm set của nó thì dù store có thay đổi state thì nó cũng ko tự trigger render
+
+//! phần tử trong mảng final có 2 cái, đặc biệt là numeric giúp cho việc hiển thị giữa dữ liệu chữ và số đẹp hơn ở mỗi row của table
+
+//! setIsNotify dùng để ngăn cho ko hiện notification khi lần đầu event listener đc nổ
+
+//! tam thoi chua dung den all click
