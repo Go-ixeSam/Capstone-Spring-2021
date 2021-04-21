@@ -16,6 +16,21 @@ export const getDashboard = createAsyncThunk(
     return result;
   }
 );
+export const getTop10 = createAsyncThunk(
+  "dashboard/getTop10",
+  async (params, thunkAPI) => {
+    const result = await JSONPLACEHOLDERApi.getTop10(params);
+    return result;
+  }
+);
+export const getShareAndExchangeCompare = createAsyncThunk(
+  "dashboard/getShareAndExchangeCompare",
+  async (params, thunkAPI) => {
+    const result = await JSONPLACEHOLDERApi.getShareAndExchangeCompare(params);
+    return result;
+  }
+);
+
 /**
  * * Có một chút khác biệt khi ta tạo async action,
  * * thay vì hồi trước slice mà ta tạo ra sẽ cho ta 2 biến là reducer và actions thì
@@ -34,7 +49,7 @@ const dashboardSlice = createSlice({
     loading: false, // * trường này dùng để hiển thị pop up loading trong lúc dợi API trả về response
     success: false, // * trường này dùng để hiển thị pop up success nếu như gọi API thành công
     fail: false, //* trường này dùng để hiển thị pop up fail nếu như gọi API thất bại
-    result:[],
+    result: [],
     error: "",
     updateDashboard: [
       {
@@ -60,16 +75,16 @@ const dashboardSlice = createSlice({
 
   // ! Với kết quả trả về đều sẽ có 3 trường là meta,data và error, ta viết ở dưới này để coi sẽ phải làm những gì cho từng loại kêt quả
   extraReducers: {
-    [getDashboard.fulfilled]:(state,action)=>{
-        state.result=action.payload
-        // console.table(action.payload)
+    [getDashboard.fulfilled]: (state, action) => {
+      state.result = action.payload;
+      // console.table(action.payload)
     },
-    [getDashboard.rejected]:(state)=>{
-      console.log("Dashboard lấy về ko thành công")
+    [getDashboard.rejected]: (state) => {
+      console.log("Dashboard lấy về ko thành công");
     },
-    [getDashboard.pending]:state=>{
-      console.log("Dashboard đang pending")
-    }
+    [getDashboard.pending]: (state) => {
+      console.log("Dashboard đang pending");
+    },
   },
 });
 

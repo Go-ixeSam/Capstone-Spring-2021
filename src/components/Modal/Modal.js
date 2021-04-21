@@ -73,7 +73,6 @@ export const LoadingPopUp = (argument) => {
             fontWeight: "bold",
           }}
         >
-          Đang xử lí
         </p>
       </div>
     </Modal>

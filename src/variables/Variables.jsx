@@ -569,7 +569,7 @@ var optionsSales = {
   height: 200,
   // height: "200px",
   axisX: {
-    showGrid: false,
+    showGrid: true,
     showLabel: true,
   },
   axisY: {
@@ -598,8 +598,8 @@ var responsiveSales = [
   ],
 ];
 var legendSales = {
-  names: ["New post", "New garden", "New vegetable", "aha"],
-  types: ["info", "danger", "warning", "purple"],
+  names: ["New post", "New garden"],
+  types: ["info", "danger",],
 };
 
 // Data for Bar Chart
