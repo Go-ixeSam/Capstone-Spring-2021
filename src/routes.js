@@ -49,13 +49,13 @@ const dashboardRoutes = [
   //   component: SignIn,
   //   layout: "/admin",
   // },
-  {
-    path: "/user",
-    name: "User Profile",
-    icon: faUser,
-    component: UserProfile,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/user",
+  //   name: "User Profile",
+  //   icon: faUser,
+  //   component: UserProfile,
+  //   layout: "/admin",
+  // },
   {
     path: "/testing",
     name: "Fireabase Realtime",
@@ -63,13 +63,13 @@ const dashboardRoutes = [
     component: Test,
     layout: "/admin",
   },
-  {
-    path: "/account",
-    name: "Account",
-    icon: faUserPlus,
-    component: MaterialTable,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/account",
+  //   name: "Account",
+  //   icon: faUserPlus,
+  //   component: MaterialTable,
+  //   layout: "/admin",
+  // },
   {
     path: "/post",
     name: "Post",
@@ -84,13 +84,13 @@ const dashboardRoutes = [
     component: SystemCon,
     layout: "/admin",
   },
-  {
-    path: "/assignlabel",
-    name: "Labeling",
-    icon: faTags,
-    component: Label,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/assignlabel",
+  //   name: "Labeling",
+  //   icon: faTags,
+  //   component: Label,
+  //   layout: "/admin",
+  // },
   // {
   //   path: "/table",
   //   name: "Table List",

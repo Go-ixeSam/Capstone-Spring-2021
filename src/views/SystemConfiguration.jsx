@@ -8,20 +8,23 @@ import {
   getPercent,
   getPercentName,
   getPercentResult,
+  getSystemConfigLoading,
 } from "../redux/Selector/Selectors";
 import { Formik, Field, Form, useField, useFormikContext } from "formik";
+import { ShowPopUp, SuccessPopUp, LoadingPopUp } from "components/Modal/Modal";
 
 import * as variable from "../variables/Variables";
-import { addPercentReportName, getPercentById } from "../redux/index";
+import {
+  addPercentReportName,
+  getPercentById,
+  getAllPercentReport,
+  updatePercentThreshold,
+} from "../redux/index";
 import { MaterialButton } from "../components/CustomButton/MaterialButton";
 
 function SystemConfiguration() {
   const dispatch = useDispatch();
-  const percentDefault = useSelector(
-    (state) => getPercentResult(state)[0].precent
-  );
-  const systemConfigForm = useSelector((state) => getPercentReport(state));
-  const defaultData = useSelector((state) => getPercentResult(state));
+  const loading = useSelector((state) => getSystemConfigLoading(state));
   const percentNames = {
     elementConfig: {
       options: useSelector((state) => getPercentName(state)),
@@ -30,27 +33,22 @@ function SystemConfiguration() {
 
   React.useEffect(() => {
     // * khúc này lúc sau sẽ lấy giá trị percent đầu tiên của mảng percent report gửi về và đưa vào initialValue percent bằng cách gọi API
-
-    //! tạm dùng local để test trước
-    const stepByStep = () => {
-      dispatch(addPercentReportName());
-
-      //! phan set default nay se dc chay trong async khi chuyen qua goi API
-      // setPercentDefault(defaultData[0].precent);
+    const loadPercentName = async () => {
+      const res = await dispatch(getAllPercentReport());
+      dispatch(addPercentReportName(res.payload.data));
     };
-    stepByStep();
+    loadPercentName();
   }, []);
 
   const initialValue = {
     [variable.percentName]: "",
-    [variable.percent]: percentDefault,
+    [variable.percent]: "",
   };
 
   const MyField = (props) => {
     const percent = useSelector((state) => getPercent(state));
     const {
       values: { percentName },
-      // touched,
       setFieldValue,
     } = useFormikContext();
     const [field, meta] = useField(props);
@@ -60,10 +58,7 @@ function SystemConfiguration() {
         dispatch(getPercentById(percentName));
         setFieldValue(props.name, percent);
       };
-      set()
-      // if (touched.percentName) {
-      //   set();
-      // }
+      set();
     }, [percentName, percent]);
 
     return (
@@ -73,51 +68,79 @@ function SystemConfiguration() {
     );
   };
 
-  return (
-    <Grid fluid style={{ margin: 0, padding: 0 }}>
-      <CardNoFooter
-        title=""
-        content={
-          <React.Fragment>
-            <div style={{ width: "30%" }}>
-              <Formik
-                initialValues={initialValue}
-                //   validationSchema={validationSchema}
-                // onSubmit={onSubmit}
-              >
-                {(formik) => {
-                  return (
-                    <Form>
-                      <FormControll
-                        elementType="select"
-                        label={"Loại ngưỡng báo cáo"}
-                        name={variable.percentName}
-                        {...percentNames}
-                      />
-                      <MyField
-                        elementType="input"
-                        type="text"
-                        label={"Phần trăm ngưỡng"}
-                        name={variable.percent}
-                      />
+  const onSubmit = (value, onSubmitProps) => {
+    console.log("value, ", value);
+    const submitChange = async () => {
+      const res = await dispatch(
+        updatePercentThreshold({
+          id: value[variable.percentName],
+          name: "",
+          precent: value[variable.percent],
+        })
+      );
 
-                      <MaterialButton
-                        variant="contained"
-                        color="success"
-                        size="large"
-                        style={{ marginRight: 5, marginTop: 10 }}
-                      >
-                        Duyệt rau
-                      </MaterialButton>
-                    </Form>
-                  );
-                }}
-              </Formik>
-            </div>
-          </React.Fragment>
-        }
-      />
-    </Grid>
+      //* Update lai du lieu sau khi submit xong
+     const updateData= await dispatch(getAllPercentReport());
+      dispatch(addPercentReportName(updateData.payload.data));
+      console.log("submit= ", res);
+      onSubmitProps.setSubmitting(false);
+    };
+    submitChange();
+  };
+
+  return (
+    <React.Fragment>
+      <LoadingPopUp visible={loading} length="200px" />
+      <Grid fluid style={{ margin: 0, padding: 0 }}>
+        <CardNoFooter
+          title=""
+          content={
+            <React.Fragment>
+              <div style={{ width: "30%" }}>
+                <Formik
+                  initialValues={initialValue}
+                  //   validationSchema={validationSchema}
+                  onSubmit={onSubmit}
+                >
+                  {(formik) => {
+                    return (
+                      <Form>
+                        <FormControll
+                          elementType="select"
+                          label={"Loại ngưỡng báo cáo"}
+                          name={variable.percentName}
+                          {...percentNames}
+                        />
+                        <MyField
+                          elementType="input"
+                          type="text"
+                          label={"Phần trăm ngưỡng"}
+                          name={variable.percent}
+                        />
+
+                        <MaterialButton
+                          variant="contained"
+                          color="success"
+                          type="submit"
+                          size="large"
+                          disabled={
+                            formik.isSubmitting ||
+                           !formik.touched[variable.percent]
+                          }
+                          style={{ marginRight: 5, marginTop: 10 }}
+                        >
+                          Duyệt rau
+                        </MaterialButton>
+                      </Form>
+                    );
+                  }}
+                </Formik>
+              </div>
+            </React.Fragment>
+          }
+        />
+      </Grid>
+    </React.Fragment>
   );
 }
 

@@ -24,7 +24,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { DeleteButton } from "../../components/CustomButton/CustomButton";
+import { DeleteButton ,UnclockButton} from "../../components/CustomButton/CustomButton";
 import SearchOption from "../../components/FilterOption/SearchOption/SearchBar";
 import { getLocked, removeAdvanceRecordSelected,setSelectedAccountID } from "../../redux";
 import {
@@ -184,6 +184,7 @@ export default function EnhancedTable(props) {
 
   // * cái row ở bên store truyền từ bên component vào
   const [rows, setRows] = React.useState(props.bodyData);
+  // const rows =props.bodyData;
 
   //* cái row ở trực tiếp bên store luôn
   let directRowBody = useSelector((state) => getAdvanceData(state));
@@ -197,10 +198,10 @@ export default function EnhancedTable(props) {
   // ! Dùng để kiểm tra sự thay đổi của  const rowWithDataFromStore = props.bodyData;
   //!  lấy trực tiếp từ store. Vì ở đây rows đc khởi tạo với useState nên nếu như
   //! ko thực hiện hàm set của nó thì dù store có thay đổi state thì nó cũng ko tự trigger render
-  React.useEffect(() => {
-    console.log("Đã vào effect", rowWithDataFromStore);
-    setRows(rowWithDataFromStore);
-  }, rowWithDataFromStore);
+  // React.useEffect(() => {
+  //   console.log("Đã vào effect", rowWithDataFromStore);
+  //   setRows(rowWithDataFromStore);
+  // }, rowWithDataFromStore);
 
   //* Dùng để thông báo rằng những field ko cần phải show ở table
 
@@ -285,10 +286,17 @@ export default function EnhancedTable(props) {
     console.log("đc lua", selected);
   };
 
-  const deleteRow = () => {
+  // const deleteRow = () => {
+  //   console.log("row moi: ", selected);
+  //   dispatch(removeAdvanceRecordSelected(selected));
+  //   //! tìm ra những row đc lựa chọng
+  // };
+  const lockRow = () => {
     console.log("row moi: ", selected);
-    dispatch(removeAdvanceRecordSelected(selected));
-    //! tìm ra những row đc lựa chọng
+    const getUnlock=async ()=>{
+      // const res=await dispatch(isAccept())
+
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -318,10 +326,10 @@ export default function EnhancedTable(props) {
       console.log("search value", values);
       switch (values["filtervalue"]) {
         case "Name":
-          console.log(
-            setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]))
-          );
-          setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]));
+          // console.log(
+          //   setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]))
+          // );
+          // setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]));
           break;
         case " Age":
           console.log("result", values["filtervalue"]);
@@ -471,7 +479,9 @@ export default function EnhancedTable(props) {
                         >
                           {selected.length} được chọn
                         </p>
-                        <DeleteButton click={deleteRow} />
+                        {/* <DeleteButton click={deleteRow} /> */}
+                        <UnclockButton click={lockRow} />
+                        
                       </div>
                     ) : (
                       <Typography
@@ -485,7 +495,7 @@ export default function EnhancedTable(props) {
                     )}
                   </div>
                 </TableCell>
-                <TableCell colSpan={4} size={"small"} style={{ padding: 0 }}>
+                <TableCell colSpan={8} size={"small"} style={{ padding: 0 }}>
                   <TablePagination
                     style={{ fontSize: 14 }}
                     rowsPerPageOptions={[5, 10, 25]}

@@ -34,6 +34,7 @@ const loginSlice= createSlice({
     success: false, // * trường này dùng để hiển thị pop up success nếu như gọi API thành công
     fail: false, //* trường này dùng để hiển thị pop up fail nếu như gọi API thất bại
     error: "",
+    expiresTime:"",
     signInForm: [
       {
         row: {
@@ -77,6 +78,7 @@ const loginSlice= createSlice({
     logOut: (state, action) => {
       console.log("Đã vào logout")
       state.token = "";
+      localStorage.setItem("token","")
     },
   },
 
@@ -89,7 +91,9 @@ const loginSlice= createSlice({
     [login.fulfilled]: (state, action) => {
       console.log("actioon: ", action.payload);
       state.token = action.payload.data.token;
-      variable.token=action.payload.token;
+      state.expiresTime=action.payload.data.expiresTime;
+      localStorage.setItem("token",action.payload.data.token)
+      // variable.token=action.payload.data.token;
     },
   },
 });

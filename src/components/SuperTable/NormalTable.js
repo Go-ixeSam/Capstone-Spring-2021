@@ -5,6 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
+import { prepareVegetableData } from "util/Helper";
 import { setVisible, isAccept, getAllVegetableUnapproved } from "redux/index";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -196,10 +197,10 @@ export default function NormalTable(props) {
   // ! Dùng để kiểm tra sự thay đổi của  const rowWithDataFromStore = props.bodyData;
   //!  lấy trực tiếp từ store. Vì ở đây rows đc khởi tạo với useState nên nếu như
   //! ko thực hiện hàm set của nó thì dù store có thay đổi state thì nó cũng ko tự trigger render
-  React.useEffect(() => {
-    console.log("Đã vào effect", rowWithDataFromStore);
-    setRows(rowWithDataFromStore);
-  }, rowWithDataFromStore);
+  // React.useEffect(() => {
+  //   console.log("Đã vào effect", rowWithDataFromStore);
+  //   setRows(rowWithDataFromStore);
+  // }, rowWithDataFromStore);
 
   //* Dùng để thông báo rằng những field ko cần phải show ở table
   const { headCells } = props;
@@ -242,11 +243,15 @@ export default function NormalTable(props) {
 
   /**
    * ! row sẽ tượng trưng cái row đc click
+   * * Cái này chỉ là chọn đc những cái row đc click thôi,
+   * * Muốn nó hiện màu ở checkbox còn phải, thay đổi ở chỗ
+   * * này nữa: const isItemSelected = isSelected(row.ID);
    * @param {*} event
    * @param {*} row
    */
   const handleClick = (event, row) => {
-    const { vegetableName: name } = row;
+    //* row đc click sẽ dựa theo ID của nó
+    const { ID: name } = row;
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
@@ -278,22 +283,50 @@ export default function NormalTable(props) {
    ** Hàm dùng để duyệt những rau đúng thông tin
    ** Vì ở đây là duyệt nhiều rau cùng 1 lúc nên sẽ có 1 vòng lập xử lí
    */
-  // const passTest = async () => {
-  //   console.log("Những row đc lựa chọn: ", selected);
-  //   selected.map(item=>{
-  //     await dispatch(isAccept({Id:item.id,Status:""}));
-  //   })
-  // };
+  const passTest = () => {
+    console.log("Những row đc lựa chọn: ", selected);
+    selected.map((item) => {
+      dispatch(isAccept({
+        Id:item,
+        Status:2
+      })).then((res) => {
+        console.log("Nhìn nè", res);
+
+        //! sau khi submit thành công thì cập nhật row và load lại list
+        dispatch(getAllVegetableUnapproved()).then(
+          res=>{ 
+            const hava=[]
+            prepareVegetableData(res.payload.data,hava)
+            setRows(hava)
+          }
+        )
+      });
+    });
+  };
 
   /**
    ** Hàm dùng để từ chối những rau sai thông tin
    */
-  // const failTest = () => {
-  //   console.log("Những row đc lựa chọn: ", selected);
-  //   selected.map(item=>{
-  //     await dispatch(isAccept({Id:item.id,Status:""}));
-  //   })
-  // };
+  const failTest = () => {
+    console.log("Những row đc lựa chọn: ", selected);
+    selected.map((item) => {
+      dispatch(isAccept({
+        Id:item,
+        Status:3
+      })).then((res) => {
+        console.log("Nhìn nè", res);
+
+        //! sau khi submit thành công thì cập nhật row và load lại list
+        dispatch(getAllVegetableUnapproved()).then(
+          res=>{ 
+            const hava=[]
+            prepareVegetableData(res.payload.data,hava)
+            setRows(hava)
+          }
+        )
+      });
+    });
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -359,7 +392,7 @@ export default function NormalTable(props) {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.vegetableName);
+                  const isItemSelected = isSelected(row.ID);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   const objectInArr = []; //! cái array này sẽ chứa
@@ -376,7 +409,7 @@ export default function NormalTable(props) {
                   headCells.map((obj) => {
                     objectInArr.map((cell) => {
                       if (obj.id == cell.key) {
-                        console.log("cell", cell.key, " obj", obj.id);
+                        // console.log("cell", cell.key, " obj", obj.id);
                         //! phần tử trong mảng final có 2 cái, đặc biệt là numeric giúp cho việc hiển thị giữa dữ liệu chữ và số đẹp hơn ở mỗi row của table
                         finalArray.push({
                           value: cell.value,
@@ -505,11 +538,9 @@ export default function NormalTable(props) {
                           {selected.length} được chọn
                         </p>
                         {/* <DeleteButton click={deleteRow} /> */}
-                        <CheckCircleButton 
-                        // click={passTest} 
-                        />
-                        <CancelButton 
-                        // click={failTest} 
+                        <CheckCircleButton click={passTest} />
+                        <CancelButton
+                        click={failTest}
                         />
                       </div>
                     ) : (

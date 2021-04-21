@@ -1,6 +1,6 @@
 import * as variable from "variables/Variables";
 import { getDates, removeDuplicateDate } from "util/Helper";
-
+import { createVegetableData } from "util/ContructorCreation";
 export function getList(state) {
   return state.contract.listTestSelectorstSelector;
 }
@@ -8,12 +8,16 @@ export function getList(state) {
 export function getTrip(state) {
   return state.trip.tripData;
 }
-export function getVegetableAPIloadingTime(state){
-  return state.post.loading
+export function getVegetableAPIloadingTime(state) {
+  return state.post.loading;
 }
 
 export function getAdvanceData(state) {
   return state.account.accountData;
+}
+
+export function getSystemConfigLoading(state) {
+  return state.systemConfig.loading;
 }
 
 export function getAdvanceSelectedData(state) {
@@ -34,6 +38,37 @@ export function getModalVisible(state) {
 }
 export function getToken(state) {
   return state.login.token;
+}
+export function getAllVegetable(state) {
+  // return state.post.getAllVegetableUnapprovedCurrent
+  console.log(state.post.getAllVegetableUnapprovedCurrent);
+  const datas = state.post.getAllVegetableUnapprovedCurrent;
+  const tableBodyData = [];
+  let image = "";
+  if (Object.keys(datas).length!==0) {
+    datas.map((data) => {
+      if (data.images) {
+        if (data.images.length > 0) {
+          if (data.images[0].url) {
+            image = data.images[0].url;
+          }
+        }
+      }
+      tableBodyData.push(
+        createVegetableData(
+          data.name,
+          data.idDescription,
+          data.feature,
+          data.description,
+          image
+        )
+      );
+    });
+  }
+  return tableBodyData;
+}
+export function getTokenExpiredTime(state) {
+  return state.login.expiresTime;
 }
 /**
  * * Hàm sẽ trả về 1 mảng chứa những ngày tạo bài đã loại bỏ trùng nhau từ account id
@@ -67,28 +102,28 @@ export function getReportedPost(state) {
   return state.post.reportedPosts;
 }
 
-export function getPercentReport(state){
-  return state.systemConfig.systemConfigForm
+export function getPercentReport(state) {
+  return state.systemConfig.systemConfigForm;
 }
 
-export function getPercent(state){
-  return state.systemConfig.percent
+export function getPercent(state) {
+  return state.systemConfig.percent;
 }
 
-export function getPercentResult(state){
-  return state.systemConfig.percentResult
+export function getPercentResult(state) {
+  return state.systemConfig.percentResult;
 }
 
-export function getPercentName(state){
-  return state.systemConfig.percentNames
+export function getPercentName(state) {
+  return state.systemConfig.percentNames;
 }
 
 export function getSignInForm(state) {
   return state.login.signInForm;
 }
 
-export function getDashboardUpdate(state){
-  return state.dashboard.updateDashboard
+export function getDashboardUpdate(state) {
+  return state.dashboard.updateDashboard;
 }
 
 export function getFirebase(state) {

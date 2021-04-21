@@ -92,7 +92,7 @@ export const SuccessPopUp = (argument) => {
             fontWeight: "bold",
           }}
         >
-          Thành công
+          {/* Thành công */}
         </p>
       </div>
     </Modal>

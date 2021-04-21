@@ -112,7 +112,7 @@ export default function StickyHeadTable() {
                   <EnhancedTable
                     headCells={materialHeader}
                     bodyData={materialBody}
-                    actionbuttonlist={["remove"]}
+                    actionbuttonlist={["remove",]}
                     // actionbuttonlist={[]}
                   />
                 </Col>

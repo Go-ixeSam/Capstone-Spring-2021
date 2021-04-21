@@ -9,7 +9,6 @@ import {
 } from "util/ContructorCreation";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
-
 /**
  * * Có một chút khác biệt khi ta tạo async action,
  * * thay vì hồi trước slice mà ta tạo ra sẽ cho ta 2 biến là reducer và actions thì
@@ -48,25 +47,54 @@ export const getPlantInfo = createAsyncThunk(
   }
 );
 export const login = createAsyncThunk(
-  "account/",
+  "account/login",
   async (params, thunkAPI) => {
     const result = await JSONPLACEHOLDERApi.getPlantInfo(params);
     return result;
   }
 );
 
-
 const account = createSlice({
   name: "account",
   initialState: {
-    token:"",
+    token: "",
     accountData: [
       //  createAccountData(1,"alive","Khá bảnh","samxxx@gmail.com","08/17/1998","Nam","02/23/2021","08081501"),
       //  createAccountData(2,"dead","Khong bảnh lắm","samxxx@gmail.com","02/17/1990","Nam","02/23/2021","08081501"),
       //  createAccountData(3,"alive","Okiem ","samxxx@gmail.com","01/17/1991","Nữ","02/23/2021","08081501"),
-      createAccountData("1", "a live", "Khá bảnh", "02/23/2021","12","samxxx@gmail.com","08/17/1998","Nam","090242342"),
-      createAccountData("2", "dead", "Khong bảnh lắm", "02/23/2021","23","samxxx@gmail.com","02/17/1990","Nam","042342334"),
-      createAccountData("3", "alive", "Okiem ", "02/23/2021","5","samxxx@gmail.com","01/17/1991","Nữ","0774342234"),
+      createAccountData(
+        "1",
+        "a live",
+        "Khá bảnh",
+        "02/23/2021",
+        "12",
+        "samxxx@gmail.com",
+        "08/17/1998",
+        "Nam",
+        "090242342"
+      ),
+      createAccountData(
+        "2",
+        "dead",
+        "Khong bảnh lắm",
+        "02/23/2021",
+        "23",
+        "samxxx@gmail.com",
+        "02/17/1990",
+        "Nam",
+        "042342334"
+      ),
+      createAccountData(
+        "3",
+        "alive",
+        "Okiem ",
+        "02/23/2021",
+        "5",
+        "samxxx@gmail.com",
+        "01/17/1991",
+        "Nữ",
+        "0774342234"
+      ),
     ],
     accountTableHeader: [
       createHeader("Người dùng", false, true, variable.userName),
@@ -76,7 +104,12 @@ const account = createSlice({
       createHeader("Giới tính", false, true, variable.sex),
       createHeader("Trạng thái", false, true, variable.accoutStatus),
       createHeader("Số điện thoại", true, false, variable.phone),
-      createHeader("Số lượng bài bị báo cáo", true, false, variable.numberOfReport),
+      createHeader(
+        "Số lượng bài bị báo cáo",
+        true,
+        false,
+        variable.numberOfReport
+      ),
     ],
     current: {},
     loading: false, // * trường này dùng để hiển thị pop up loading trong lúc dợi API trả về response

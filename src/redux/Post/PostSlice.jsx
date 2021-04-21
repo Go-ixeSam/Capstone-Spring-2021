@@ -1,6 +1,7 @@
 // import ContractType from "./contractType";
 // import * as variable from "../../variables/Variables";
 import JSONPLACEHOLDERApi from "api/JSONPLACEHOLDERApi";
+import { useAPICalling } from "api/JSONPLACEHOLDERApi";
 import {
   convertDateToString,
   createHeader,
@@ -229,7 +230,8 @@ const post = createSlice({
       state.loading = false;
     },
     [getAllVegetableUnapproved.fulfilled]: (state, action) => {
-      state.getAllVegetableUnapprovedCurrent = action.payload;
+      state.getAllVegetableUnapprovedCurrent = action.payload.data;
+      console.log("result= ", action.payload.data);
       state.loading = false;
     },
   },

@@ -196,7 +196,7 @@ const Admin = (props) => {
       document.scrollingElement.scrollTop = 0;
       mainPanel.scrollTop = 0;
     }
-  }, [mainPanel]);
+  }, []);
 
   // ! Lắng nghe sự thay đổi của database trên firebase
   const firebaseListening = (params) => {

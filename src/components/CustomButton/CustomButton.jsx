@@ -26,6 +26,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import * as variable from "../../variables/Variables"
 class CustomButton extends Component {
   render() {
@@ -56,9 +57,16 @@ export const DeleteButton = (props) => {
     </IconButton>
   );
 };
+export const UnclockButton = (props) => {
+  return (
+    <IconButton aria-label="unlock" onClick={props.click} style={{color:variable.alternativePrimaryColor}}>
+      <LockOpenIcon />
+    </IconButton>
+  );
+};
 export const CheckCircleButton = (props) => {
   return (
-    <IconButton aria-label="delete" onClick={props.click} style={{color:variable.alternativePrimaryColor}}>
+    <IconButton aria-label="checkCircleButton" onClick={props.click} style={{color:variable.alternativePrimaryColor}}>
       <CheckCircleIcon />
     </IconButton>
   );

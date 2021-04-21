@@ -25,7 +25,7 @@ const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 export const updatePercentThreshold = createAsyncThunk(
   "PrecentReport/put",
   async (params, thunkAPI) => {
-    const result = await JSONPLACEHOLDERApi.login(params);
+    const result = await JSONPLACEHOLDERApi.editPrecentReport(params);
     return result;
   }
 );
@@ -34,7 +34,7 @@ export const updatePercentThreshold = createAsyncThunk(
 export const getAllPercentReport = createAsyncThunk(
   "PrecentReport/GetAll",
   async (params, thunkAPI) => {
-    const result = await JSONPLACEHOLDERApi.login(null);
+    const result = await JSONPLACEHOLDERApi.getAllPercent(null);
     return result;
   }
 );
@@ -59,8 +59,8 @@ const systemConfig = createSlice({
     fail: false, //* trường này dùng để hiển thị pop up fail nếu như gọi API thất bại
     error: "",
     selectedId: "",
-    percent:"",
-    percentNames:[],
+    percent: "",
+    percentNames: [],
     systemConfigForm: [
       {
         row: {
@@ -93,23 +93,23 @@ const systemConfig = createSlice({
     //   ! Hàm dùng để đưa các lựa chọn về loại percent vào form
     addPercentReportName: (state, action) => {
       //* Cái phần commend này là dùng để lấy từ API
-      //   state.systemConfigForm[0].row.cols[0].elementConfig.options =
-      //     action.payload;
+      state.systemConfigForm[0].row.cols[0].elementConfig.options =action.payload;
       let arra = [];
-      state.percentResult.map((percent) => {
-        arra.push({ key: percent.name, value: percent.id });
-      });
+      state.systemConfigForm[0].row.cols[0].elementConfig.options.map(
+        (percent) => {
+          arra.push({ key: percent.name, value: percent.id });
+        }
+      );
       state.percentNames = arra;
     },
- 
 
     //* Hàm này dùng để lấy ra cái percent đúng với cái ID
     getPercentById: (state, action) => {
-        state.percentResult.map(item=>{
-            if(action.payload==item.id){
-                state.percent=item.precent
-            }
-        })
+      state.systemConfigForm[0].row.cols[0].elementConfig.options.map((item) => {
+        if (action.payload == item.id) {
+          state.percent = item.precent;
+        }
+      });
     },
   },
 
@@ -126,9 +126,20 @@ const systemConfig = createSlice({
       state.percentResult = action.payload;
       state.loading = false;
     },
+    [updatePercentThreshold.pending]: (state) => {
+      state.loading = true;
+    },
+    [updatePercentThreshold.rejected]: (state, action) => {
+      state.error = action.error;
+      state.loading = false;
+    },
+    [updatePercentThreshold.fulfilled]: (state, action) => {
+      state.percentResult = action.payload;
+      state.loading = false;
+    },
   },
 });
 
 const { reducer: systemConfigReducer, actions } = systemConfig; //createSlice sẽ trả về cho ta 2 biến là reducer và action
-export const { addPercentReportName,getPercentById } = actions;
+export const { addPercentReportName, getPercentById } = actions;
 export default systemConfigReducer;

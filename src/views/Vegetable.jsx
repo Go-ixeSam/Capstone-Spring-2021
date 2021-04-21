@@ -1,51 +1,56 @@
 import richado from "assets/img/richasdo.jpg";
-import { ShowPopUp, SuccessPopUp ,LoadingPopUp} from "components/Modal/Modal";
+import { ShowPopUp, SuccessPopUp, LoadingPopUp } from "components/Modal/Modal";
 import NormalTable from "components/SuperTable/NormalTable";
-import React from "react";
+import React, { useState } from "react";
 import { Col, Grid, Row } from "react-bootstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
+import { prepareVegetableData } from "util/Helper";
 import { useDispatch, useSelector } from "react-redux";
-import { setVisible, isAccept, getAllVegetableUnapproved } from "redux/index";
+import {
+  setVisible,
+  isAccept,
+  getAllVegetableUnapproved,
+  // useWantAllVegetableUnapproved,
+} from "redux/index";
 import { CardNoFooter } from "../components/Card/Card";
+// import { useAPICalling } from "api/JSONPLACEHOLDERApi";
 import { MaterialButton } from "../components/CustomButton/MaterialButton";
 import {
   getModalVisible,
   getPostTableBodyData,
   getPostTableHeader,
-  getVegetableAPIloadingTime
+  getVegetableAPIloadingTime,
+  getAllVegetable,
 } from "../redux/Selector/Selectors";
 import * as variable from "../variables/Variables";
-
+import { createVegetableData } from "util/ContructorCreation";
+import { dataSales } from "variables/Variables";
 function Post() {
   let materialBody = useSelector((state) => getPostTableBodyData(state));
   let materialHeader = useSelector((state) => getPostTableHeader(state));
-  let loading=useSelector((state)=>getVegetableAPIloadingTime(state));
+  let loading = useSelector((state) => getVegetableAPIloadingTime(state));
   let [successVisible, setSuccessVisible] = React.useState(false);
+  const [tableBodyData, setTableBodyData] = useState([]);
+  const currentVegetableList = useSelector((state) => getAllVegetable(state));
+  console.log("table đây= ", tableBodyData);
   let dispatch = useDispatch();
   let visible = useSelector((state) => getModalVisible(state));
   const HeightLength = "200px";
   const WidthLength = "300px";
 
-  // * convert dữ liệu từ API trả về thành dữ liệu có thể hiển thị lên table
-  const prepareVegetableData = (data) => {};
-
   React.useEffect(() => {
-    const getAllVegetbale = async () => {
-      const response = await dispatch(getAllVegetableUnapproved());
-      prepareVegetableData(response.data);
-    };
-  });
-  // ! Tắt cái modal đi
-  function closeModal() {
-    dispatch(setVisible(false));
-  }
-  function autoCloseSuccessModal() {
-    setSuccessVisible(true);
-    setTimeout(function () {
-      setSuccessVisible(false);
-    }, 2000);
-  }
+    dispatch(getAllVegetableUnapproved()).then((response) => {
+      prepareVegetableData(response.payload.data, tableBodyData);
+      setTableBodyData(tableBodyData);
+    });
+  }, []);
+  const closeModal = () => {
+    return "";
+  };
+  const autoCloseSuccessModal = () => {
+    return "";
+  };
   return (
     <React.Fragment>
       <ShowPopUp visible={visible} onCLose={closeModal} length="50%">
@@ -204,7 +209,7 @@ function Post() {
             content={
               <NormalTable
                 headCells={materialHeader}
-                bodyData={materialBody}
+                bodyData={tableBodyData}
                 notShowing={[variable.islock]}
                 actionbuttonlist={["remove"]}
               />
