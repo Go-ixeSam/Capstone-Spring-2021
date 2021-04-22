@@ -1,7 +1,7 @@
 import { Box } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import { FormControll } from "components/Formik/FormikControl";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import loginReducer from "redux/Login/LoginSlice";
@@ -11,6 +11,7 @@ import * as Yup from "yup";
 import "../components/SignIn/style.scss";
 import { getALL, getPlantInfo, login, sharingDetail } from "redux/index";
 import { loginToWeb } from "components/Hook/CustomHook";
+import message from "util/firebase";
 
 let width = 240;
 let marginBottom = 5;
@@ -56,20 +57,52 @@ const validationSchema = Yup.object({
 function Signin() {
   const token = useSelector((state) => getToken(state));
   const signInForm = useSelector((state) => getSignInForm(state));
+  const [firebaseToken, setFirebaseToken] = React.useState("");
   const dispatch = useDispatch();
+  React.useEffect(() => {
+    //! laasy firebase token cai da
+    // const messaging = firebase.messaging();
+    // Get registration token. Initially this makes a network call, once retrieved
+    // subsequent calls to getToken will return from cache.
+    message
+      .getToken({
+        vapidKey:
+          "BJT4KMAdFm6G8Sjq49q8RmDMsP6w0jPUghMTSMcdfkduJnBNzfxsSlLGEAMQzKjsu1aCtCtGA9TBT4D1wCk4SxM",
+      })
+      .then((currentToken) => {
+        if (currentToken) {
+          // Send the token to your server and update the UI if necessary
+          // ...
+          setFirebaseToken(currentToken);
+          console.log("firebae token day=", currentToken);
+        } else {
+          // Show permission request UI
+          console.log(
+            "No registration token available. Request permission to generate one."
+          );
+          // ...
+        }
+      })
+      .catch((err) => {
+        console.log("An error occurred while retrieving token. ", err);
+        // ...
+      });
+  }, []);
   const onSubmit = (value, onSubmitProps) => {
     console.log("submit value: ", value);
     //* giá trị của submiting thì formik sẽ tự động set khi ta dùng đén fieldError, bỏi vì nó làm thay đổi đến object error nên submiting sẽ ko
     //* chuyển thành true
 
     //! Nếu như token bằng rỗng thì chứng tỏ mật khẩu sai
+    console.log("token lên web", firebaseToken);
     dispatch(
       login({
         phoneNumber: value.username,
+        deviceToken: firebaseToken,
         password: value.password,
       })
-      //* * Ở đây ta dùng .then là vì createAsyncThunk nó trả về 1 promise, nếu như ta dùng asynce await để nhận thì 
-      //* sẽ vi phạm nguyên tắc hook là bỏ hook trong 1 nested function 
+      //* * Ở đây ta dùng .then là vì createAsyncThunk nó trả về 1 promise, nếu như ta dùng asynce await để nhận thì
+      //* sẽ vi phạm nguyên tắc hook là bỏ hook trong 1 nested function
       //* ở dưới đang là check token trong store, nếu ta muốn sử dụng result từ .then trả về thì
       //! .then((result)=>{ }), lúc này ta vẫn có thể sử dụng popUp loading,success và fail như ta hằng mong muốn
     ).then(() => {
@@ -79,7 +112,6 @@ function Signin() {
           "Hãy kiểm tra lại mật khẩu hoặc tên đăng nhập của bạn"
         );
       } else {
-        
         // alert("Ok rồi nha");
       }
     });

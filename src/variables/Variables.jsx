@@ -679,6 +679,7 @@ const reportCount = "reportCount";
 const negativeCommendCount = "negativeCommendCount";
 const advanceTableData = "advanceTableData";
 const tableHeader = "tableHeader";
+const vapidAPIKey="BNZzdzfi0VcWMVR2Ycq7z32Uw8XURgH0Bxw-G6Y0Al88vvlzQ5PzGQNtbjarbhogI5DpxshHlzwb5O-Wq4ncid0"
 /**
  * *Các loại input
  */
@@ -787,4 +788,5 @@ module.exports = {
   vegetableImage,
   description,
   uses,
+  vapidAPIKey
 };

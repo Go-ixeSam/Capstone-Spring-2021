@@ -56,13 +56,13 @@ const dashboardRoutes = [
   //   component: UserProfile,
   //   layout: "/admin",
   // },
-  {
-    path: "/testing",
-    name: "Fireabase Realtime",
-    icon: faUser,
-    component: Test,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/testing",
+  //   name: "Fireabase Realtime",
+  //   icon: faUser,
+  //   component: Test,
+  //   layout: "/admin",
+  // },
   // {
   //   path: "/account",
   //   name: "Account",

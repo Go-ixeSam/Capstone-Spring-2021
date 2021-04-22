@@ -23,12 +23,12 @@ import React, { useRef, useState } from "react";
 import NotificationSystem from "react-notification-system";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
-import { addObject } from "redux/index";
+import { addObject,increaseNotificationCount } from "redux/index";
 import { getFirebase } from "redux/Selector/Selectors";
 import routes from "routes.js";
-import firebase from "util/firebase";
+import message from "util/firebase";
 import { style } from "variables/Variables.jsx";
-
+import * as variable from "../variables/Variables";
 const Admin = (props) => {
   const [image, setImage] = useState(imageSide);
   const [color, setColor] = useState("black");
@@ -160,18 +160,89 @@ const Admin = (props) => {
     }
   };
 
+  // * cho này để lắng nghe firebase DB realtime, ta ko dùng nữa
   React.useEffect(() => {
-    console.log("arrr= ", dataInFirebase.firebaseData);
-    firebaseListening();
-    return () => {
-      removeFirebaseListening();
-    };
+    // notifyMe();
+    // const messaging=firebase.message()
+    //     message.requestPermission()
+    //     .then(async function() {
+    //       const token = await messaging.getToken();
+    //       console.log("token nè Amdin, ",token)
+    //     })
+    //     .catch(function(err) {
+    //       console.log("Unable to get permission to notify.", err);
+    //     });
+    // navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
+    // const messaging = firebase.messaging();
+    // Get registration token. Initially this makes a network call, once retrieved
+    // subsequent calls to getToken will return from cache.
+    message
+      .getToken({
+        vapidKey:
+          "BJT4KMAdFm6G8Sjq49q8RmDMsP6w0jPUghMTSMcdfkduJnBNzfxsSlLGEAMQzKjsu1aCtCtGA9TBT4D1wCk4SxM",
+        // "AAAAZBez2YQ:APA91bHgjYoWKRpPhXQJ9jIo6EO8ZihVV18bJZEHpES5Yc4Z7lk6icP3sZsfBOzYwZeFBPB7ay9h4XJ89764qBf7_s33JQ9E08qYthGYWM2MnDXCtb5ckHR7HI7krRUl0ZFJ8o5SpZZM",
+      })
+      .then((currentToken) => {
+        if (currentToken) {
+          // Send the token to your server and update the UI if necessary
+          // ...
+          console.log("toen nè", currentToken);
+        } else {
+          // Show permission request UI
+          console.log(
+            "No registration token available. Request permission to generate one."
+          );
+          // ...
+        }
+      })
+
+      .catch((err) => {
+        console.log("An error occurred while retrieving token. ", err);
+        // ...
+      });
+    message.onMessage((payload) => {
+      console.log("Message received. ", payload);
+
+      //! cứ mỗi 1 noti đến là cộgn thêm 1
+      increaseNotificationCount()
+      addNotify()
+    });
+
+    // navigator.serviceWorker.addEventListener("message", (message) =>
+    //   console.log(message)
+    // );
   }, []);
 
+  function notifyMe() {
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+      alert("This browser does not support desktop notification");
+    }
+
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      // If it's okay let's create a notification
+      var notification = new Notification("Hi there!");
+    }
+
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== "denied") {
+      Notification.requestPermission(function (permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          var notification = new Notification("Hi there!");
+        }
+      });
+    }
+
+    // At last, if the user has denied notifications, and you
+    // want to be respectful there is no need to bother them any more.
+  }
   React.useEffect(() => {
     //! setIsNotify dùng để ngăn cho ko hiện notification khi lần đầu event listener đc nổ
     setIsNotify(isNotify + 1);
 
+    //! đây là đk để nổi notification =_
     if (dataInFirebase.firebaseData.length != 0 && isNotify >= 2) {
       addNotify();
     }
@@ -200,25 +271,23 @@ const Admin = (props) => {
 
   // ! Lắng nghe sự thay đổi của database trên firebase
   const firebaseListening = (params) => {
-    var userCount = firebase.database().ref("users");
-    userCount.on("value", (snapshot) => {
-      let newArr = [];
-      // ? Vì snapshot sẽ chỉ trả về các obj nên ta muốn nó thành 1 array ta phải làm bằng tay, chi tiết thế nào thì coi trong quick note
-      snapshot.forEach((child) => {
-        // console.log("child nè= ", child.val());
-
-        //chỉ bỏ những node child nào có status là no, tức là chưa đc duyệt
-        if (child.val()["status"] == "not") {
-          newArr.push({ ...child.val(), userId: child.key });
-        }
-      });
-      dispatch(addObject(newArr));
-    });
+    // var userCount = firebase.database().ref("users");
+    // userCount.on("value", (snapshot) => {
+    //   let newArr = [];
+    //   // ? Vì snapshot sẽ chỉ trả về các obj nên ta muốn nó thành 1 array ta phải làm bằng tay, chi tiết thế nào thì coi trong quick note
+    //   snapshot.forEach((child) => {
+    //     //chỉ bỏ những node child nào có status là no, tức là chưa đc duyệt
+    //     if (child.val()["status"] == "not") {
+    //       newArr.push({ ...child.val(), userId: child.key });
+    //     }
+    //   });
+    //   dispatch(addObject(newArr));
+    // });
   };
 
   //! bỏ lắng nghe khi cái component này unmount
   function removeFirebaseListening(params) {
-    firebase.database().ref("user").off("value");
+    // firebase.database().ref("user").off("value");
   }
   return (
     <div className="wrapper">

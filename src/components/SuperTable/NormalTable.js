@@ -6,7 +6,12 @@ import Paper from "@material-ui/core/Paper";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import { prepareVegetableData } from "util/Helper";
-import { setVisible, isAccept, getAllVegetableUnapproved } from "redux/index";
+import {
+  setVisible,
+  isAccept,
+  getAllVegetableUnapproved,
+  decreaseNotificationCount,
+} from "redux/index";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -21,7 +26,7 @@ import clsx from "clsx";
 import { useFormik } from "formik";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -179,14 +184,10 @@ export default function NormalTable(props) {
   const classes = useStyles();
 
   // ! row này sẽ đại diện cho dữ liệu lấy trực tiếp từ store (global)
-  const rowWithDataFromStore = props.bodyData;
   const actionButtonList = props.actionbuttonlist;
 
   // * cái row ở bên store truyền từ bên component vào
-  const [rows, setRows] = React.useState(props.bodyData);
-
-  //* cái row ở trực tiếp bên store luôn
-  let directRowBody = useSelector((state) => getAdvanceData(state));
+  const [rows, setRows] = useState(props.bodyData);
 
   const dispatch = useDispatch();
   let history = useHistory(); // ! history object
@@ -194,13 +195,9 @@ export default function NormalTable(props) {
   // * Dùng để đánh dấu account đang bị lock
   const [isLock, setIsLock] = React.useState(0);
 
-  // ! Dùng để kiểm tra sự thay đổi của  const rowWithDataFromStore = props.bodyData;
-  //!  lấy trực tiếp từ store. Vì ở đây rows đc khởi tạo với useState nên nếu như
-  //! ko thực hiện hàm set của nó thì dù store có thay đổi state thì nó cũng ko tự trigger render
-  // React.useEffect(() => {
-  //   console.log("Đã vào effect", rowWithDataFromStore);
-  //   setRows(rowWithDataFromStore);
-  // }, rowWithDataFromStore);
+  React.useEffect(() => {
+    setRows(props.bodyData);
+  }, [props.bodyData]);
 
   //* Dùng để thông báo rằng những field ko cần phải show ở table
   const { headCells } = props;
@@ -286,20 +283,22 @@ export default function NormalTable(props) {
   const passTest = () => {
     console.log("Những row đc lựa chọn: ", selected);
     selected.map((item) => {
-      dispatch(isAccept({
-        Id:item,
-        Status:2
-      })).then((res) => {
+      dispatch(
+        isAccept({
+          Id: item,
+          Status: 2,
+        })
+      ).then((res) => {
         console.log("Nhìn nè", res);
 
         //! sau khi submit thành công thì cập nhật row và load lại list
-        dispatch(getAllVegetableUnapproved()).then(
-          res=>{ 
-            const hava=[]
-            prepareVegetableData(res.payload.data,hava)
-            setRows(hava)
-          }
-        )
+        dispatch(getAllVegetableUnapproved()).then((res) => {
+          const hava = prepareVegetableData(res.payload.data);
+
+          //! sau khi pass hết các cây hợp lệ thì số lượng noti sẽ giảm dựa theo các cây đã đc pass, với fail cũng vậy
+          decreaseNotificationCount(selected.length);
+          setRows(hava);
+        });
       });
     });
   };
@@ -309,21 +308,22 @@ export default function NormalTable(props) {
    */
   const failTest = () => {
     console.log("Những row đc lựa chọn: ", selected);
+
     selected.map((item) => {
-      dispatch(isAccept({
-        Id:item,
-        Status:3
-      })).then((res) => {
+      dispatch(
+        isAccept({
+          Id: item,
+          Status: 3,
+        })
+      ).then((res) => {
         console.log("Nhìn nè", res);
 
         //! sau khi submit thành công thì cập nhật row và load lại list
-        dispatch(getAllVegetableUnapproved()).then(
-          res=>{ 
-            const hava=[]
-            prepareVegetableData(res.payload.data,hava)
-            setRows(hava)
-          }
-        )
+        dispatch(getAllVegetableUnapproved()).then((res) => {
+          decreaseNotificationCount(selected.length);
+          const hava = prepareVegetableData(res.payload.data);
+          setRows(hava);
+        });
       });
     });
   };
@@ -355,10 +355,11 @@ export default function NormalTable(props) {
       console.log("search value", values);
       switch (values["filtervalue"]) {
         case "Name":
-          console.log(
-            setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]))
-          );
-          setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]));
+          console
+            .log
+            // setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]))
+            ();
+          // setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]));
           break;
         case " Age":
           console.log("result", values["filtervalue"]);
@@ -539,9 +540,7 @@ export default function NormalTable(props) {
                         </p>
                         {/* <DeleteButton click={deleteRow} /> */}
                         <CheckCircleButton click={passTest} />
-                        <CancelButton
-                        click={failTest}
-                        />
+                        <CancelButton click={failTest} />
                       </div>
                     ) : (
                       <Typography

@@ -16,7 +16,7 @@ function App() {
     if(currentTime==expiredToken){
          dispatch(logOut)
     }else{
-      console.log("current time vẫn ổn")
+      // console.log("current time vẫn ổn")
     }
   const number = 0;
   return (

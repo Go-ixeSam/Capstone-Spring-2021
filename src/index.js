@@ -31,21 +31,21 @@ import store from "./redux/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import AdminLayout from "layouts/Admin.jsx";
-
+// import {} from ""
 // import { library } from '@fortawesome/fontawesome-svg-core'
 // import { fab } from '@fortawesome/free-brands-svg-icons'
 // import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 // library.add(fab, faCheckSquare, faCoffee)
-let persistor=persistStore(store)
+let persistor = persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <PersistGate persistor={persistor}>
-          <App />
-          {/* <Route path="/admin" render={props => <AdminLayout {...props} />} /> */}
-          {/* <Redirect from="/" to="/admin/dashboard" /> */}
+        <App />
+        {/* <Route path="/admin" render={props => <AdminLayout {...props} />} /> */}
+        {/* <Redirect from="/" to="/admin/dashboard" /> */}
       </PersistGate>
     </BrowserRouter>
   </Provider>,

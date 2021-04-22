@@ -17,12 +17,26 @@ export {
   setSelectedAccountID,
   isAccept,
   getAllVegetableUnapproved,
-  // useWantAllVegetableUnapproved,
-} from "./Post/PostSlice";
+} from // useWantAllVegetableUnapproved,
+"./Post/PostSlice";
 export { addObject } from "./Firebase/FirebaseSlice";
-export { login, logOut } from "./Login/LoginSlice";
-export { getDashboard,getTop10,getShareAndExchangeCompare } from "./Dashboard/DashboardSlice";
-export {addPercentReportName,getPercentById,updatePercentThreshold,getAllPercentReport} from "./SystemConfiguration/SystemConfigurationSlice"
+export {
+  login,
+  logOut,
+  increaseNotificationCount,
+  decreaseNotificationCount,
+} from "./Login/LoginSlice";
+export {
+  getDashboard,
+  getTop10,
+  getShareAndExchangeCompare,
+} from "./Dashboard/DashboardSlice";
+export {
+  addPercentReportName,
+  getPercentById,
+  updatePercentThreshold,
+  getAllPercentReport,
+} from "./SystemConfiguration/SystemConfigurationSlice";
 // export * as contracType from "./contract/contractType"
 // Làm như thế này thì mọi action creator sẽ nằm chung 1 chỗ, và ta chỉ cần gọi đến redux để
 // import action creator mình cần

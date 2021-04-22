@@ -336,6 +336,7 @@ function Dashboard() {
                           <p style={{ marginLeft: 5 }}>{item.id}</p>
                           <p style={{ marginLeft: 5, fontWeight: "bold" }}>
                             {item.text}
+                            
                           </p>
                         </div>
                       );

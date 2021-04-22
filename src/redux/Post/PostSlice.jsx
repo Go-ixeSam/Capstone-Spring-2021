@@ -212,13 +212,13 @@ const post = createSlice({
   },
   extraReducers: {
     [isAccept.pending]: (state) => {
-      state.loading = true;
+      // state.loading = true;
     },
     [getAllVegetableUnapproved.pending]: (state) => {
       state.loading = true;
     },
     [isAccept.rejected]: (state, action) => {
-      state.loading = false;
+      // state.loading = false;
       state.error = action.error;
     },
     [getAllVegetableUnapproved.rejected]: (state, action) => {
@@ -227,11 +227,11 @@ const post = createSlice({
     },
     [isAccept.fulfilled]: (state, action) => {
       state.isAcceptCurrent = action.payload;
-      state.loading = false;
+      // state.loading = false;
     },
     [getAllVegetableUnapproved.fulfilled]: (state, action) => {
       state.getAllVegetableUnapprovedCurrent = action.payload.data;
-      console.log("result= ", action.payload.data);
+      // console.log("result= ", action.payload.data);
       state.loading = false;
     },
   },

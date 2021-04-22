@@ -23,7 +23,7 @@ function TestingDatabaseRealTime() {
     },
     onSubmit: (values) => {
       //   alert(JSON.stringify(values, null, 2));
-      console.log(values);
+      // console.log(values);
       writeUserData(
         rand.generate(7),
         values.firstName,

@@ -25,16 +25,17 @@ export const login = createAsyncThunk("login", async (params, thunkAPI) => {
   return result;
 });
 
-const loginSlice= createSlice({
+const loginSlice = createSlice({
   name: "login",
   initialState: {
     token: "",
+    notificationCount: 0,
     current: {},
     loading: false, // * trường này dùng để hiển thị pop up loading trong lúc dợi API trả về response
     success: false, // * trường này dùng để hiển thị pop up success nếu như gọi API thành công
     fail: false, //* trường này dùng để hiển thị pop up fail nếu như gọi API thất bại
     error: "",
-    expiresTime:"",
+    expiresTime: "",
     signInForm: [
       {
         row: {
@@ -76,9 +77,17 @@ const loginSlice= createSlice({
   },
   reducers: {
     logOut: (state, action) => {
-      console.log("Đã vào logout")
+      console.log("Đã vào logout");
       state.token = "";
-      localStorage.setItem("token","")
+      localStorage.setItem("token", "");
+    },
+
+    //! 2 hàm dưới dùng để cho người dùng biết có bao nhiêu notfication đã đến và đã đc xử lí xong
+    increaseNotificationCount: (state, action) => {
+      state.notificationCount++;
+    },
+    decreaseNotificationCount: (state, action) => {
+      state.notificationCount = state.notificationCount - action.payload;
     },
   },
 
@@ -91,13 +100,17 @@ const loginSlice= createSlice({
     [login.fulfilled]: (state, action) => {
       console.log("actioon: ", action.payload);
       state.token = action.payload.data.token;
-      state.expiresTime=action.payload.data.expiresTime;
-      localStorage.setItem("token",action.payload.data.token)
+      state.expiresTime = action.payload.data.expiresTime;
+      localStorage.setItem("token", action.payload.data.token);
       // variable.token=action.payload.data.token;
     },
   },
 });
 
 const { reducer: loginReducer, actions } = loginSlice; //createSlice sẽ trả về cho ta 2 biến là reducer và action
-export const {logOut} = actions;
+export const {
+  logOut,
+  increaseNotificationCount,
+  decreaseNotificationCount,
+} = actions;
 export default loginReducer;

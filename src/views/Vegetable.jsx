@@ -33,16 +33,19 @@ function Post() {
   let [successVisible, setSuccessVisible] = React.useState(false);
   const [tableBodyData, setTableBodyData] = useState([]);
   const currentVegetableList = useSelector((state) => getAllVegetable(state));
-  console.log("table đây= ", tableBodyData);
   let dispatch = useDispatch();
   let visible = useSelector((state) => getModalVisible(state));
   const HeightLength = "200px";
   const WidthLength = "300px";
 
   React.useEffect(() => {
+    let hava = [];
     dispatch(getAllVegetableUnapproved()).then((response) => {
-      prepareVegetableData(response.payload.data, tableBodyData);
-      setTableBodyData(tableBodyData);
+      if (Object.keys(response.payload.data).length !== 0) {
+        hava = [...prepareVegetableData(response.payload.data)];
+        console.log("table đây= ", hava);
+        setTableBodyData(hava);
+      }
     });
   }, []);
   const closeModal = () => {
@@ -213,16 +216,6 @@ function Post() {
                 notShowing={[variable.islock]}
                 actionbuttonlist={["remove"]}
               />
-              // <Row xs={4}>
-              //   <Col xs={12}>
-              //     <NormalTable
-              //       headCells={materialHeader}
-              //       bodyData={materialBody}
-              //       notShowing={[variable.islock]}
-              //       actionbuttonlist={["read"]}
-              //     />
-              //   </Col>
-              // </Row>
             }
           />
         </Grid>
