@@ -20,7 +20,7 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import {getFirebase,getNotificationCount} from "redux/Selector/Selectors"
+import {getFirebase,getNotificationCount,getNotificationCountFromLogin} from "redux/Selector/Selectors"
 import "./CircleDot.css";
 import "./DotPosition.css";
 
@@ -41,7 +41,7 @@ function Sidebar(props) {
 
   //! Số lượng cay chua dc duyet
   // const length=useSelector(state=>getFirebase(state)).firebaseData.length
-  const length=useSelector(state=>getNotificationCount(state))
+  const length=useSelector(state=>getNotificationCountFromLogin(state))
 
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";

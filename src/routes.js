@@ -30,7 +30,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import Post from "views/Vegetable";
 import SystemCon from "views/SystemConfiguration"
 import Label from "views/Labeling"
-import { faCheckSquare, faCoffee,faUser,faUserPlus,faPaperPlane,faCog,faTags,faChartBar } from '@fortawesome/free-solid-svg-icons'
+import { faCheckSquare, faCoffee,faUser,faUserPlus,faPaperPlane,faCog,faTags,faChartBar,faCarrot} from '@fortawesome/free-solid-svg-icons'
 import Test from "views/TestingDatabaseRealTime"
 library.add(fab, faCheckSquare, faCoffee,faUser)
 
@@ -72,8 +72,8 @@ const dashboardRoutes = [
   // },
   {
     path: "/post",
-    name: "Post",
-    icon: faPaperPlane,
+    name: "Approve vegetable",
+    icon: faCarrot,
     component: Post,
     layout: "/admin",
   },

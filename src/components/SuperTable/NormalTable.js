@@ -282,23 +282,24 @@ export default function NormalTable(props) {
    */
   const passTest = () => {
     console.log("Những row đc lựa chọn: ", selected);
-    selected.map((item) => {
-      dispatch(
-        isAccept({
-          Id: item,
-          Status: 2,
-        })
-      ).then((res) => {
-        console.log("Nhìn nè", res);
-
-        //! sau khi submit thành công thì cập nhật row và load lại list
-        dispatch(getAllVegetableUnapproved()).then((res) => {
-          const hava = prepareVegetableData(res.payload.data);
-
-          //! sau khi pass hết các cây hợp lệ thì số lượng noti sẽ giảm dựa theo các cây đã đc pass, với fail cũng vậy
-          dispatch(decreaseNotificationCount(selected.length));
-          setRows(hava);
-        });
+    const doing = async () => {
+      await selected.map((item) => {
+        dispatch(
+          isAccept({
+            Id: item,
+            Status: 2,
+          })
+        );
+      });
+    };
+    doing().then(() => {
+      // console.log("Nhìn nè", res);
+      //! sau khi submit thành công thì cập nhật row và load lại list
+      dispatch(getAllVegetableUnapproved()).then((res) => {
+        dispatch(decreaseNotificationCount(selected.length));
+        const hava = prepareVegetableData(res.payload.data);
+        setRows(hava);
+        setSelected([]);
       });
     });
   };
@@ -308,21 +309,24 @@ export default function NormalTable(props) {
    */
   const failTest = () => {
     console.log("Những row đc lựa chọn: ", selected);
-
-    selected.map((item) => {
-      dispatch(
-        isAccept({
-          Id: item,
-          Status: 3,
-        })
-      ).then((res) => {
-        console.log("Nhìn nè", res);
-        //! sau khi submit thành công thì cập nhật row và load lại list
-        dispatch(getAllVegetableUnapproved()).then((res) => {
-          dispatch(decreaseNotificationCount(selected.length));
-          const hava = prepareVegetableData(res.payload.data);
-          setRows(hava);
-        });
+    const doing = async () => {
+      await selected.map((item) => {
+        dispatch(
+          isAccept({
+            Id: item,
+            Status: 3,
+          })
+        );
+      });
+    };
+    doing().then(() => {
+      // console.log("Nhìn nè", res);
+      //! sau khi submit thành công thì cập nhật row và load lại list
+      dispatch(getAllVegetableUnapproved()).then((res) => {
+        dispatch(decreaseNotificationCount(selected.length));
+        const hava = prepareVegetableData(res.payload.data);
+        setRows(hava);
+        setSelected([]);
       });
     });
   };
@@ -560,12 +564,12 @@ export default function NormalTable(props) {
                     component="div"
                     count={rows.length}
                     labelRowsPerPage={
-                      <p style={normalPElement}>Rows per page:</p>
+                      <p style={normalPElement}>Số lượng rau mỗi trang:</p>
                     }
                     labelDisplayedRows={({ from, to, count }) => (
                       <p style={normalPElement}>
                         {from}-{to}
-                        {" of "}
+                        {" trong "}
                         {count !== -1 ? count : "more than" + to}
                       </p>
                     )}

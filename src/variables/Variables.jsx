@@ -598,7 +598,7 @@ var responsiveSales = [
   ],
 ];
 var legendSales = {
-  names: ["New post", "New garden"],
+  names: ["Lượt tương tác đến bài đăng", "Bài đăng chia sẻ rau"],
   types: ["info", "danger",],
 };
 
@@ -644,7 +644,7 @@ var responsiveBar = [
   ],
 ];
 var legendBar = {
-  names: ["Tesla Model S", "BMW 5 Series"],
+  names: ["Bài đăng dạng chia sẻ", "Bài đăng dạng trao đổi"],
   types: ["info", "danger"],
 };
 const percentName = "percentName";

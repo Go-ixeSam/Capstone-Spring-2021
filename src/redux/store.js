@@ -9,11 +9,17 @@ import firebaseReducer from "./Firebase/FirebaseSlice";
 import loginReducer from "./Login/LoginSlice";
 import dashboardReducer from "./Dashboard/DashboardSlice"
 import systemReducer from "./SystemConfiguration/SystemConfigurationSlice"
+import { createFilter, createBlacklistFilter } from 'redux-persist-transform-filter';
 // import userReducer from "./user/userSlice"
 
 const customizedMiddleware=getDefaultMiddleware({
   serializableCheck:false
 })
+// you want to store only a subset of your state of reducer one
+const saveSubsetFilter = createFilter(
+  'post',
+  ['getAllVegetableUnapprovedCurrent']
+);
 const reducers = combineReducers({
   account: accountReducer,
   dashboard:dashboardReducer,
@@ -28,6 +34,7 @@ const persistConfig = {
   storage,
   whitelist: ["login"],
   blacklist: ["account", "trip", "post", "firebase","dashboard","systemConfig"],
+  transforms:[saveSubsetFilter]
 };
 const persistedReducer = persistReducer(persistConfig, reducers);
 /**
@@ -35,6 +42,6 @@ const persistedReducer = persistReducer(persistConfig, reducers);
  */
 const store = configureStore({
   reducer: persistedReducer,
-  middleware:customizedMiddleware
+  middleware:customizedMiddleware,
 });
 export default store;

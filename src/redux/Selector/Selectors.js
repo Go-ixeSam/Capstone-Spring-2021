@@ -135,6 +135,10 @@ export function getNotificationCount(state) {
   return state.post.getAllVegetableUnapprovedCurrent.length;
 }
 
+export function getNotificationCountFromLogin(state) {
+  return state.login.notificationCount;
+}
+
 export function getPostTableHeader(state) {
   return state.post.tableHeader;
 }

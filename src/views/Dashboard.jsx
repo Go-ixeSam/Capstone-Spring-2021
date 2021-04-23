@@ -256,8 +256,8 @@ function Dashboard() {
           <Col md={12}>
             <Card
               id="chartActivity"
-              title="2014 Sales"
-              category="All products including Taxes"
+              title="Biểu đồ so sánh số lượng bài đăng chia sẻ và trao đổi"
+              // category="All products including Taxes"
               content={
                 <div className="ct-chart">
                   <ChartistGraph
@@ -273,10 +273,10 @@ function Dashboard() {
           </Col>
         </Row>
         <Row>
-          <Col md={5}>
+          <Col md={6}>
             <Card
               id="top10A"
-              title="Top 10 rau "
+              title="Top 10 rau được chia sẻ nhiều nhất"
               // category="All products including Taxes"
               content={
                 <div>
@@ -309,10 +309,10 @@ function Dashboard() {
               }
             />
           </Col>
-          <Col md={5}>
+          <Col md={6}>
             <Card
               id="top10B"
-              title="Top 10 tài khoản "
+              title="Top 10 tài khoản đăng bài nhiều nhất"
               // category="All products including Taxes"
               content={
                 <div>
