@@ -205,7 +205,8 @@ const Admin = (props) => {
 
       //! cứ mỗi 1 noti đến là cộgn thêm 1
       increaseNotificationCount()
-      addNotify()
+      // addNotify()
+      notifyMe()
     });
 
     // navigator.serviceWorker.addEventListener("message", (message) =>
