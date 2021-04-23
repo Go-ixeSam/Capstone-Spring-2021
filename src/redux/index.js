@@ -16,15 +16,15 @@ export {
   setVisible,
   setSelectedAccountID,
   isAccept,
-  getAllVegetableUnapproved,
-} from // useWantAllVegetableUnapproved,
-"./Post/PostSlice";
+  getAllVegetableUnapproved, // useWantAllVegetableUnapproved,
+} from "./Post/PostSlice";
 export { addObject } from "./Firebase/FirebaseSlice";
 export {
   login,
   logOut,
   increaseNotificationCount,
   decreaseNotificationCount,
+  setNotificationCount,
 } from "./Login/LoginSlice";
 export {
   getDashboard,

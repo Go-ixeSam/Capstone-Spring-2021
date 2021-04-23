@@ -84,10 +84,13 @@ const loginSlice = createSlice({
 
     //! 2 hàm dưới dùng để cho người dùng biết có bao nhiêu notfication đã đến và đã đc xử lí xong
     increaseNotificationCount: (state, action) => {
-      state.notificationCount++;
+      state.notificationCount = state.notificationCount + 1;
     },
     decreaseNotificationCount: (state, action) => {
       state.notificationCount = state.notificationCount - action.payload;
+    },
+    setNotificationCount: (state, action) => {
+      state.notificationCount = action.payload;
     },
   },
 
@@ -112,5 +115,6 @@ export const {
   logOut,
   increaseNotificationCount,
   decreaseNotificationCount,
+  setNotificationCount,
 } = actions;
 export default loginReducer;

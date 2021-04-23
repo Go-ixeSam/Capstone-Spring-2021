@@ -20,7 +20,7 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import {getFirebase} from "redux/Selector/Selectors"
+import {getFirebase,getNotificationCount} from "redux/Selector/Selectors"
 import "./CircleDot.css";
 import "./DotPosition.css";
 
@@ -39,8 +39,9 @@ function Sidebar(props) {
   const [width, setWidth] = React.useState(window.innerWidth);
   const dispatch=useDispatch()
 
-  //! Số lượng post chưa đc kiểm duyệt
-  const length=useSelector(state=>getFirebase(state)).firebaseData.length
+  //! Số lượng cay chua dc duyet
+  // const length=useSelector(state=>getFirebase(state)).firebaseData.length
+  const length=useSelector(state=>getNotificationCount(state))
 
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";

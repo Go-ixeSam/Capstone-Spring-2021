@@ -296,7 +296,7 @@ export default function NormalTable(props) {
           const hava = prepareVegetableData(res.payload.data);
 
           //! sau khi pass hết các cây hợp lệ thì số lượng noti sẽ giảm dựa theo các cây đã đc pass, với fail cũng vậy
-          decreaseNotificationCount(selected.length);
+          dispatch(decreaseNotificationCount(selected.length));
           setRows(hava);
         });
       });
@@ -317,10 +317,9 @@ export default function NormalTable(props) {
         })
       ).then((res) => {
         console.log("Nhìn nè", res);
-
         //! sau khi submit thành công thì cập nhật row và load lại list
         dispatch(getAllVegetableUnapproved()).then((res) => {
-          decreaseNotificationCount(selected.length);
+          dispatch(decreaseNotificationCount(selected.length));
           const hava = prepareVegetableData(res.payload.data);
           setRows(hava);
         });

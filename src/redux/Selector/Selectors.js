@@ -45,7 +45,7 @@ export function getAllVegetable(state) {
   const datas = state.post.getAllVegetableUnapprovedCurrent;
   const tableBodyData = [];
   let image = "";
-  if (Object.keys(datas).length!==0) {
+  if (Object.keys(datas).length !== 0) {
     datas.map((data) => {
       if (data.images) {
         if (data.images.length > 0) {
@@ -128,6 +128,11 @@ export function getDashboardUpdate(state) {
 
 export function getFirebase(state) {
   return state.firebase;
+}
+
+//* độ dài của cái notification này chính là độ dài của cái mảng chứa những phần tử duyệt cây
+export function getNotificationCount(state) {
+  return state.post.getAllVegetableUnapprovedCurrent.length;
 }
 
 export function getPostTableHeader(state) {

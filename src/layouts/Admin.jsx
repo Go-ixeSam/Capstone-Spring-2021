@@ -23,7 +23,7 @@ import React, { useRef, useState } from "react";
 import NotificationSystem from "react-notification-system";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
-import { addObject,increaseNotificationCount } from "redux/index";
+import { addObject, increaseNotificationCount } from "redux/index";
 import { getFirebase } from "redux/Selector/Selectors";
 import routes from "routes.js";
 import message from "util/firebase";
@@ -46,7 +46,9 @@ const Admin = (props) => {
 
   //! Hàm này có tác dụng là tạo ra một notification, ta sẽ dùng hàm này cứ mỗi khi firebase bắt
   //! sự kiện
-  const addNotify = () => {
+  const addNotify = (message) => {
+    // increaseNotificationCount()
+    // dispatch(increaseNotificationCount())
     var color = Math.floor(Math.random() * 4 + 1);
     var level;
     const notification = notify.current;
@@ -67,13 +69,8 @@ const Admin = (props) => {
         break;
     }
     notification.addNotification({
-      title: <span data-notify="icon" className="pe-7s-gift" />,
-      message: (
-        <div>
-          Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for
-          every web developer.
-        </div>
-      ),
+      title: <span data-notify="icon" className="pe-7s-leaf" />,
+      message: <div>{message}</div>,
       level: level,
       position: "tr",
       autoDismiss: 15,
@@ -162,56 +159,13 @@ const Admin = (props) => {
 
   // * cho này để lắng nghe firebase DB realtime, ta ko dùng nữa
   React.useEffect(() => {
-    // notifyMe();
-    // const messaging=firebase.message()
-    //     message.requestPermission()
-    //     .then(async function() {
-    //       const token = await messaging.getToken();
-    //       console.log("token nè Amdin, ",token)
-    //     })
-    //     .catch(function(err) {
-    //       console.log("Unable to get permission to notify.", err);
-    //     });
-    // navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
-    // const messaging = firebase.messaging();
-    // Get registration token. Initially this makes a network call, once retrieved
-    // subsequent calls to getToken will return from cache.
-    message
-      .getToken({
-        vapidKey:
-          "BJT4KMAdFm6G8Sjq49q8RmDMsP6w0jPUghMTSMcdfkduJnBNzfxsSlLGEAMQzKjsu1aCtCtGA9TBT4D1wCk4SxM",
-        // "AAAAZBez2YQ:APA91bHgjYoWKRpPhXQJ9jIo6EO8ZihVV18bJZEHpES5Yc4Z7lk6icP3sZsfBOzYwZeFBPB7ay9h4XJ89764qBf7_s33JQ9E08qYthGYWM2MnDXCtb5ckHR7HI7krRUl0ZFJ8o5SpZZM",
-      })
-      .then((currentToken) => {
-        if (currentToken) {
-          // Send the token to your server and update the UI if necessary
-          // ...
-          console.log("toen nè", currentToken);
-        } else {
-          // Show permission request UI
-          console.log(
-            "No registration token available. Request permission to generate one."
-          );
-          // ...
-        }
-      })
-
-      .catch((err) => {
-        console.log("An error occurred while retrieving token. ", err);
-        // ...
-      });
     message.onMessage((payload) => {
       console.log("Message received. ", payload);
 
       //! cứ mỗi 1 noti đến là cộgn thêm 1
-      increaseNotificationCount()
-      // addNotify()
-      notifyMe()
+      // increaseNotificationCount();
+      addNotify(payload.notification.body);
     });
-
-    // navigator.serviceWorker.addEventListener("message", (message) =>
-    //   console.log(message)
-    // );
   }, []);
 
   function notifyMe() {

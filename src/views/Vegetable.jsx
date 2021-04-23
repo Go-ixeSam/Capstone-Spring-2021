@@ -38,7 +38,7 @@ function Post() {
   const HeightLength = "200px";
   const WidthLength = "300px";
 
-  React.useEffect(() => {
+  function updateVegetableData() {
     let hava = [];
     dispatch(getAllVegetableUnapproved()).then((response) => {
       if (Object.keys(response.payload.data).length !== 0) {
@@ -47,6 +47,10 @@ function Post() {
         setTableBodyData(hava);
       }
     });
+  }
+
+  React.useEffect(() => {
+    updateVegetableData();
   }, []);
   const closeModal = () => {
     return "";
@@ -205,7 +209,19 @@ function Post() {
       </ShowPopUp>
       {/* <SuccessPopUp visible={successVisible} length="200px" /> */}
       <LoadingPopUp visible={loading} length="200px" />
+
       <div className="content">
+        <MaterialButton
+          variant="contained"
+          color="info"
+          size="large"
+          style={{ marginRight: 5 }}
+          onClick={() => {
+            updateVegetableData();
+          }}
+        >
+          Cập nhật
+        </MaterialButton>
         <Grid fluid style={{ margin: 0, padding: 0 }}>
           <CardNoFooter
             titlet="Account list"
