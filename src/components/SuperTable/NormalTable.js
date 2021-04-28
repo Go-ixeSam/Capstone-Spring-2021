@@ -187,7 +187,7 @@ export default function NormalTable(props) {
   const actionButtonList = props.actionbuttonlist;
 
   // * cái row ở bên store truyền từ bên component vào
-  const [rows, setRows] = useState(props.bodyData);
+  let [rows, setRows] = useState(props.bodyData);
 
   const dispatch = useDispatch();
   let history = useHistory(); // ! history object
@@ -246,14 +246,14 @@ export default function NormalTable(props) {
    * @param {*} event
    * @param {*} row
    */
-  const handleClick = (event, row) => {
+  const handleClick = (event, ID) => {
     //* row đc click sẽ dựa theo ID của nó
-    const { ID: name } = row;
-    const selectedIndex = selected.indexOf(name);
+    // const { ID: name } = row;
+    const selectedIndex = selected.indexOf(ID);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, ID);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -267,7 +267,7 @@ export default function NormalTable(props) {
 
     // ! Ở chỗ này là ta sẽ có đc 1 list những item đc check
     setSelected(newSelected);
-    console.log(selected);
+    console.log(newSelected);
   };
 
   const deleteRow = () => {
@@ -281,35 +281,43 @@ export default function NormalTable(props) {
    ** Vì ở đây là duyệt nhiều rau cùng 1 lúc nên sẽ có 1 vòng lập xử lí
    */
   const passTest = () => {
+    let tmp = [];
     console.log("Những row đc lựa chọn: ", selected);
-    const doing = async () => {
-      await selected.map((item) => {
-        dispatch(
-          isAccept({
-            Id: item,
-            Status: 2,
-          })
-        );
-      });
-    };
-    doing().then(() => {
-      // console.log("Nhìn nè", res);
-      //! sau khi submit thành công thì cập nhật row và load lại list
-      dispatch(getAllVegetableUnapproved()).then((res) => {
-        dispatch(decreaseNotificationCount(selected.length));
-        const hava = prepareVegetableData(res.payload.data);
-        setRows(hava);
-        setSelected([]);
+    // const doing = async () => {
+    //   await
+    selected.map((item) => {
+      dispatch(
+        isAccept({
+          Id: item,
+          Status: 2,
+        })
+      ).then(() => {
+        dispatch(getAllVegetableUnapproved()).then((res) => {
+          // const hava = prepareVegetableData(res.payload.data);
+          // console.log("hava ne: ", hava);
+          tmp = [...prepareVegetableData(res.payload.data)];
+          setRows(tmp);
+          setSelected([]);
+        });
       });
     });
+    dispatch(decreaseNotificationCount(selected.length));
+    // };
+    // doing().then(() => {
+    // console.log("Nhìn nè", res);
+    //! sau khi submit thành công thì cập nhật row và load lại list
+    // });D
   };
 
   /**
    ** Hàm dùng để từ chối những rau sai thông tin
    */
   const failTest = () => {
+    let tmp = [];
     console.log("Những row đc lựa chọn: ", selected);
+    // const doing = async () => {
     const doing = async () => {
+      // for (let i = 0; i < select.length; i++) {}
       await selected.map((item) => {
         dispatch(
           isAccept({
@@ -318,17 +326,23 @@ export default function NormalTable(props) {
           })
         );
       });
+      // .then(() => {
+      const result = await dispatch(getAllVegetableUnapproved());
+      dispatch(decreaseNotificationCount(selected.length));
+      console.log("ress= ", result);
+      tmp = [...prepareVegetableData(result.payload.data)];
+      setRows(tmp);
+      setSelected([]);
+      // });
     };
-    doing().then(() => {
-      // console.log("Nhìn nè", res);
-      //! sau khi submit thành công thì cập nhật row và load lại list
-      dispatch(getAllVegetableUnapproved()).then((res) => {
-        dispatch(decreaseNotificationCount(selected.length));
-        const hava = prepareVegetableData(res.payload.data);
-        setRows(hava);
-        setSelected([]);
-      });
-    });
+    doing();
+    // dispatch(decreaseNotificationCount(selected.length));
+    // doing();
+    // doing().then(() => {
+    // console.log("Nhìn nè", res);
+    //! sau khi submit thành công thì cập nhật row và load lại list
+
+    // });
   };
 
   const handleChangePage = (event, newPage) => {
@@ -433,6 +447,7 @@ export default function NormalTable(props) {
                       tabIndex={-1}
                       key={row.Dessert}
                       selected={isItemSelected}
+                      onClick={(event) => handleClick(event, row.ID)}
                     >
                       {actionButtonList.map((obj) => {
                         if (obj == "remove") {
@@ -441,7 +456,6 @@ export default function NormalTable(props) {
                               <Checkbox
                                 checked={isItemSelected}
                                 inputProps={{ "aria-labelledby": labelId }}
-                                onClick={(event) => handleClick(event, row)}
                               />
                             </StyledTableCell>
                           );
@@ -450,7 +464,7 @@ export default function NormalTable(props) {
                       })}
 
                       {finalArray.map((obj, index) => {
-                        console.log("value", obj.value);
+                        // console.log("value", obj.value);
                         //  ! Nếu value là ảnh thì sẽ  thêm 1 component image và để hiển thị
                         if (obj.key == "vegetableImage") {
                           if (obj.numeric == false) {

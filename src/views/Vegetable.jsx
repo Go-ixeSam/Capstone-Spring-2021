@@ -11,7 +11,7 @@ import {
   setVisible,
   isAccept,
   getAllVegetableUnapproved,
-  setNotificationCount
+  setNotificationCount,
   // useWantAllVegetableUnapproved,
 } from "redux/index";
 import { CardNoFooter } from "../components/Card/Card";
@@ -45,7 +45,12 @@ function Post() {
       if (Object.keys(response.payload.data).length !== 0) {
         hava = [...prepareVegetableData(response.payload.data)];
         console.log("table đây= ", hava);
-        dispatch(setNotificationCount(hava.length))
+        dispatch(setNotificationCount(hava.length));
+        setTableBodyData(hava);
+      } else {
+        hava = [...prepareVegetableData(response.payload.data)];
+        console.log("table đây= ", hava);
+        dispatch(setNotificationCount(0));
         setTableBodyData(hava);
       }
     });
