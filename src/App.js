@@ -4,20 +4,24 @@ import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import AdminLayout from "../src/layouts/Admin.jsx";
 import Signin from "./views/Signin";
 import { useDispatch, useSelector } from "react-redux";
-import { getSignInForm, getToken ,getTokenExpiredTime} from "redux/Selector/Selectors";
+import {
+  getSignInForm,
+  getToken,
+  getTokenExpiredTime,
+} from "redux/Selector/Selectors";
 import * as variable from "./variables/Variables";
-import {logOut} from "redux/index"
+import { logOut } from "redux/index";
 function App() {
   const token = useSelector((state) => getToken(state));
-  const expiredToken=useSelector(state=>getTokenExpiredTime(state))
-  const dispatch=useDispatch()
+  const expiredToken = useSelector((state) => getTokenExpiredTime(state));
+  const dispatch = useDispatch();
   //* kiểm tra thời hạn của token, nếu hết thì gọi logout
-  let currentTime=new Date()
-    if(currentTime==expiredToken){
-         dispatch(logOut)
-    }else{
-      // console.log("current time vẫn ổn")
-    }
+  let currentTime = new Date();
+  if (currentTime == expiredToken) {
+    dispatch(logOut);
+  } else {
+    // console.log("current time vẫn ổn")
+  }
   const number = 0;
   return (
     <div>
@@ -25,8 +29,8 @@ function App() {
         <Route
           path="/admin"
           render={
-            (props) => (token != "" ? <AdminLayout {...props} /> : <Signin />)
-            // (number == 1 ? <AdminLayout {...props} /> : <Signin />)
+            // (props) => (token != "" ? <AdminLayout {...props} /> : <Signin />)
+            (props) => (number == 1 ? <AdminLayout {...props} /> : <Signin />)
           }
         />
         <Redirect from="/" to="/admin/dashboard" />

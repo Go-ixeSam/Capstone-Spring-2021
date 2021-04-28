@@ -53,7 +53,7 @@ class Footer extends Component {
             <a href="http://www.creative-tim.com?ref=lbr-footer" style={{color:"#34CBA7"}}>
               Veg Exchange
             </a>
-            , share vegetable with love
+          
           </p>
         </Grid>
       </footer>

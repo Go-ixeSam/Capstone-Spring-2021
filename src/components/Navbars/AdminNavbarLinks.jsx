@@ -77,7 +77,7 @@ function AdminNavbarLinks() {
             dispatch(logOut());
           }}
         >
-          Log out
+         Đăng xuất
         </NavItem>
       </Nav>
     </div>

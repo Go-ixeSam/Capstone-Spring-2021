@@ -37,7 +37,7 @@ library.add(fab, faCheckSquare, faCoffee,faUser)
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Tổng quan hệ thống",
   icon: faChartBar,
     component: Dashboard,
     layout: "/admin",
@@ -72,14 +72,14 @@ const dashboardRoutes = [
   // },
   {
     path: "/post",
-    name: "Approve vegetable",
+    name: "Duyệt thông tin rau",
     icon: faCarrot,
     component: Post,
     layout: "/admin",
   },
   {
     path: "/systemconfiguration",
-    name: "System Configuartion",
+    name: "Cấu hình hệ thống",
     icon: faCog,
     component: SystemCon,
     layout: "/admin",

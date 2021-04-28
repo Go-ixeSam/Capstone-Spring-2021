@@ -113,7 +113,7 @@ function SystemConfiguration() {
                         />
                         <MyField
                           elementType="input"
-                          type="text"
+                          type="number"
                           label={"Phần trăm ngưỡng"}
                           name={variable.percent}
                         />
@@ -129,7 +129,7 @@ function SystemConfiguration() {
                           }
                           style={{ marginRight: 5, marginTop: 10 }}
                         >
-                          Duyệt rau
+                          Cập nhật
                         </MaterialButton>
                       </Form>
                     );
