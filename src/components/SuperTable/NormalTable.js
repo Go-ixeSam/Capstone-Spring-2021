@@ -316,33 +316,29 @@ export default function NormalTable(props) {
     let tmp = [];
     console.log("Những row đc lựa chọn: ", selected);
     // const doing = async () => {
-    const doing = async () => {
-      // for (let i = 0; i < select.length; i++) {}
-      await selected.map((item) => {
-        dispatch(
-          isAccept({
-            Id: item,
-            Status: 3,
-          })
-        );
+    //   await
+    selected.map((item) => {
+      dispatch(
+        isAccept({
+          Id: item,
+          Status: 3,
+        })
+      ).then(() => {
+        dispatch(getAllVegetableUnapproved()).then((res) => {
+          // const hava = prepareVegetableData(res.payload.data);
+          // console.log("hava ne: ", hava);
+          tmp = [...prepareVegetableData(res.payload.data)];
+          setRows(tmp);
+          setSelected([]);
+        });
       });
-      // .then(() => {
-      const result = await dispatch(getAllVegetableUnapproved());
-      dispatch(decreaseNotificationCount(selected.length));
-      console.log("ress= ", result);
-      tmp = [...prepareVegetableData(result.payload.data)];
-      setRows(tmp);
-      setSelected([]);
-      // });
-    };
-    doing();
-    // dispatch(decreaseNotificationCount(selected.length));
-    // doing();
+    });
+    dispatch(decreaseNotificationCount(selected.length));
+    // };
     // doing().then(() => {
     // console.log("Nhìn nè", res);
     //! sau khi submit thành công thì cập nhật row và load lại list
-
-    // });
+    // });D
   };
 
   const handleChangePage = (event, newPage) => {
