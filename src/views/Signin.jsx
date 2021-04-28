@@ -89,7 +89,7 @@ function Signin() {
       });
   }, []);
   const onSubmit = (value, onSubmitProps) => {
-    console.log("submit value: ", value);
+    console.log("submit value và có ở Sâm: ", value);
     //* giá trị của submiting thì formik sẽ tự động set khi ta dùng đén fieldError, bỏi vì nó làm thay đổi đến object error nên submiting sẽ ko
     //* chuyển thành true
 

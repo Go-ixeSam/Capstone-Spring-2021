@@ -29,8 +29,8 @@ function App() {
         <Route
           path="/admin"
           render={
-            // (props) => (token != "" ? <AdminLayout {...props} /> : <Signin />)
-            (props) => (number == 1 ? <AdminLayout {...props} /> : <Signin />)
+            (props) => (token != "" ? <AdminLayout {...props} /> : <Signin />)
+            // (props) => (number == 1 ? <AdminLayout {...props} /> : <Signin />)
           }
         />
         <Redirect from="/" to="/admin/dashboard" />
