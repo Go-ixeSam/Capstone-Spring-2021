@@ -63,7 +63,7 @@ function Dashboard() {
       const prepare = () => {
         dispatch(getDashboard()).then((response) => {
           const data = response.payload.data;
-          console.log("dashboard nè ", data);
+          console.log("dashboard ngày 29/01 ", data);
           const labels = [...data.labels, ""];
           const tmp = {
             labels: labels,

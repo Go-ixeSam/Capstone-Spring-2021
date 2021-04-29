@@ -44,7 +44,7 @@ function Post() {
     dispatch(getAllVegetableUnapproved()).then((response) => {
       if (Object.keys(response.payload.data).length !== 0) {
         hava = [...prepareVegetableData(response.payload.data)];
-        console.log("table đây= ", hava);
+        console.log("table đây ngày29/01= ", hava);
         dispatch(setNotificationCount(hava.length));
         setTableBodyData(hava);
       } else {
