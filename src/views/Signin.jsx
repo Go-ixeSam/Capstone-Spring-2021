@@ -94,7 +94,7 @@ function Signin() {
     //* chuyển thành true
 
     //! Nếu như token bằng rỗng thì chứng tỏ mật khẩu sai
-    console.log("token lên web", firebaseToken);
+    console.log("token lên web vào ngày 5/5", firebaseToken);
     dispatch(
       login({
         phoneNumber: value.username,
