@@ -188,19 +188,13 @@ const post = createSlice({
       createHeader("Tên", false, false, [variable.vegetableName]),
       createHeader("Công dụng", false, true, [variable.uses]),
       createHeader("Mô tả", false, true, [variable.description]),
-      // createHeader("Mô tả", false, true, [variable.description]),
-      // createHeader("Date submitted", false, true, [variable.dateSubmitted]),
-      // createHeader("ID", true, false, [variable.id]),
-      // createHeader("Report", true, false, [variable.reportCount]),
-      // createHeader("Negative commend", true, false, [
-      //   variable.negativeCommendCount,
-      // ]),
     ],
     isAcceptCurrent: {},
     getAllVegetableUnapprovedCurrent: {},
     loading: true, // true am chi pending dan dien ra
     error: "",
     userPostVisible: false,
+    selectedItem:[]
   },
   reducers: {
     setVisible: (state, action) => {
@@ -209,7 +203,11 @@ const post = createSlice({
     setSelectedAccountID: (state, action) => {
       state.selectedAccountId = action.payload;
     },
+    setSelectedItem: (state, action) => {
+      state.selectedItem=action.payload
+    },
   },
+
   extraReducers: {
     [isAccept.pending]: (state) => {
       // state.loading = true;
@@ -238,5 +236,5 @@ const post = createSlice({
 });
 
 const { reducer: postReducer, actions } = post; //createSlice sẽ trả về cho ta 2 biến là reducer và action
-export const { setVisible, setSelectedAccountID } = actions;
+export const { setVisible, setSelectedAccountID,setSelectedItem } = actions;
 export default postReducer;

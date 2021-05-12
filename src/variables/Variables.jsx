@@ -713,8 +713,8 @@ const caption = "caption";
 // ! Mọi API URL chỉ khách ở phần sau thôi
 const baseURL = "";
 const jsonplaceholerAPI = "https://jsonplaceholder.typicode.com";
-// const teamBaseURL = "http://54.179.74.214:8080"; 
-const teamBaseURL = "https://54.179.74.214:443";
+const teamBaseURL = "http://54.179.74.214:8080"; 
+// const teamBaseURL = "https://54.179.74.214:443";
 // const teamBaseURL = "https://54.179.74.214:4210";
 module.exports = {
   numberOfReport,

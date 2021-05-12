@@ -36,6 +36,10 @@ export function getUserRole(state) {
 export function getModalVisible(state) {
   return state.post.userPostVisible;
 }
+
+export function getSelectedItem(state) {
+  return state.post.selectedItem;
+}
 export function getToken(state) {
   return state.login.token;
 }

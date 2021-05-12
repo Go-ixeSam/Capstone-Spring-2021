@@ -11,7 +11,12 @@ import {
   getSystemConfigLoading,
 } from "../redux/Selector/Selectors";
 import { Formik, Field, Form, useField, useFormikContext } from "formik";
-import { ShowPopUp, SuccessPopUp, LoadingPopUp } from "components/Modal/Modal";
+import {
+  ShowPopUp,
+  SuccessPopUp,
+  LoadingPopUp,
+  FailPopUp,
+} from "components/Modal/Modal";
 
 import * as variable from "../variables/Variables";
 import {
@@ -25,38 +30,67 @@ import { MaterialButton } from "../components/CustomButton/MaterialButton";
 function SystemConfiguration() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => getSystemConfigLoading(state));
+  const percent = useSelector((state) => getPercent(state));
+
+  let [successVisible, setSuccessVisible] = React.useState(false); // dùng để hiện succes popup
+  let [failVisible, setFailVisible] = React.useState(false);
   const percentNames = {
     elementConfig: {
       options: useSelector((state) => getPercentName(state)),
     },
   };
 
+  // tư động đóng popup lại sau 2s
+  function autoCloseSuccessModal() {
+    setSuccessVisible(true);
+    setTimeout(function () {
+      setSuccessVisible(false);
+    }, 2000);
+  }
+
+  function autoCloseFailModal() {
+    setFailVisible(true);
+    setTimeout(function () {
+      setFailVisible(false);
+    }, 2000);
+  }
+
   React.useEffect(() => {
     // * khúc này lúc sau sẽ lấy giá trị percent đầu tiên của mảng percent report gửi về và đưa vào initialValue percent bằng cách gọi API
     const loadPercentName = async () => {
       const res = await dispatch(getAllPercentReport());
-      dispatch(addPercentReportName(res.payload.data));
+      const result = dispatch(addPercentReportName(res.payload.data));
+      console.log("result nè= ",result)
+
+      //* lấy giá trị mặc đinh cho field hiện percent mỗi khi load trang
+      dispatch(getPercentById(result.payload[0].id));
     };
-    loadPercentName();
+
+    try {
+      loadPercentName();
+    } catch (error) {
+      console.log("Lỗi try system configuaration khi useEffect= ", error);
+    }
   }, []);
 
   const initialValue = {
     [variable.percentName]: "",
-    [variable.percent]: "",
+    [variable.percent]: percent,
   };
 
   const MyField = (props) => {
-    const percent = useSelector((state) => getPercent(state));
+    const { name } = props;
     const {
-      values: { percentName },
+      values: { percentName }, // value mặc định
       setFieldValue,
     } = useFormikContext();
     const [field, meta] = useField(props);
 
     React.useEffect(() => {
       const set = () => {
+        //! lấy số phần trăm dựa trên loại phần trăm, ta lấy kết quả bằng useSelector ở trên
         dispatch(getPercentById(percentName));
-        setFieldValue(props.name, percent);
+        setFieldValue(name, percent); // * name ở đây là tên của cái field
       };
       set();
     }, [percentName, percent]);
@@ -80,16 +114,30 @@ function SystemConfiguration() {
       );
 
       //* Update lai du lieu sau khi submit xong
-     const updateData= await dispatch(getAllPercentReport());
-      dispatch(addPercentReportName(updateData.payload.data));
+      const updateData = await dispatch(getAllPercentReport());
+      const result = dispatch(addPercentReportName(updateData.payload.data));
       console.log("submit= ", res);
+
+      //! sau khi việc update thành công thì hiện cái popup success
+      if (result.payload) {
+        if (result.payload.length > 0) {
+          autoCloseSuccessModal();
+        }
+      }
       onSubmitProps.setSubmitting(false);
     };
-    submitChange();
+    try {
+      submitChange();
+    } catch (error) {
+      autoCloseFailModal();
+      console.log("Lỗi ở system configuaration khi submit= ", error);
+    }
   };
 
   return (
     <React.Fragment>
+      <SuccessPopUp visible={successVisible} length="200px" />
+      <FailPopUp visible={failVisible} length="200px" />
       <LoadingPopUp visible={loading} length="200px" />
       <Grid fluid style={{ margin: 0, padding: 0 }}>
         <CardNoFooter
@@ -116,6 +164,7 @@ function SystemConfiguration() {
                           type="number"
                           label={"Phần trăm ngưỡng"}
                           name={variable.percent}
+                          value="40"
                         />
 
                         <MaterialButton
@@ -125,7 +174,7 @@ function SystemConfiguration() {
                           size="large"
                           disabled={
                             formik.isSubmitting ||
-                           !formik.touched[variable.percent]
+                            !formik.touched[variable.percent]
                           }
                           style={{ marginRight: 5, marginTop: 10 }}
                         >

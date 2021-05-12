@@ -17,6 +17,7 @@ export {
   setSelectedAccountID,
   isAccept,
   getAllVegetableUnapproved, // useWantAllVegetableUnapproved,
+  setSelectedItem
 } from "./Post/PostSlice";
 export { addObject } from "./Firebase/FirebaseSlice";
 export {
