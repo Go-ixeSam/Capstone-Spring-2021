@@ -1,12 +1,5 @@
-// import ContractType from "./contractType";
-import * as variable from "../../variables/Variables";
 import JSONPLACEHOLDERApi from "api/JSONPLACEHOLDERApi";
-import {
-  createPostData,
-  convertDateToString,
-  createAccountData,
-  createHeader,
-} from "util/ContructorCreation";
+import * as variable from "../../variables/Variables";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 export const getDashboard = createAsyncThunk(
@@ -77,7 +70,6 @@ const dashboardSlice = createSlice({
   extraReducers: {
     [getDashboard.fulfilled]: (state, action) => {
       state.result = action.payload;
-      // console.table(action.payload)
     },
     [getDashboard.rejected]: (state) => {
       console.log("Dashboard lấy về ko thành công");

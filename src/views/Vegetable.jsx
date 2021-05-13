@@ -1,44 +1,28 @@
-import richado from "assets/img/richasdo.jpg";
-import { ShowPopUp, SuccessPopUp, LoadingPopUp } from "components/Modal/Modal";
+import { LoadingPopUp } from "components/Modal/Modal";
 import NormalTable from "components/SuperTable/NormalTable";
 import React, { useState } from "react";
-import { Col, Grid, Row } from "react-bootstrap";
-import PerfectScrollbar from "react-perfect-scrollbar";
+import { Grid } from "react-bootstrap";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import { prepareVegetableData } from "util/Helper";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setVisible,
-  isAccept,
   getAllVegetableUnapproved,
-  setNotificationCount,
-  // useWantAllVegetableUnapproved,
+  setNotificationCount, setVisible
 } from "redux/index";
+import { prepareVegetableData } from "util/Helper";
 import { CardNoFooter } from "../components/Card/Card";
-// import { useAPICalling } from "api/JSONPLACEHOLDERApi";
 import { MaterialButton } from "../components/CustomButton/MaterialButton";
 import {
-  getModalVisible,
-  getPostTableBodyData,
   getPostTableHeader,
-  getVegetableAPIloadingTime,
-  getAllVegetable,
+  getVegetableAPIloadingTime
 } from "../redux/Selector/Selectors";
 import * as variable from "../variables/Variables";
-import { createVegetableData } from "util/ContructorCreation";
-import { dataSales } from "variables/Variables";
 function Post() {
-  let materialBody = useSelector((state) => getPostTableBodyData(state));
   let materialHeader = useSelector((state) => getPostTableHeader(state));
   let loading = useSelector((state) => getVegetableAPIloadingTime(state));
-  let [successVisible, setSuccessVisible] = React.useState(false);
   const [tableBodyData, setTableBodyData] = useState([]);
-  const currentVegetableList = useSelector((state) => getAllVegetable(state));
   let dispatch = useDispatch();
-  let visible = useSelector((state) => getModalVisible(state));
-  const HeightLength = "200px";
-  const WidthLength = "300px";
 
+  //! function sẽ load những rau trồng đc gửi lên để admin duyệt
   function updateVegetableData() {
     let hava = [];
     dispatch(getAllVegetableUnapproved()).then((response) => {
@@ -59,18 +43,9 @@ function Post() {
   React.useEffect(() => {
     updateVegetableData();
   }, []);
-  const closeModal = () => {
-    return "";
-  };
-  const autoCloseSuccessModal = () => {
-    dispatch(setVisible(false))
-  };
   return (
     <React.Fragment>
-     
-      {/* <SuccessPopUp visible={successVisible} length="200px" /> */}
       <LoadingPopUp visible={loading} length="200px" />
-
       <div className="content">
         <MaterialButton
           variant="contained"

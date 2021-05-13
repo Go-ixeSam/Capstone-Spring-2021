@@ -158,80 +158,10 @@ function Dashboard() {
                       );
                     });
                   })}
-                  {/* <MaterialButton
-                    variant="contained"
-                    color="info"
-                    size="large"
-                    style={{ marginRight: 5 }}
-                    // click={() => autoCloseSuccessModal()}
-                  >
-                    Cập nhật
-                  </MaterialButton> */}
                 </Form>
               );
             }}
           </Formik>
-          {/* <Col lg={3} sm={6}>
-              <Card
-                statsIcon="fa fa-history"
-                id="chartHours"
-                title="Hoạt động của người  dùng"
-                category="24 Hours performance"
-                stats="Updated 3 minutes ago"
-                content={
-                  <div className="ct-chart">
-                    <ChartistGraph
-                      data={dataSales}
-                      type="Line"
-                      options={optionsSales}
-                      responsiveOptions={responsiveSales}
-                    />
-                  </div>
-                }
-              />
-            </Col> */}
-          {/* <Col lg={3} sm={6}>
-              <MiniChartCard
-                content={
-                  <ChartistGraph
-                    className={"ct-chart"}
-                    data={dataSales}
-                    type="Line"
-                    options={optionsSales}
-                    responsiveOptions={responsiveSales}
-                  />
-                }
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText="Updated now"
-              />
-            </Col> */}
-          {/* <Col lg={3} sm={6}>
-              <StatsCard
-                bigIcon={<i className="pe-7s-wallet text-success" />}
-                statsText="Revenue"
-                statsValue="$1,345"
-                statsIcon={<i className="fa fa-calendar-o" />}
-                statsIconText="Last day"
-              />
-            </Col> */}
-          {/* <Col lg={3} sm={6}>
-              <StatsCard
-                bigIcon={<i className="pe-7s-graph1 text-danger" />}
-                statsText="Errors"
-                statsValue="23"
-                statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText="In the last hour"
-              />
-            </Col> */}
-          {/* <Col lg={3} sm={6}>
-              <StatsCard
-                bigIcon={<i className="fa fa-twitter text-info" />}
-                statsText="Followers"
-                statsValue="+45"
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText="Updated now"
-              />
-            </Col> */}
         </Row>
         <Row>
           <Col md={12}>

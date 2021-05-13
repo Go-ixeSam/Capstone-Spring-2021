@@ -18,7 +18,7 @@ export {
   isAccept,
   getAllVegetableUnapproved, // useWantAllVegetableUnapproved,
   setSelectedItem
-} from "./Post/PostSlice";
+} from "./Vegetable/VegetableSlice";
 export { addObject } from "./Firebase/FirebaseSlice";
 export {
   login,

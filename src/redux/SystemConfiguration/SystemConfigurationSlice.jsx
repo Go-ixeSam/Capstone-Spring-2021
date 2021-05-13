@@ -1,12 +1,5 @@
-// import ContractType from "./contractType";
-import * as variable from "../../variables/Variables";
 import JSONPLACEHOLDERApi from "api/JSONPLACEHOLDERApi";
-import {
-  createPostData,
-  convertDateToString,
-  createAccountData,
-  createHeader,
-} from "util/ContructorCreation";
+import * as variable from "../../variables/Variables";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 /**
@@ -75,15 +68,6 @@ const systemConfig = createSlice({
                 value: "",
               },
             },
-            // {
-            //   elementType: variable.input,
-            //   elementConfig: {
-            //     name: variable.percent,
-            //     type: variable.text,
-            //     labeltext: "Phần trăm báo cáo",
-            //     value: "",
-            //   },
-            // },
           ],
         },
       },

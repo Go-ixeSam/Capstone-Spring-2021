@@ -4,7 +4,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import accountReducer from "./Account/AccountSlice";
 import tripReducer from "./trip/TripSlice";
-import postReducer from "./Post/PostSlice";
+import postReducer from "./Vegetable/VegetableSlice";
 import firebaseReducer from "./Firebase/FirebaseSlice";
 import loginReducer from "./Login/LoginSlice";
 import dashboardReducer from "./Dashboard/DashboardSlice"

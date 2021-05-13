@@ -31,7 +31,6 @@ function SystemConfiguration() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => getSystemConfigLoading(state));
   const percent = useSelector((state) => getPercent(state));
-
   let [successVisible, setSuccessVisible] = React.useState(false); // dùng để hiện succes popup
   let [failVisible, setFailVisible] = React.useState(false);
   const percentNames = {

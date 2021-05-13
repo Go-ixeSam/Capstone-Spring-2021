@@ -1,22 +1,18 @@
 // import ContractType from "./contractType";
 // import * as variable from "../../variables/Variables";
 import JSONPLACEHOLDERApi from "api/JSONPLACEHOLDERApi";
-import { useAPICalling } from "api/JSONPLACEHOLDERApi";
-import {
-  convertDateToString,
-  createHeader,
-  createPostData,
-  createReportedPostData,
-  createVegetableData,
-} from "util/ContructorCreation";
-import * as variable from "variables/Variables";
 import garden from "assets/img/garden.jpg";
 import richasdo from "assets/img/richasdo.jpg";
 import vegetable from "assets/img/vegetable_web_admin.jpg";
+import {
+  createHeader,
+
+  createReportedPostData,
+  createVegetableData
+} from "util/ContructorCreation";
+import * as variable from "variables/Variables";
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
-const currentDate = new Date();
-
 //* Ham de chap thuan nhung rau co thong tin chinh xac
 export const isAccept = createAsyncThunk(
   "vegetable/isAccept",
@@ -32,23 +28,6 @@ export const getAllVegetableUnapproved = createAsyncThunk(
     return result;
   }
 );
-/**
- * * Hàm có mục đích cho việc test
- * ! trả về ngày tiếp theo
- */
-function getNextDate(currentDate) {
-  return currentDate.setDate(new Date().getDate() + 1);
-}
-
-function createDateForTest() {
-  // var currentDate = new Date();
-  var data = [];
-  for (var i = 0; i >= 5; i++) {
-    data.push(createPostData(i, "sam", currentDate, 3, 12));
-    currentDate = getNextDate(currentDate);
-  }
-  return data;
-}
 
 const post = createSlice({
   name: "post",
@@ -210,13 +189,11 @@ const post = createSlice({
 
   extraReducers: {
     [isAccept.pending]: (state) => {
-      // state.loading = true;
     },
     [getAllVegetableUnapproved.pending]: (state) => {
       state.loading = true;
     },
     [isAccept.rejected]: (state, action) => {
-      // state.loading = false;
       state.error = action.error;
     },
     [getAllVegetableUnapproved.rejected]: (state, action) => {
@@ -225,11 +202,9 @@ const post = createSlice({
     },
     [isAccept.fulfilled]: (state, action) => {
       state.isAcceptCurrent = action.payload;
-      // state.loading = false;
     },
     [getAllVegetableUnapproved.fulfilled]: (state, action) => {
       state.getAllVegetableUnapprovedCurrent = action.payload.data;
-      // console.log("result= ", action.payload.data);
       state.loading = false;
     },
   },

@@ -1,23 +1,8 @@
-import { faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, TableFooter, Checkbox } from "@material-ui/core";
+import { Box, Checkbox, TableFooter } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
-import { ShowPopUp, SuccessPopUp, LoadingPopUp } from "components/Modal/Modal";
-import { Col, Grid, Row } from "react-bootstrap";
-import { CardNoFooter } from "components/Card/Card";
-import { MaterialButton } from "components/CustomButton/MaterialButton";
-
-import { prepareVegetableData } from "util/Helper";
-import {
-  setVisible,
-  isAccept,
-  getAllVegetableUnapproved,
-  decreaseNotificationCount,
-  setSelectedItem,
-} from "redux/index";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -29,32 +14,33 @@ import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import clsx from "clsx";
+import { CardNoFooter } from "components/Card/Card";
+import { MaterialButton } from "components/CustomButton/MaterialButton";
+import { ShowPopUp } from "components/Modal/Modal";
+import ActionButton from "components/SuperTable/ActionButton";
 import { useFormik } from "formik";
-import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { Col, Grid, Row } from "react-bootstrap";
+import PerfectScrollbar from "react-perfect-scrollbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 import {
-  DeleteButton,
-  CheckCircleButton,
-  CancelButton,
+  decreaseNotificationCount, getAllVegetableUnapproved, isAccept, setVisible
+} from "redux/index";
+import { prepareVegetableData } from "util/Helper";
+import {
+  CancelButton, CheckCircleButton
 } from "../../components/CustomButton/CustomButton";
-import SearchOption from "../../components/FilterOption/SearchOption/SearchBar";
-import { getLocked, removeAdvanceRecordSelected } from "../../redux";
+import { removeAdvanceRecordSelected } from "../../redux";
 import {
-  getAdvanceData,
-  getAdvanceDataByNameSearch,
-  removeAdvanceRecord,
-  getSelectedItem,
-  getModalVisible,
+  getModalVisible, removeAdvanceRecord
 } from "../../redux/Selector/Selectors";
 import * as variable from "../../variables/Variables";
 import EnhancedTableHead from "../SuperTable/Header/AdvanceHeader";
 import { StyledTableCell, StyledTableCell17px } from "./StyledCell";
 import { StyledTableRow } from "./StyledRow";
-import ActionButton from "components/SuperTable/ActionButton";
+
 
 const normalPElement = {
   fontSize: 14,
@@ -190,18 +176,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NormalTable(props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   let visible = useSelector((state) => getModalVisible(state));
-  // ! row này sẽ đại diện cho dữ liệu lấy trực tiếp từ store (global)
   const actionButtonList = props.actionbuttonlist;
 
   // * cái row ở bên store truyền từ bên component vào
   let [rows, setRows] = useState(props.bodyData);
-
-  const dispatch = useDispatch();
-  let history = useHistory(); // ! history object
-
-  // * Dùng để đánh dấu account đang bị lock
-  const [isLock, setIsLock] = React.useState(0);
 
   React.useEffect(() => {
     setRows(props.bodyData);
@@ -213,15 +193,11 @@ export default function NormalTable(props) {
   const [orderBy, setOrderBy] = React.useState([variable.negativeCommendCount]);
   const [selected, setSelected] = React.useState([]);
   const [selectedForStore, setSelectedForStore] = React.useState([]);
-  // const selectedForStore = useSelector((state) => getSelectedItem(state));
-  const removeRows = useSelector((state) =>
-    removeAdvanceRecord(state, selected)
-  );
-
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  //! dùng để sort
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -235,18 +211,6 @@ export default function NormalTable(props) {
       return;
     }
   };
-
-  // ! Hàm này sẽ nhận name của cái row đc click và truyền đến trang edit
-  // const handleEdit = (selectedRowName) => {
-  //   console.log("user role=", userRole);
-  //   if (userRole == variable.fleetManagerRole) {
-  //     history.push(variable.fleetmanager + `/truckform/:name${selectedRowName}`);
-  //     history.push({
-  //       pathname: variable.fleetmanager + "/truckform",
-  //       search: `?name=${selectedRowName}`,
-  //     });
-  //   }
-  // };
 
   /**
    * ! row sẽ tượng trưng cái row đc click
@@ -307,15 +271,14 @@ export default function NormalTable(props) {
     );
   };
 
-  const deleteRow = () => {
-    console.log("Những row đc lựa chọn: ", selected);
-    dispatch(removeAdvanceRecordSelected(selected));
-    //! tìm ra những row đc lựa chọng
-  };
-
-  //* Hàm hiện cái popup confirm lựa chọn
+  //! Hàm hiện cái popup confirm lựa chọn
   const showConfirmDialog = () => {
     dispatch(setVisible(true));
+  };
+
+  //! hàm dùng để đóng modal
+  const closeModal = () => {
+    dispatch(setVisible(false));
   };
 
   /**
@@ -374,39 +337,11 @@ export default function NormalTable(props) {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  const formik = useFormik({
-    initialValues: {
-      searchvalue: "",
-      filtervalue: "Name",
-    },
-    onSubmit: (values) => {
-      console.log("search value", values);
-      switch (values["filtervalue"]) {
-        case "Name":
-          console
-            .log
-            // setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]))
-            ();
-          // setRows(getAdvanceDataByNameSearch(rows, values["searchvalue"]));
-          break;
-        case " Age":
-          console.log("result", values["filtervalue"]);
-          break;
-      }
-    },
-  });
-  const closeModal = () => {
-    dispatch(setVisible(false));
-  };
   return (
     <React.Fragment>
       <ShowPopUp visible={visible} length="50%">
@@ -526,7 +461,6 @@ export default function NormalTable(props) {
                     headCells.map((obj) => {
                       objectInArr.map((cell) => {
                         if (obj.id == cell.key) {
-                          // console.log("cell", cell.key, " obj", obj.id);
                           //! phần tử trong mảng final có 2 cái, đặc biệt là numeric giúp cho việc hiển thị giữa dữ liệu chữ và số đẹp hơn ở mỗi row của table
                           finalArray.push({
                             value: cell.value,
@@ -563,7 +497,6 @@ export default function NormalTable(props) {
                         })}
 
                         {finalArray.map((obj, index) => {
-                          // console.log("value", obj.value);
                           //  ! Nếu value là ảnh thì sẽ  thêm 1 component image và để hiển thị
                           if (obj.key == "vegetableImage") {
                             if (obj.numeric == false) {
