@@ -1,12 +1,5 @@
-// Give the service worker access to Firebase Messaging.
-// Note that you can only use Firebase Messaging here. Other Firebase libraries
-// are not available in the service worker.
 importScripts("https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/8.4.1/firebase-messaging.js");
-
-// Initialize the Firebase app in the service worker by passing in
-// your app's Firebase config object.
-// https://firebase.google.com/docs/web/setup#config-object
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
     .register("../public/firebase-messaging-sw.js")
@@ -18,30 +11,22 @@ if ("serviceWorker" in navigator) {
     });
 }
 firebase.initializeApp({
-  apiKey: "api-key",
-  authDomain: "project-id.firebaseapp.com",
-  databaseURL: "https://project-id.firebaseio.com",
-  projectId: "project-id",
-  storageBucket: "project-id.appspot.com",
-  messagingSenderId: "sender-id",
-  appId: "app-id",
-  measurementId: "G-measurement-id",
+  apiKey: "AIzaSyCJhxike3V11N-S4t2cUvJO7KhkTOSR4x8",
+  authDomain: "vegetable-6cd92.firebaseapp.com",
+  projectId: "vegetable-6cd92",
+  storageBucket: "vegetable-6cd92.appspot.com",
+  messagingSenderId: "429894392196",
+  appId: "1:429894392196:web:ef20d0d8290d42b87065d1",
+  measurementId: "G-LRXQX12XD9"
 });
-
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.
 const messaging = firebase.messaging();
 messaging.onBackgroundMessage((payload) => {
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
+  console.log("background message ha ha", payload);
   // Customize notification here
-  // const notificationTitle = "Background Message Title";
-  // const notificationOptions = {
-  //   body: "Background Message body.", 
-  //   icon: "/firebase-logo.png",
-  // };
-
-  // self.registration.showNotification(notificationTitle, notificationOptions);
+  const notificationTitle = "Background Message Title";
+  const notificationOptions = {
+    body: "Background Message body.",
+    icon: "/icon_app.png",
+  };
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });

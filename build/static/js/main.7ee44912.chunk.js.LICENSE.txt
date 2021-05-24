@@ -1,0 +1,49 @@
+/*!
+
+=========================================================
+* Light Bootstrap Dashboard React - v1.3.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+//! 2 hàm dưới dùng để cho người dùng biết có bao nhiêu notfication đã đến và đã đc xử lí xong
+
+//! Nếu hơn 100 tin nhắn thì sẽ chuyển thành hình vuông
+
+//! Nếu như token bằng rỗng thì chứng tỏ mật khẩu sai
+
+//! cái array sau khi đã đc xử lí để hiển thị
+
+//! cứ mỗi 1 noti đến là cộgn thêm 1
+
+//! function sẽ load những rau trồng đc gửi lên để admin duyệt
+
+//! kiểu put ở dưới là cách để thiết lập đối với những api mà param nằm ở body
+
+//! kiểu put ở dưới là cách để thiết lập đối với những api mà sử dụng query param
+
+//! laasy firebase token cai da
+
+//! list dành riêng cho store
+
+//! lấy số phần trăm dựa trên loại phần trăm, ta lấy kết quả bằng useSelector ở trên
+
+//! phần tử trong mảng final có 2 cái, đặc biệt là numeric giúp cho việc hiển thị giữa dữ liệu chữ và số đẹp hơn ở mỗi row của table
+
+//! sau khi việc update thành công thì hiện cái popup success
+
+//! setIsNotify dùng để ngăn cho ko hiện notification khi lần đầu event listener đc nổ
+
+//! tạo 1 list những item dc chọn ở store để hiện lên popup
+
+//! đây là đk để nổi notification =_

@@ -16,7 +16,7 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import clsx from "clsx";
 import { CardNoFooter } from "components/Card/Card";
 import { MaterialButton } from "components/CustomButton/MaterialButton";
-import { ShowPopUp } from "components/Modal/Modal";
+import { ShowPopUp, LoadingPopUp } from "components/Modal/Modal";
 import ActionButton from "components/SuperTable/ActionButton";
 import { useFormik } from "formik";
 import PropTypes from "prop-types";
@@ -26,21 +26,26 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
-  decreaseNotificationCount, getAllVegetableUnapproved, isAccept, setVisible
+  decreaseNotificationCount,
+  getAllVegetableUnapproved,
+  isAccept,
+  setVisible,
 } from "redux/index";
 import { prepareVegetableData } from "util/Helper";
 import {
-  CancelButton, CheckCircleButton
+  CancelButton,
+  CheckCircleButton,
 } from "../../components/CustomButton/CustomButton";
 import { removeAdvanceRecordSelected } from "../../redux";
 import {
-  getModalVisible, removeAdvanceRecord
+  getModalVisible,
+  removeAdvanceRecord,
+  getVegetableAPIloadingTime,
 } from "../../redux/Selector/Selectors";
 import * as variable from "../../variables/Variables";
 import EnhancedTableHead from "../SuperTable/Header/AdvanceHeader";
 import { StyledTableCell, StyledTableCell17px } from "./StyledCell";
 import { StyledTableRow } from "./StyledRow";
-
 
 const normalPElement = {
   fontSize: 14,
@@ -178,6 +183,7 @@ export default function NormalTable(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   let visible = useSelector((state) => getModalVisible(state));
+  let loading = useSelector((state) => getVegetableAPIloadingTime(state));
   const actionButtonList = props.actionbuttonlist;
 
   // * cái row ở bên store truyền từ bên component vào
@@ -285,47 +291,56 @@ export default function NormalTable(props) {
    ** Hàm dùng để duyệt những rau đúng thông tin
    */
   const passTest = () => {
-    let tmp = [];
-    console.log("Những row đc lựa chọn: ", selected);
-    selected.map((item) => {
-      dispatch(
-        isAccept({
-          Id: item,
-          Status: 2,
-        })
-      ).then(() => {
-        dispatch(getAllVegetableUnapproved()).then((res) => {
-          tmp = [...prepareVegetableData(res.payload.data)];
-          setRows(tmp);
-          setSelected([]);
-        });
-      });
-    });
-    dispatch(decreaseNotificationCount(selected.length));
-    //! sau khi submit thành công thì cập nhật row và load lại list
+    const vegetableCensorship = async () => {
+      try {
+        await dispatch(
+          isAccept({
+            id: selected,
+            status: 2,
+          })
+        );
+
+        //! sau khi submit thành công thì cập nhật row và load lại list
+        const res = await dispatch(getAllVegetableUnapproved());
+        const tmp = await [...prepareVegetableData(res.payload.data)];
+        await setRows(tmp);
+        await setSelected([]);
+        await setSelectedForStore([])
+        await dispatch(decreaseNotificationCount(selected.length));
+        closeModal();
+      } catch (error) {
+        console.log("Normal table error: ", error);
+      }
+    };
+    vegetableCensorship();
   };
 
   /**
    ** Hàm dùng để từ chối những rau sai thông tin
    */
   const failTest = () => {
-    let tmp = [];
-    console.log("Những row đc lựa chọn: ", selected);
-    selected.map((item) => {
-      dispatch(
-        isAccept({
-          Id: item,
-          Status: 3,
-        })
-      ).then(() => {
-        dispatch(getAllVegetableUnapproved()).then((res) => {
-          tmp = [...prepareVegetableData(res.payload.data)];
-          setRows(tmp);
-          setSelected([]);
-        });
-      });
-    });
-    dispatch(decreaseNotificationCount(selected.length));
+    const vegetableCensorship = async () => {
+      try {
+        await dispatch(
+          isAccept({
+            id: selected,
+            status: 3,
+          })
+        );
+
+        //! sau khi submit thành công thì cập nhật row và load lại list
+        const res = await dispatch(getAllVegetableUnapproved());
+        const tmp = await [...prepareVegetableData(res.payload.data)];
+        await setRows(tmp);
+        await setSelected([]);
+        await setSelectedForStore([])
+        await dispatch(decreaseNotificationCount(selected.length));
+        closeModal();
+      } catch (error) {
+        console.log("Normal table error: ", error);
+      }
+    };
+    vegetableCensorship();
   };
 
   const handleChangePage = (event, newPage) => {
@@ -345,6 +360,7 @@ export default function NormalTable(props) {
   return (
     <React.Fragment>
       <ShowPopUp visible={visible} length="50%">
+        <LoadingPopUp visible={loading} length="200px" />
         <Grid fluid style={{ margin: 0, padding: 0 }}>
           <CardNoFooter
             title={<React.Fragment></React.Fragment>}
@@ -406,6 +422,7 @@ export default function NormalTable(props) {
                             color="success"
                             size="large"
                             style={{ marginRight: 5 }}
+                            onClick={() => failTest()}
                           >
                             Xác nhận
                           </MaterialButton>

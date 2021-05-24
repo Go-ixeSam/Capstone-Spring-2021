@@ -38,7 +38,8 @@ const JsonPlaceHolderApi = {
     const url = "/api/Vegetable/IsAccept";
 
     //! kiểu put ở dưới là cách để thiết lập đối với những api mà sử dụng query param
-    return axiosTeamClient.put(url, {}, { params: params });
+    // return axiosTeamClient.put(url, {}, { params: params });
+    return axiosTeamClient.put(url, params);
   },
   getAllVegetableUnapproved: (params) => {
     const url = "/api/Vegetable/GetAllVegetableUnapproved";
