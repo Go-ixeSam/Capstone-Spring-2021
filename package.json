@@ -10,6 +10,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@material-ui/core": "^4.11.2",
+    "@material-ui/data-grid": "^4.0.0-alpha.29",
     "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.5.0",
     "axios": "^0.21.1",
@@ -41,6 +42,7 @@
     "redux-persist": "^6.0.0",
     "redux-persist-transform-filter": "0.0.20",
     "styled-components": "^5.2.1",
+    "use-force-update": "^1.0.7",
     "yup": "^0.32.8"
   },
   "devDependencies": {

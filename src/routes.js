@@ -26,12 +26,15 @@ import Upgrade from "views/Upgrade.jsx";
 import MaterialTable from "views/Account";
 import SignIn from "views/Signin";
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
+import { fab, faFortAwesome } from '@fortawesome/free-brands-svg-icons'
 import Post from "views/Vegetable";
 import SystemCon from "views/SystemConfiguration"
 import Label from "views/Labeling"
+import Wiki from "views/Wikipedia"
 import { faCheckSquare, faCoffee,faUser,faUserPlus,faPaperPlane,faCog,faTags,faChartBar,faCarrot} from '@fortawesome/free-solid-svg-icons'
+import {faWikipediaW} from "@fortawesome/free-brands-svg-icons"
 import Test from "views/TestingDatabaseRealTime"
+import White from "views/White";
 library.add(fab, faCheckSquare, faCoffee,faUser)
 
 const dashboardRoutes = [
@@ -70,18 +73,32 @@ const dashboardRoutes = [
   //   component: MaterialTable,
   //   layout: "/admin",
   // },
-  {
-    path: "/post",
-    name: "Duyệt thông tin rau",
-    icon: faCarrot,
-    component: Post,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/vegetable",
+  //   name: "Duyệt thông tin rau",
+  //   icon: faCarrot,
+  //   component: Post,
+  //   layout: "/admin",
+  // },
   {
     path: "/systemconfiguration",
     name: "Cấu hình hệ thống",
     icon: faCog,
     component: SystemCon,
+    layout: "/admin",
+  },
+  // {
+  //   path: "/wikipediasearch",
+  //   name: "Cổng Wiki",
+  //   icon: faWikipediaW,
+  //   component: Wiki,
+  //   layout: "/admin",
+  // },
+  {
+    path: "/vegetable",
+    name: "Duyệt rau",
+    icon: faCarrot,
+    component: White,
     layout: "/admin",
   },
   // {

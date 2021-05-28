@@ -17,6 +17,7 @@
 */
 import React, { Component, useState } from "react";
 import ChartistGraph from "react-chartist";
+import {useHistory} from "react-router-dom"
 import crown from "assets/img/crown.png";
 import { Grid, Row, Col } from "react-bootstrap";
 import ChartistTooltip from "chartist-plugin-tooltips-updated";
@@ -52,12 +53,14 @@ import { Box } from "@material-ui/core";
 require("chartist-plugin-legend");
 
 function Dashboard() {
+  const history=useHistory()
   const dispatch = useDispatch();
   const [dataSales, setDataSales] = useState({});
   const [loading, setLoading] = useState(true);
   const [top10, setTop10] = useState([]);
   const [top10Account, setTop10Account] = useState([]);
   const [compare, setCompare] = useState({});
+  console.log("dashboard= ",history)
   React.useEffect(() => {
     try {
       const prepare = () => {
@@ -74,16 +77,16 @@ function Dashboard() {
         dispatch(getTop10(2)).then((res) => {
           const tmp = res.payload.data;
           setTop10(tmp);
-          console.log("danh sách 10 rau: ", res);
+          // console.log("danh sách 10 rau: ", res);
         });
         dispatch(getTop10(1)).then((res) => {
           const tmp = res.payload.data;
           setTop10Account(tmp);
-          console.log("danh sách 10 người: ", res);
+          // console.log("danh sách 10 người: ", res);
         });
         dispatch(getShareAndExchangeCompare()).then((res) => {
           setCompare(res.payload.data);
-          console.log("share và exchage: ", res);
+          // console.log("share và exchage: ", res);
         });
         setLoading(false);
       };

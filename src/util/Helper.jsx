@@ -37,7 +37,8 @@ export function prepareVegetableData(datas) {
         data.idDescription,
         data.feature,
         data.description,
-        image
+        image,
+        data.status
       )
     );
   });

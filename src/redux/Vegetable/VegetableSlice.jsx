@@ -6,9 +6,8 @@ import richasdo from "assets/img/richasdo.jpg";
 import vegetable from "assets/img/vegetable_web_admin.jpg";
 import {
   createHeader,
-
   createReportedPostData,
-  createVegetableData
+  createVegetableData,
 } from "util/ContructorCreation";
 import * as variable from "variables/Variables";
 
@@ -28,10 +27,32 @@ export const getAllVegetableUnapproved = createAsyncThunk(
     return result;
   }
 );
+export const updateVegetableDetail = createAsyncThunk(
+  "vegetable/updateVegetable",
+  async (params, thunkAPI) => {
+    const result = await JSONPLACEHOLDERApi.updateVegetable(params);
+    return result;
+  }
+);
+export const wikiVegetableSearch = createAsyncThunk(
+  "vegetable/wikiVegetableSearch",
+  async (params, thunkAPI) => {
+    const result = await JSONPLACEHOLDERApi.wikiVegetableSearch(params);
+    return result;
+  }
+);
+export const wikiHtmlString = createAsyncThunk(
+  "vegetable/wikiHtmlString",
+  async (params, thunkAPI) => {
+    const result = await JSONPLACEHOLDERApi.wikiSearch(params);
+    return result;
+  }
+);
 
 const post = createSlice({
   name: "post",
   initialState: {
+    vegetableFormatList: [],
     selectedAccountId: 0,
     [variable.advanceTableData]: [
       createVegetableData(
@@ -162,18 +183,33 @@ const post = createSlice({
         ],
       },
     ],
+
     tableHeader: [
       createHeader("Ảnh đại diện", false, false, [variable.vegetableImage]),
       createHeader("Tên", false, false, [variable.vegetableName]),
+      createHeader("Hình thức ", false, true, [variable.vegetableName]),
       createHeader("Công dụng", false, true, [variable.uses]),
       createHeader("Mô tả", false, true, [variable.description]),
     ],
+    tableHeaderForTest: [
+      // createHeader("Ảnh đại diện", false, false, [variable.vegetableImage]),
+      createHeader("Người dùng", false, false, "user"),
+      createHeader("Tên rau ", false, true, "vegetableName"),
+      // createHeader("Công dụng", false, true, [variable.uses]),
+      // createHeader("Mô tả", false, true, [variable.description])
+    ],
+    showDetail: "hidden",
     isAcceptCurrent: {},
     getAllVegetableUnapprovedCurrent: {},
-    loading: true, // true am chi pending dan dien ra
+    wikiResult: {},
+    loading: false, // true am chi pending dan dien ra
     error: "",
     userPostVisible: false,
-    selectedItem:[]
+    selectedItem: [],
+    selectedVegetable: {},
+    filterSelect: 0,
+    updateResult: {},
+    updateSignal: false,
   },
   reducers: {
     setVisible: (state, action) => {
@@ -183,13 +219,24 @@ const post = createSlice({
       state.selectedAccountId = action.payload;
     },
     setSelectedItem: (state, action) => {
-      state.selectedItem=action.payload
+      state.selectedItem = action.payload;
+    },
+    setSelectedVegetable: (state, action) => {
+      state.selectedVegetable = action.payload;
+    },
+    setVegetableFormatList: (state, action) => {
+      state.vegetableFormatList = action.payload;
+    },
+    setFilterSelect: (state, action) => {
+      state.filterSelect = action.payload;
+    },
+    setUpdateSingal: (state, action) => {
+      state.updateSignal = action.payload;
     },
   },
 
   extraReducers: {
-    [isAccept.pending]: (state) => {
-    },
+    [isAccept.pending]: (state) => {},
     [getAllVegetableUnapproved.pending]: (state) => {
       state.loading = true;
     },
@@ -207,9 +254,38 @@ const post = createSlice({
       state.getAllVegetableUnapprovedCurrent = action.payload.data;
       state.loading = false;
     },
+    [wikiVegetableSearch.pending]: (state) => {
+      state.loading = true;
+    },
+    [wikiVegetableSearch.fulfilled]: (state, action) => {
+      state.wikiResult = action.payload.data;
+      state.loading = false;
+    },
+    [wikiVegetableSearch.rejected]: (state) => {
+      state.loading = false;
+    },
+    [updateVegetableDetail.pending]: (state) => {
+      // state.loading = true;
+    },
+    [updateVegetableDetail.fulfilled]: (state, action) => {
+      // state.loading = false;
+      state.updateResult = action.payload;
+    },
+    [updateVegetableDetail.rejected]: (state, action) => {
+      // state.loading = false;
+      state.error = action.error;
+    },
   },
 });
 
 const { reducer: postReducer, actions } = post; //createSlice sẽ trả về cho ta 2 biến là reducer và action
-export const { setVisible, setSelectedAccountID,setSelectedItem } = actions;
+export const {
+  setVisible,
+  setSelectedAccountID,
+  setSelectedItem,
+  setSelectedVegetable,
+  setVegetableFormatList,
+  setFilterSelect,
+  setUpdateSingal,
+} = actions;
 export default postReducer;

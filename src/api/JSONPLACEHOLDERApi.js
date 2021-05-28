@@ -72,5 +72,23 @@ const JsonPlaceHolderApi = {
     const url = "/api/Dashboard/ShowDashBoardAboutShareAndExchange";
     return axiosTeamClient.get(url, {}, { params: params });
   },
+
+  //* Lấy html string của rau cần tìm
+  wikiSearch:(params)=>{
+    const url="/GetHTMLWiki";
+    return axios.get(variable.wikiSearchBaseUrl+url+`?title=${params}`)
+  },
+
+  // * tìm kiếm rau tren wiki
+  wikiVegetableSearch:(params)=>{
+    const url="/LeakInfoFromWiki";
+    return axios.get(variable.wikiSearchBaseUrl+url+`?title=${params}`)
+  },
+
+  // * cập nhật rau
+  updateVegetable:(params)=>{
+    const url="/api/Vegetable/UpdateVegetableByAdmin"
+    return axiosTeamClient.put(url, params)
+  }
 };
 export default JsonPlaceHolderApi;

@@ -20,7 +20,11 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import {getFirebase,getNotificationCount,getNotificationCountFromLogin} from "redux/Selector/Selectors"
+import {
+  getFirebase,
+  getNotificationCount,
+  getNotificationCountFromLogin,
+} from "redux/Selector/Selectors";
 import "./CircleDot.css";
 import "./DotPosition.css";
 
@@ -37,11 +41,11 @@ function Sidebar(props) {
   // }
 
   const [width, setWidth] = React.useState(window.innerWidth);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
   //! Số lượng cay chua dc duyet
   // const length=useSelector(state=>getFirebase(state)).firebaseData.length
-  const length=useSelector(state=>getNotificationCountFromLogin(state))
+  const length = useSelector((state) => getNotificationCountFromLogin(state));
 
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -102,7 +106,7 @@ function Sidebar(props) {
             //! Nếu hơn 100 tin nhắn thì sẽ chuyển thành hình vuông
 
             // ! Nếu là link là post thì ta show thêm 1 cái notification
-            if (prop.path == "/post") {
+            if (prop.path == "/vegetable") {
               navLinkHaveNotification = (
                 <li key={key}>
                   <NavLink
@@ -110,10 +114,6 @@ function Sidebar(props) {
                     className="nav-link"
                     activeClassName="active"
                   >
-                    {/* Hiện cái icon */}
-                    {
-
-                    }
                     <div
                       style={{
                         display: "flex",
@@ -128,13 +128,15 @@ function Sidebar(props) {
                       />
                       <Box width={15} />
                       <p>{prop.name}</p>
-                      
-                      <span className={length <10 ? "dot" : "square"}>{length}</span>
+                      <span className={length < 10 ? "dot" : "square"}>
+                        {length}
+                      </span>
                     </div>
                   </NavLink>
-                  {/* <span className="dot" /> */}
                 </li>
               );
+            } else if (prop.path == "/white" || prop.path == "/admin/white") {
+              navLinkHaveNotification = <li style={{ display: "none" }}></li>;
             } else {
               navLinkHaveNotification = (
                 <li

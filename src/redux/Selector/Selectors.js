@@ -12,6 +12,33 @@ export function getVegetableAPIloadingTime(state) {
   return state.post.loading;
 }
 
+export function getUpdateSignal(state){
+  return state.post.updateSignal
+}
+
+export function getVegetableFormatList(state){
+  return state.post.setVegetableFormatList;
+}
+
+export function getSelectedFilter(state){
+  return state.post.filterSelect
+}
+
+export function getTestTable(state){
+  return state.post.tableHeaderForTest
+}
+
+export function getShowDetail(state){
+  return state.post.showDetail
+}
+export function getSeletedVegetable(state){
+  return state.post.selectedVegetable
+}
+
+export function getWikiResult(state){
+return state.post.wikiResult
+}
+
 export function getAdvanceData(state) {
   return state.account.accountData;
 }

@@ -210,6 +210,7 @@ const Admin = (props) => {
   }, [dataInFirebase]);
 
   React.useEffect(() => {
+    // * Doạn này dùng để thu cái nav bar lại khi chiều rộng bị bé lại
     if (
       window.innerWidth < 993 &&
       history.location.pathname !== location.pathname &&
@@ -217,6 +218,8 @@ const Admin = (props) => {
     ) {
       document.documentElement.classList.toggle("nav-open");
     }
+
+   // * Đoạn này dùng để lưu lại nơi scroll top
     if (history.action === "PUSH") {
       document.documentElement.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;

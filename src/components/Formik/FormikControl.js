@@ -7,6 +7,7 @@ import Input from "./Input";
 import RadioButton from "./RadioButton";
 import CheckboxGroup from "./CheckboxGroup";
 import DatePicker from "./DatePicker";
+import TextArea from "./Textarea";
 
 export const FormControll = (argument) => {
   // const {}
@@ -14,7 +15,7 @@ export const FormControll = (argument) => {
     case variable.input:
       return <Input {...argument} />;
     case "textarea":
-      break;
+      return <TextArea {...argument}/>;
     case variable.select:
       return <Select {...argument} />;
     case variable.radiobutton:

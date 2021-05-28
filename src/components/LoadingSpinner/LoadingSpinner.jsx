@@ -21,4 +21,17 @@ function LoadingSpinner() {
   );
 }
 
+//* spinner có thể bật tắt 
+export function SwitchSpinner(props){
+  // let [loading, setLoading] = useState(props.show);
+  let [color, setColor] = useState(variable.alternativePrimaryColor);
+
+  return (
+    <div className="sweet-loading">
+      <ClipLoader color={color} loading={props.show} size={props.size} />
+    </div>
+  );
+
+}
+
 export default LoadingSpinner;

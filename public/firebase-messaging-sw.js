@@ -22,11 +22,14 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 messaging.onBackgroundMessage((payload) => {
   console.log("background message ha ha", payload);
+  payload.body="Background Message body"
+  payload.image="/icon_app.png"
+  payload.title="Background Message Title"
   // Customize notification here
-  const notificationTitle = "Background Message Title";
-  const notificationOptions = {
-    body: "Background Message body.",
-    icon: "/icon_app.png",
-  };
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  // const notificationTitle = "Background Message Title";
+  // const notificationOptions = {
+  //   body: "Background Message body.",
+  //   icon: "/icon_app.png",
+  // };
+  // self.registration.showNotification(notificationTitle, notificationOptions);
 });

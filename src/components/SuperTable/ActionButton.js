@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {setVisible} from "redux/index"
 
 const ActionButton = (props) => {
-  const { row, handlelock, name } = props;
+  const { row, handlelock, name,click } = props;
   const dispatch = useDispatch();
   function handleLockAccount(row) {
     let id = row[variable.id];
@@ -45,7 +45,7 @@ const ActionButton = (props) => {
         <StyledTableCell
           padding="checkbox"
         >
-          <IconButton onClick={openModal}>
+          <IconButton onClick={click}>
             <FontAwesomeIcon
               icon={faReadme}
             />

@@ -443,7 +443,8 @@ export default function NormalTable(props) {
             <Table
               className={classes.table}
               aria-labelledby="tableTitle"
-              size={dense ? "small" : "medium"}
+              size={"small"}
+              // size={dense ? "small" : "medium"}
               aria-label="enhanced table"
             >
               <EnhancedTableHead

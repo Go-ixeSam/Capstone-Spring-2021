@@ -543,19 +543,7 @@ var dataSales = {
     // ],
     // {name:"hoa quả",data:[287, 385, 490, 492, 554, 586, 698,287, 385, 490, 492, 554, 586]} ,
     // {name:"Okay",data:[67, 152, 143, 240, 287, 335, 435,287, 385, 490, 492, 554, 586]} ,
-  [  67,
-    152,
-    143,
-    240,
-    287,
-    335,
-    435,
-    287,
-    385,
-    490,
-    492,
-    554,
-    586,]
+    [67, 152, 143, 240, 287, 335, 435, 287, 385, 490, 492, 554, 586],
     // [67, 152, 143, 240, 287, 335, 435, 437],
     // [23, 113, 67, 108, 190, 239, 307, 308],
     // [43, 113, 90, 122, 432, 239, 113, 223],
@@ -599,7 +587,7 @@ var responsiveSales = [
 ];
 var legendSales = {
   names: ["Lượt tương tác đến bài đăng", "Bài đăng chia sẻ rau"],
-  types: ["info", "danger",],
+  types: ["info", "danger"],
 };
 
 // Data for Bar Chart
@@ -679,7 +667,8 @@ const reportCount = "reportCount";
 const negativeCommendCount = "negativeCommendCount";
 const advanceTableData = "advanceTableData";
 const tableHeader = "tableHeader";
-const vapidAPIKey="BNZzdzfi0VcWMVR2Ycq7z32Uw8XURgH0Bxw-G6Y0Al88vvlzQ5PzGQNtbjarbhogI5DpxshHlzwb5O-Wq4ncid0"
+const vapidAPIKey =
+  "BNZzdzfi0VcWMVR2Ycq7z32Uw8XURgH0Bxw-G6Y0Al88vvlzQ5PzGQNtbjarbhogI5DpxshHlzwb5O-Wq4ncid0";
 /**
  * *Các loại input
  */
@@ -702,6 +691,7 @@ const description = "description";
 const uses = "uses";
 const vegetableImage = "vegetableImage";
 const numberOfReport = "numberofreport";
+const vegetableStatus="vegetableStatus";
 const email = "email";
 const birthDate = "birthdate";
 const phone = "phone";
@@ -709,11 +699,13 @@ const sex = "sex";
 const createDate = "createdate";
 const postPicture = "postpicture";
 const caption = "caption";
+const vegetableInputType = "Hình thức";
 
 // ! Mọi API URL chỉ khách ở phần sau thôi
 const baseURL = "";
 const jsonplaceholerAPI = "https://jsonplaceholder.typicode.com";
-const teamBaseURL = "http://54.179.74.214:8080"; 
+const teamBaseURL = "http://54.179.74.214:8080";
+const wikiSearchBaseUrl = "http://54.179.74.214:8080";
 // const teamBaseURL = "https://54.179.74.214:443";
 // const teamBaseURL = "https://54.179.74.214:4210";
 module.exports = {
@@ -790,5 +782,8 @@ module.exports = {
   vegetableImage,
   description,
   uses,
-  vapidAPIKey
+  vapidAPIKey,
+  vegetableInputType,
+  wikiSearchBaseUrl,
+  vegetableStatus
 };

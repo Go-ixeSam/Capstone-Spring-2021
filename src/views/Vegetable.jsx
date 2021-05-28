@@ -21,7 +21,6 @@ function Post() {
   let loading = useSelector((state) => getVegetableAPIloadingTime(state));
   const [tableBodyData, setTableBodyData] = useState([]);
   let dispatch = useDispatch();
-
   //! function sẽ load những rau trồng đc gửi lên để admin duyệt
   function updateVegetableData() {
     let hava = [];

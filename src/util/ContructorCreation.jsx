@@ -60,13 +60,14 @@ export const createAccountData = (
  * @param {*} image 
  * @returns 
  */
-export const createVegetableData = (name, id, uses, description, image) => {
+export const createVegetableData = (name, id, uses, description, image,status) => {
   return {
     [variable.vegetableName]: name,
     [variable.vegetableImage]: image,
     [variable.uses]: uses,
     [variable.description]: description,
     [variable.id]: id,
+    [variable.vegetableStatus]:status
   };
 };
 export const createReportedPostData = (

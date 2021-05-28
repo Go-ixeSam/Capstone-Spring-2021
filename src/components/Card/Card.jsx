@@ -52,10 +52,11 @@ export class Card extends Component {
 export const CardNoFooter = (props) => {
   const primaryColor = variable.primaryColor;
   return (
-    <div
-      className={"card" + (props.plain ? " card-plain" : "")}
-      style={{ margin: 15, border: "0.5px solid " + primaryColor }}
-    >
+    // <div
+    //   className={"card" + (props.plain ? " card-plain" : "")}
+    //   style={{ margin: 15, border: "0.5px solid " + primaryColor }}
+    // >
+    <div className={"card" + (props.plain ? " card-plain" : "")}>
       <div className={"header" + (props.hCenter ? " text-center" : "")}>
         <h4 className="title">{props.title}</h4>
         <p className="category">{props.category}</p>
