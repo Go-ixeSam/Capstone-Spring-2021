@@ -355,6 +355,7 @@ export default function EnhancedTable(props) {
     update();
   }, [updateSignal]);
 
+  //! Hàm dùng để lọc ra list rau dựa trên filter tương ứng
   const change = (fullList) => {
     let tmp = [];
     switch (seletedFilter) {
@@ -469,11 +470,15 @@ export default function EnhancedTable(props) {
     const response = await dispatch(getAllVegetableUnapproved());
     console.log("res= ", response);
     setFulllList(prepareVegetableData(response.payload.data));
-    hava = prepareVegetableData(
-      response.payload.data.filter(function (e) {
-        return e.status == false;
-      })
-    );
+
+
+    //! Hàm change sẽ trả về 1 list rau dựa trên filter hiện tại
+    hava=change(prepareVegetableData(response.payload.data))
+    // hava = prepareVegetableData(
+    //   response.payload.data.filter(function (e) {
+    //     return e.status == false;
+    //   })
+    // );
     setRows(hava);
 
     //! đếm số lượng rau chưa duyệt
