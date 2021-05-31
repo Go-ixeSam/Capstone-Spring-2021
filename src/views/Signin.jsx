@@ -1,17 +1,14 @@
 import { Box } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
 import { FormControll } from "components/Formik/FormikControl";
-import { Field, Form, Formik } from "formik";
-import React, { useEffect } from "react";
+import { Form, Formik } from "formik";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import loginReducer from "redux/Login/LoginSlice";
+import { login, setFirebaseToken } from "redux/index";
 import { getSignInForm, getToken } from "redux/Selector/Selectors";
+import message from "util/firebase";
 import * as variable from "variables/Variables";
 import * as Yup from "yup";
 import "../components/SignIn/style.scss";
-import { getALL, getPlantInfo, login, sharingDetail } from "redux/index";
-import { loginToWeb } from "components/Hook/CustomHook";
-import message from "util/firebase";
 
 let width = 240;
 let marginBottom = 5;
@@ -60,33 +57,29 @@ function Signin() {
   const [firebaseToken, setFirebaseToken] = React.useState("");
   const dispatch = useDispatch();
   React.useEffect(() => {
-    //! laasy firebase token cai da
-    // const messaging = firebase.messaging();
-    // Get registration token. Initially this makes a network call, once retrieved
-    // subsequent calls to getToken will return from cache.
-    message
-      .getToken({
-        vapidKey:
-          "BJT4KMAdFm6G8Sjq49q8RmDMsP6w0jPUghMTSMcdfkduJnBNzfxsSlLGEAMQzKjsu1aCtCtGA9TBT4D1wCk4SxM",
-      })
-      .then((currentToken) => {
+    const getTokenFromServer = async () => {
+      try {
+        const currentToken = await message.getToken({
+          vapidKey:
+            "BJT4KMAdFm6G8Sjq49q8RmDMsP6w0jPUghMTSMcdfkduJnBNzfxsSlLGEAMQzKjsu1aCtCtGA9TBT4D1wCk4SxM",
+        });
         if (currentToken) {
-          // Send the token to your server and update the UI if necessary
-          // ...
           setFirebaseToken(currentToken);
-          console.log("firebae token day=", currentToken);
+          console.log(
+            "registration success, here firebase token=",
+            currentToken
+          );
         } else {
           // Show permission request UI
           console.log(
             "No registration token available. Request permission to generate one."
           );
-          // ...
         }
-      })
-      .catch((err) => {
-        console.log("An error occurred while retrieving token. ", err);
-        // ...
-      });
+      } catch (error) {
+        console.log("firebase token error= ", error);
+      }
+    };
+    getTokenFromServer();
   }, []);
   const onSubmit = (value, onSubmitProps) => {
     console.log("submit value và có ở Sâm: ", value);
@@ -101,18 +94,12 @@ function Signin() {
         deviceToken: firebaseToken,
         password: value.password,
       })
-      //* * Ở đây ta dùng .then là vì createAsyncThunk nó trả về 1 promise, nếu như ta dùng asynce await để nhận thì
-      //* sẽ vi phạm nguyên tắc hook là bỏ hook trong 1 nested function
-      //* ở dưới đang là check token trong store, nếu ta muốn sử dụng result từ .then trả về thì
-      //! .then((result)=>{ }), lúc này ta vẫn có thể sử dụng popUp loading,success và fail như ta hằng mong muốn
     ).then(() => {
       if (token == "") {
         onSubmitProps.setFieldError(
           [variable.password],
           "Hãy kiểm tra lại mật khẩu hoặc tên đăng nhập của bạn"
         );
-      } else {
-        // alert("Ok rồi nha");
       }
     });
   };
@@ -120,173 +107,6 @@ function Signin() {
     <div
       style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
     >
-      {/* <div className="login-page">
-        <div className="form">
-          <Button
-            style={{
-              height: choseSignInTypeHeight,
-              padding: chooseSignInPadding,
-              marginBottom: 10,
-              width: choseSignInTypeWidth,
-              fontSize: 12,
-            }}
-            type="submit"
-            startIcon={
-              <FontAwesomeIcon
-                icon={faUser}
-                width={startIcon}
-                height={startIcon}
-              />
-            }
-          >
-            Tên và mật khẩu
-          </Button>
-          <Button
-            type="submit"
-            style={{
-              height: choseSignInTypeHeight,
-              padding: chooseSignInPadding,
-              marginBottom: 10,
-              width: choseSignInTypeWidth,
-              fontSize: 12,
-              backgroundColor: "#e82e1e",
-            }}
-            startIcon={
-              <FontAwesomeIcon
-                icon={faGoogle}
-                width={startIcon}
-                height={startIcon}
-              />
-            }
-          >
-            Google
-          </Button>
-          <Button
-            type="submit"
-            style={{
-              height: choseSignInTypeHeight,
-              padding: chooseSignInPadding,
-              marginBottom: 10,
-              width: choseSignInTypeWidth,
-              fontSize: 12,
-              backgroundColor: "#c57a09",
-            }}
-            startIcon={
-              <FontAwesomeIcon
-                icon={faPhoneAlt}
-                width={startIcon}
-                height={startIcon}
-              />
-            }
-          >
-            Số điện thoại
-          </Button>
-        </div>
-      </div> */}
-      {/* <div style={{ fontSize: 25 }}>- -</div> */}
-
-      {/* ! Phần div dùng để thay đổi mật khẩu */}
-
-      {/* <div className="login-page">
-        <div className="form">
-          <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                paddingLeft: 15,
-                fontFamily: "Roboto",
-              }}
-            >
-              <p style={{ color: "grey", fontSize: headeFontSize }}>
-                Thay đổi mật khẩu
-              </p>
-            </div>
-            <TextField
-              style={{ width: width, marginBottom: marginBottom }}
-              type="text"
-              variant="standard"
-              label="Email"
-              name="email"
-              // onChange={(event) => this.handleChange(event)}
-            />
-            <div
-              className="attensin"
-              style={{ textAlign: "left", paddingLeft: attensionPadding }}
-            >
-              <p style={{ fontSize: 12, fontWeight: "bold" }}>
-                Lưu ý: Mail sẽ đến trong vòng 5 phút
-              </p>
-            </div>
-            <button type="submit" className="button">
-              <p>
-                <a href="#resend">Gửi yêu cầu</a>
-              </p>
-            </button>{" "}
-            <div
-              style={{
-                textAlign: "center",
-                color: "#bb8322",
-                paddingLeft: 10,
-                margin: "5px 5px 15px 0",
-              }}
-            >
-              <p id="resend">Gửi lại yêu cầu trong {chooseSignInPadding}s</p>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div className="login-page">
-        <div className="form">
-          <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                paddingLeft: 15,
-                fontFamily: "Roboto",
-              }}
-            >
-              <p style={{ color: "grey", fontSize: headeFontSize }}>
-                Mật khẩu mới
-              </p>
-            </div>
-            <TextField
-              size="medium"
-              style={{ marginBottom: marginBottom }}
-              type="text"
-              variant="outlined"
-              label="Email"
-              name="email"
-              // onChange={(event) => this.handleChange(event)}
-            />
-            <div
-              className="attensin"
-              style={{ textAlign: "left", paddingLeft: attensionPadding }}
-            >
-              <p style={{ fontSize: 12, fontWeight: "bold" }}>
-                Lưu ý: Mail sẽ đến trong vòng 5 phút
-              </p>
-            </div>
-            <button type="submit" className="button">
-              <p>
-                <a href="#resend">Gửi yêu cầu</a>
-              </p>
-            </button>{" "}
-            <div
-              style={{
-                textAlign: "center",
-                color: "#bb8322",
-                paddingLeft: 10,
-                margin: "5px 5px 15px 0",
-              }}
-            >
-              <p id="resend">Gửi lại yêu cầu trong {chooseSignInPadding}s</p>
-            </div>
-          </form>
-        </div>
-      </div> */}
       <div className="login-page">
         <div className="form">
           <Formik
@@ -317,12 +137,8 @@ function Signin() {
                     const columns = rows.row.cols;
                     return columns.map((column) => {
                       const controlType = column.elementType;
-                      const {
-                        name,
-                        type,
-                        placeholder,
-                        labeltext,
-                      } = column.elementConfig;
+                      const { name, type, placeholder, labeltext } =
+                        column.elementConfig;
                       return (
                         <FormControll
                           elementType="input"

@@ -30,6 +30,7 @@ import { persistStore } from "redux-persist";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import{registerServiceWorker } from "./serviceWorker"
 import AdminLayout from "layouts/Admin.jsx";
 // import {} from ""
 // import { library } from '@fortawesome/fontawesome-svg-core'
@@ -51,3 +52,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+registerServiceWorker()

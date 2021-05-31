@@ -32,6 +32,7 @@ export {
   increaseNotificationCount,
   decreaseNotificationCount,
   setNotificationCount,
+  setFirebaseToken
 } from "./Login/LoginSlice";
 export {
   getDashboard,

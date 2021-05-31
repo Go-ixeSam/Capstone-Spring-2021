@@ -119,6 +119,7 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
+  const seletedFilter = useSelector((state) => getSelectedFilter(state));
 
   return (
     <TableHead>
@@ -129,6 +130,9 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
+            style={{
+              visibility: seletedFilter == 1 ? "hidden" : "visible",
+            }}
             inputProps={{ "aria-label": "select all desserts" }}
           />
         </TableCell>
@@ -190,10 +194,10 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected, vegetableList } = props;
+  const { numSelected } = props;
 
   //! Ta phải làm hơi lằn nhằn để có thể lấy đc value của menu dropdwon
-  const options = ["chưa duyệt", "đã duyệt", "tất cả"];
+  const options = ["chưa duyệt", "đã duyệt"];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const dispatch = useDispatch();
@@ -463,26 +467,21 @@ export default function EnhancedTable(props) {
   async function updateVegetableData() {
     let hava = [];
     const response = await dispatch(getAllVegetableUnapproved());
-    if (Object.keys(response.payload.data).length !== 0) {
-      hava = [...prepareVegetableData(response.payload.data)];
-      console.log("table đây ngày 27/5= ", hava);
-      await dispatch(setNotificationCount(hava.length));
-      setFulllList(hava);
-      setRows(
-        hava.filter(function (e) {
-          return e[variable.vegetableStatus] == false;
-        })
-      );
+    console.log("res= ", response);
+    setFulllList(prepareVegetableData(response.payload.data));
+    hava = prepareVegetableData(
+      response.payload.data.filter(function (e) {
+        return e.status == false;
+      })
+    );
+    setRows(hava);
+
+    //! đếm số lượng rau chưa duyệt
+    console.log("table đây ngày 27/5= ", hava);
+    if (hava.length != 0) {
+      dispatch(setNotificationCount(hava.length));
     } else {
-      hava = [...prepareVegetableData(response.payload.data)];
-      console.log("table đây= ", hava);
-      await dispatch(setNotificationCount(0));
-      setFulllList(hava);
-      setRows(
-        hava.filter(function (e) {
-          return e[variable.vegetableStatus] == false;
-        })
-      );
+      dispatch(setNotificationCount(0));
     }
   }
   React.useEffect(() => {
@@ -495,13 +494,31 @@ export default function EnhancedTable(props) {
     setOrderBy(property);
   };
 
+  //! Click hết tất cả lựa chọn
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.ID);
+      const onlyFalseStatus = rows.filter((n) => {
+        return n[variable.vegetableStatus] == false;
+      });
+
+      //! cái này dùng cho table
+      const newSelecteds = onlyFalseStatus.map((n) => n.ID);
+      //! Cái này dùng cho dialog confirm
+      const newSelectedForStore = [];
+
+      onlyFalseStatus.map((n) => {
+        newSelectedForStore.push({
+          id: n.ID,
+          image: n.vegetableImage,
+          name: n.vegetableName,
+        });
+      });
       setSelected(newSelecteds);
+      setSelectedForStore(newSelectedForStore);
       return;
     }
     setSelected([]);
+    setSelectedForStore([]);
   };
 
   const handleClick = (row) => {
@@ -557,10 +574,12 @@ export default function EnhancedTable(props) {
   };
 
   const handleChangePage = (event, newPage) => {
+    console.log("change page");
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
+    console.log("row per page");
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -601,7 +620,7 @@ export default function EnhancedTable(props) {
                 <Row>
                   <Col xs={7}>
                     <div className="post-background-content">
-                      <p className="post-text-header">Xác nhận lựa chọn</p>
+                      {/* <p className="post-text-header">Xác nhận lựa chọn</p> */}
                       <PerfectScrollbar style={{ height: 200, width: 300 }}>
                         <div
                           style={{
@@ -639,15 +658,15 @@ export default function EnhancedTable(props) {
                         </div>
                       </PerfectScrollbar>
                       <div>
-                        <div style={{ display: "flex", marginTop: 10 }}>
+                        <div style={{ display: "flex", marginTop: 10 ,width:"max-content"}}>
                           <MaterialButton
                             variant="contained"
                             color="error"
                             size="large"
-                            style={{ marginRight: 5 }}
+                            style={{ marginRight: 5}}
                             click={() => failTest()}
                           >
-                            Từ chối
+                            Thông tin không đạt yêu cầu
                           </MaterialButton>
                           <MaterialButton
                             variant="contained"
@@ -656,7 +675,7 @@ export default function EnhancedTable(props) {
                             style={{ marginRight: 5 }}
                             onClick={() => passTest()}
                           >
-                            Chấp nhận
+                            Thông tin rau đạt yêu cầu
                           </MaterialButton>
                         </div>
                       </div>
@@ -676,8 +695,6 @@ export default function EnhancedTable(props) {
               className={classes.table}
               aria-labelledby="tableTitle"
               size="small"
-              // size={dense ? "small" : "medium"}
-              vegetableList={rows}
               aria-label="enhanced table"
             >
               <EnhancedTableHead
@@ -703,23 +720,33 @@ export default function EnhancedTable(props) {
                         role="checkbox"
                         aria-checked={isItemSelected}
                         //   tabIndex={-1}
-                        key={row.vegetableName}
+                        key={row.vegetableName + "index-" + index}
                         selected={isItemSelected}
                       >
-                        {actionbuttonlist.map((obj) => {
+                        {actionbuttonlist.map((obj, index) => {
                           if (obj == "remove") {
                             return (
-                              <TableCell padding="checkbox">
+                              <TableCell
+                                padding="checkbox"
+                                key={obj.labelId + index}
+                              >
                                 <Checkbox
                                   onClick={() => handleClick(row)}
                                   checked={isItemSelected}
-                                  inputProps={{ "aria-labelledby": labelId }}
+                                  style={{
+                                    visibility:
+                                      row[variable.vegetableStatus] == true
+                                        ? "hidden"
+                                        : "visible",
+                                  }}
+                                  ops={{ "aria-labelledby": labelId }}
                                 />
                               </TableCell>
                             );
                           }
                           return (
                             <ActionButton
+                              key={"action-butoon" + obj.labelId + index}
                               name={obj}
                               row={row}
                               click={() => showVegetableDetail(row)}
@@ -737,6 +764,7 @@ export default function EnhancedTable(props) {
                           id={labelId}
                           scope="row"
                           padding="none"
+                          key={row[variable.id + "index" + index]}
                         >
                           <p style={{ margin: 0, color: "green" }}>
                             <img

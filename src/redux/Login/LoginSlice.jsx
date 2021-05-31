@@ -29,6 +29,7 @@ const loginSlice = createSlice({
   name: "login",
   initialState: {
     token: "",
+    firebaseToken:"",
     notificationCount: 0,
     current: {},
     loading: false, // * trường này dùng để hiển thị pop up loading trong lúc dợi API trả về response
@@ -92,6 +93,9 @@ const loginSlice = createSlice({
     setNotificationCount: (state, action) => {
       state.notificationCount = action.payload;
     },
+    setFirebaseToken:(state,action)=>{
+      state.firebaseToken=action.payload
+    }
   },
 
   // ! Với kết quả trả về đều sẽ có 3 trường là meta,data và error, ta viết ở dưới này để coi sẽ phải làm những gì cho từng loại kêt quả
@@ -116,5 +120,6 @@ export const {
   increaseNotificationCount,
   decreaseNotificationCount,
   setNotificationCount,
+  setFirebaseToken
 } = actions;
 export default loginReducer;
