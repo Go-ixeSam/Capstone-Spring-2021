@@ -209,7 +209,7 @@ function Dashboard() {
           <Col md={6}>
             <Card
               id="top10A"
-              title="Top 10 rau được chia sẻ nhiều nhất"
+              title="Top 10 rau được thêm vào vường nhiều nhất"
               // category="All products including Taxes"
               content={
                 <div>
@@ -221,7 +221,7 @@ function Dashboard() {
                           <p style={number}>{index+1}</p>
                           <p style={{ marginLeft: 5 }}>{item.id}</p>
                           <p style={{ marginLeft: 5, fontWeight: "bold" }}>
-                            {item.text}
+                            {`${item.text} chậu`}
                           </p>
                         </div>
                       );
@@ -232,7 +232,7 @@ function Dashboard() {
                           <p style={number}>{index+1}</p>
                           <p style={{ marginLeft: 5 }}>{item.id}</p>
                           <p style={{ marginLeft: 5, fontWeight: "bold" }}>
-                            {item.text}
+                            {`${item.text} chậu`}
                           </p>
                         </div>
                       );
@@ -257,7 +257,7 @@ function Dashboard() {
                           <p style={numberRed}>{index+1}</p>
                           <p style={{ marginLeft: 5 }}>{item.id}</p>
                           <p style={{ marginLeft: 5, fontWeight: "bold" }}>
-                            {item.text}
+                           {`${item.text} bài`}
                           </p>
                         </div>
                       );
@@ -268,7 +268,7 @@ function Dashboard() {
                           <p style={numberRed}>{index+1}</p>
                           <p style={{ marginLeft: 5 }}>{item.id}</p>
                           <p style={{ marginLeft: 5, fontWeight: "bold" }}>
-                            {item.text}
+                            {`${item.text} bài`} 
                             
                           </p>
                         </div>

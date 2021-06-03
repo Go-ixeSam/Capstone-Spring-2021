@@ -586,7 +586,7 @@ var responsiveSales = [
   ],
 ];
 var legendSales = {
-  names: ["Lượt tương tác đến bài đăng", "Bài đăng chia sẻ rau"],
+  names: ["Số lượng tương tác đến bài đăng", "Số lượng bài đăng có trong hệ thống"],
   types: ["info", "danger"],
 };
 

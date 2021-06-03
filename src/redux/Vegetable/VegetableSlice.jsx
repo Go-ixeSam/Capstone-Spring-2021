@@ -230,6 +230,8 @@ const post = createSlice({
     setFilterSelect: (state, action) => {
       state.filterSelect = action.payload;
     },
+
+    //! Dùng để thông báo rằng có rau mới đc cập nhật, hãy load thông tin mới về
     setUpdateSingal: (state, action) => {
       state.updateSignal = action.payload;
     },

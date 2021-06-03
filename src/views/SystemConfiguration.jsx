@@ -17,6 +17,8 @@ import {
   LoadingPopUp,
   FailPopUp,
 } from "components/Modal/Modal";
+import * as Yup from "yup";
+
 
 import * as variable from "../variables/Variables";
 import {
@@ -30,7 +32,7 @@ import { MaterialButton } from "../components/CustomButton/MaterialButton";
 function SystemConfiguration() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => getSystemConfigLoading(state));
-  const percent = useSelector((state) => getPercent(state));
+  const percent = useSelector((state) => getPercent(state)); //! lấy ra số percent dựa trên loại percent
   let [successVisible, setSuccessVisible] = React.useState(false); // dùng để hiện succes popup
   let [failVisible, setFailVisible] = React.useState(false);
   const percentNames = {
@@ -89,6 +91,7 @@ function SystemConfiguration() {
       const set = () => {
         //! lấy số phần trăm dựa trên loại phần trăm, ta lấy kết quả bằng useSelector ở trên
         dispatch(getPercentById(percentName));
+
         setFieldValue(name, percent); // * name ở đây là tên của cái field
       };
       set();
@@ -101,8 +104,11 @@ function SystemConfiguration() {
     );
   };
 
-  const onSubmit = (value, onSubmitProps) => {
+  const submitUpdate = (value, onSubmitProps) => {
     console.log("value, ", value);
+    if(value[variable.percentName]==""){
+value[variable.percentName]=1
+    }
     const submitChange = async () => {
       const res = await dispatch(
         updatePercentThreshold({
@@ -114,8 +120,8 @@ function SystemConfiguration() {
 
       //* Update lai du lieu sau khi submit xong
       const updateData = await dispatch(getAllPercentReport());
-      const result = dispatch(addPercentReportName(updateData.payload.data));
-      console.log("submit= ", res);
+      const result = await dispatch(addPercentReportName(updateData.payload.data));
+      console.log("submit= ", result);
 
       //! sau khi việc update thành công thì hiện cái popup success
       if (result.payload) {
@@ -123,8 +129,12 @@ function SystemConfiguration() {
           autoCloseSuccessModal();
         }
       }
+
+
       onSubmitProps.setSubmitting(false);
     };
+
+
     try {
       submitChange();
     } catch (error) {
@@ -132,6 +142,9 @@ function SystemConfiguration() {
       console.log("Lỗi ở system configuaration khi submit= ", error);
     }
   };
+  const validationSchema=Yup.object().shape({
+    [variable.percent]:Yup.number().positive("Số phần trăm không được nhỏ hơn 0").integer()
+  })
 
   return (
     <React.Fragment>
@@ -146,8 +159,8 @@ function SystemConfiguration() {
               <div style={{ width: "30%" }}>
                 <Formik
                   initialValues={initialValue}
-                  //   validationSchema={validationSchema}
-                  onSubmit={onSubmit}
+                    validationSchema={validationSchema}
+                  onSubmit={submitUpdate}
                 >
                   {(formik) => {
                     return (
@@ -161,9 +174,10 @@ function SystemConfiguration() {
                         <MyField
                           elementType="input"
                           type="number"
-                          label={"Phần trăm ngưỡng"}
+                          label={"Số phần trăm ngưỡng giới hạn"}
                           name={variable.percent}
-                          value="40"
+                          // {...percentNames}
+                          // value="40"
                         />
 
                         <MaterialButton
